@@ -120,11 +120,15 @@
   /* hero */
   .hero { display: grid; gap: var(--s10); padding-block: var(--s12) var(--s16); align-items: center; }
   @media (min-width: 960px) { .hero { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--s12); padding-block: var(--s16) var(--s24); } }
-  .hero h1 { max-width: 14ch; }
+  .hero h1 { max-width: 15ch; font-size: clamp(40px, 5.4vw, 64px); }
   .hero .lede { margin-top: var(--s6); max-width: 34em; }
   .actions { display: flex; flex-wrap: wrap; gap: var(--s3); margin-top: var(--s8); }
   .soon { margin-top: var(--s4); }
   .soon::before { content: ""; display: inline-block; width: 8px; height: 8px; margin-right: var(--s2); border-radius: 50%; background: var(--brand); vertical-align: 1px; }
+  .why-list { list-style: none; padding: 0; margin: var(--s6) 0 0; display: grid; gap: var(--s2); }
+  .why-list li { display: flex; align-items: center; gap: var(--s3); font-weight: 500; }
+  .why-list li::before { content: ""; width: 20px; height: 20px; flex: none; border-radius: var(--r-full); background: var(--brand)
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%23fff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 8.5l2.5 2.5 5.5-6'/%3E%3C/svg%3E") center/12px no-repeat; }
   .proof { display: flex; flex-wrap: wrap; gap: var(--s2) var(--s6); margin: var(--s8) 0 0; padding: 0; list-style: none; }
   .proof li { display: flex; align-items: center; gap: var(--s2); }
   .proof li::before { content: ""; width: 16px; height: 16px; flex: none;
@@ -292,18 +296,18 @@
 <main id="top">
   <div class="wrap hero">
     <div>
-      <h1 class="h-72">Twelve Claude skills for the slow parts of UX research.</h1>
-      <p class="lede copy-18 muted">Scope the study, collate transcripts, run the numbers and build the report, the way a senior researcher would.</p>
+      <h1 class="h-72">Ten interviews to one notesheet, the same day.</h1>
+      <p class="lede copy-18 muted">Collating transcripts by hand takes days, and a summary loses the exact words. The Collator fills your notesheet row by row.</p>
+      <ul class="why-list">
+        <li>Mapped to your discussion guide</li>
+        <li>Verbatim quote and timestamp on every row</li>
+        <li><span>Writes <span class="missing">missing</span> instead of guessing</span></li>
+      </ul>
       <div class="actions">
         <a class="btn brand lg" href="#free" data-free-only>Get the Collator free</a>
-        <a class="btn lg" href="#pricing">See full stack pricing</a>
+        <a class="btn lg" href="#pricing">See pricing for all skills</a>
       </div>
-      <p class="soon copy-14 muted">The Collator is free now. Paid packs and the full stack are coming soon.</p>
-      <ul class="proof copy-14 muted">
-        <li>Runs in your own Claude account</li>
-        <li>Never invents a quote</li>
-        <li>Built by a UX researcher</li>
-      </ul>
+      <p class="soon copy-14 muted">Free until 11 December. One of 12 skills in the AI UXR Stack; paid packs are coming soon.</p>
     </div>
     <figure class="stackfig"><div class="stackviz" role="img" aria-label="Five stacked cards, one per pack: Scope, Collate, Analyse, Influence and Career."><div class="iso" id="iso"></div></div></figure>
   </div>
@@ -326,8 +330,8 @@
   <section id="free" aria-labelledby="free-title" data-free-only>
     <div class="wrap">
       <div class="sh">
-        <h2 class="h-40" id="free-title">Start with the Collator. It's free until 11 December.</h2>
-        <p class="copy-18 muted">Turn fieldwork into a theme-tagged notesheet the same day.</p>
+        <h2 class="h-40" id="free-title">Get the Collator. Free until 11 December.</h2>
+        <p class="copy-18 muted">Download it, add it to Claude, and collate your next study today.</p>
       </div>
       <div class="offer">
         <div>
