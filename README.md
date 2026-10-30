@@ -42,7 +42,7 @@ The Transcript Collator turns raw interview transcripts into one theme-tagged no
 | **Career** | "The work was strong. The portfolio isn't." | Case Study Builder | ₹2,005 | $39 |
 | **Full stack** | All 12 skills | Everything above | ₹12,005 | $249 |
 
-Single skills are ₹2,005 or $39. Paid packs open soon; [follow on LinkedIn](https://www.linkedin.com/in/nithyn/) to hear first. Prices on the website are the current ones.
+Single skills are ₹2,005 or $39. Buy any pack and you get every future update to the library, plus every new skill Nithyn publishes, at no extra cost. Paid packs open soon; [follow on LinkedIn](https://www.linkedin.com/in/nithyn/) to hear first. Prices on the website are the current ones.
 
 ## The 12 skills
 
