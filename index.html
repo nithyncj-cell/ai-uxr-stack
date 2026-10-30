@@ -123,6 +123,8 @@
   .hero h1 { max-width: 14ch; }
   .hero .lede { margin-top: var(--s6); max-width: 34em; }
   .actions { display: flex; flex-wrap: wrap; gap: var(--s3); margin-top: var(--s8); }
+  .soon { margin-top: var(--s4); }
+  .soon::before { content: ""; display: inline-block; width: 8px; height: 8px; margin-right: var(--s2); border-radius: 50%; background: var(--brand); vertical-align: 1px; }
   .proof { display: flex; flex-wrap: wrap; gap: var(--s2) var(--s6); margin: var(--s8) 0 0; padding: 0; list-style: none; }
   .proof li { display: flex; align-items: center; gap: var(--s2); }
   .proof li::before { content: ""; width: 16px; height: 16px; flex: none;
@@ -184,6 +186,10 @@
   .pack { display: grid; gap: var(--s4); }
   @media (min-width: 900px) { .pack { grid-template-columns: 280px 1fr; gap: var(--s12); } }
   .pack-h p { margin-top: var(--s1); }
+  .pack-buy { display: flex; align-items: baseline; gap: var(--s2); margin-top: var(--s4); }
+  .pack-buy .pp { font: 500 20px/28px var(--mono); }
+  .pack-h .btn { margin-top: var(--s3); }
+  @media (min-width: 900px) { .pack-h { position: sticky; top: calc(var(--header-h) + var(--s6)); align-self: start; } }
   .rows { list-style: none; margin: 0; padding: 0; }
   .rows > li + li { border-top: 1px solid var(--border); }
   .row { display: grid; grid-template-columns: 48px 1fr auto; gap: var(--s4); align-items: start; padding-block: var(--s4); }
@@ -229,6 +235,8 @@
   .plist > li:last-child { padding-bottom: 0; }
   .plist .pp { font: 500 16px/24px var(--mono); text-align: right; }
   .plist .ps { font: 400 13px/16px var(--mono); color: var(--gray-700); text-align: right; }
+  .plist li > div:last-child { display: flex; flex-direction: column; align-items: flex-end; }
+  .plist .btn { margin-top: var(--s3); }
 
   /* terms */
   .legal { margin-top: var(--s8); max-width: 760px; }
@@ -288,8 +296,9 @@
       <p class="lede copy-18 muted">Scope the study, collate transcripts, run the numbers and build the report, the way a senior researcher would.</p>
       <div class="actions">
         <a class="btn brand lg" href="#free" data-free-only>Get the Collator free</a>
-        <a class="btn lg" href="#pricing">See pricing</a>
+        <a class="btn lg" href="#pricing">See full stack pricing</a>
       </div>
+      <p class="soon copy-14 muted">The Collator is free now. Paid packs and the full stack are coming soon.</p>
       <ul class="proof copy-14 muted">
         <li>Runs in your own Claude account</li>
         <li>Never invents a quote</li>
@@ -388,8 +397,8 @@
             <li>Each skill hands its output to the next.</li>
             <li>One licence covers one person.</li>
           </ul>
-          <a class="btn brand lg" href="https://www.linkedin.com/in/nithyn/" target="_blank" rel="noopener" data-follow>Get notified on LinkedIn</a>
-          <p class="note">Paid skills open soon. No payment is taken on this site.</p>
+          <a class="btn brand lg" href="https://www.linkedin.com/in/nithyn/" target="_blank" rel="noopener" data-follow>Buy the full stack · coming soon</a>
+          <p class="note">Paid packs open soon. Until then this button opens LinkedIn so you hear first. No payment is taken on this site.</p>
         </div>
         <ul class="plist" id="plist"></ul>
       </div>
@@ -617,7 +626,9 @@
   // ---- skills, grouped by pack ----
   document.getElementById("packlist").innerHTML = PACKS.map((p) => `
     <div class="pack" id="pack-${p.key}">
-      <div class="pack-h"><h3 class="h-24">${p.name}</h3><p class="muted">${p.pain}</p></div>
+      <div class="pack-h"><h3 class="h-24">${p.name}</h3><p class="muted">${p.pain}</p>
+        <div class="pack-buy"><span class="pp" data-price="pack" data-pack="${p.key}"></span>${p.single ? "" : `<s class="was" data-price="pack-list" data-pack="${p.key}"></s>`}</div>
+        <a class="btn sm" href="${LINKEDIN}" target="_blank" rel="noopener" data-follow>Buy pack · coming soon</a></div>
       <ul class="rows">${p.skills.map((s) => `
         <li><div class="row" id="skill-${s.id}">
           <img class="icon" src="${icon(s.id, "hd")}" alt="" width="48" height="48" loading="lazy" decoding="async">
@@ -637,9 +648,10 @@
   document.getElementById("plist").innerHTML = PACKS.map((p) => `
     <li>
       <div><h3 class="h-16">${p.name}</h3><p class="copy-14 muted">${p.skills.map((s) => s.name).join(", ")}</p></div>
-      <div><p class="pp" data-price="pack" data-pack="${p.key}"></p>${p.single ? "" : `<p class="ps"><s data-price="pack-list" data-pack="${p.key}"></s> <span data-price="pack-save" data-pack="${p.key}"></span></p>`}</div>
+      <div><p class="pp" data-price="pack" data-pack="${p.key}"></p>${p.single ? "" : `<p class="ps"><s data-price="pack-list" data-pack="${p.key}"></s> <span data-price="pack-save" data-pack="${p.key}"></span></p>`}
+        <a class="btn sm" href="${LINKEDIN}" target="_blank" rel="noopener" data-follow>Buy pack · coming soon</a></div>
     </li>`).join("") + `
-    <li><div><h3 class="h-16">Single skill</h3><p class="copy-14 muted">Any one skill on its own.</p></div><div><p class="pp" data-price="single"></p></div></li>`;
+    <li><div><h3 class="h-16">Single skill</h3><p class="copy-14 muted">Any one skill on its own.</p></div><div><p class="pp" data-price="single"></p><a class="btn sm" href="${LINKEDIN}" target="_blank" rel="noopener" data-follow>Buy a skill · coming soon</a></div></li>`;
 
   // ---- free period ----
   if (!freeActive) document.querySelectorAll("[data-free-only]").forEach((el) => { el.hidden = true; });
@@ -663,11 +675,11 @@
     PACKS.forEach((p) => {
       const listPrice = P.single * p.skills.length;
       const price = P.packs[p.key];
-      const q = (k) => document.querySelector(`[data-price="${k}"][data-pack="${p.key}"]`);
-      q("pack").textContent = P.fmt(price);
+      const set = (k, v) => document.querySelectorAll(`[data-price="${k}"][data-pack="${p.key}"]`).forEach((el) => { el.textContent = v; });
+      set("pack", P.fmt(price));
       if (!p.single) {
-        q("pack-list").textContent = P.fmt(listPrice);
-        q("pack-save").textContent = "save " + pct(price, listPrice) + "%";
+        set("pack-list", P.fmt(listPrice));
+        set("pack-save", "save " + pct(price, listPrice) + "%");
       }
     });
     const stackList = P.single * ALL.length;
