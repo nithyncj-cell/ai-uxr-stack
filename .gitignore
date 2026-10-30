@@ -1,0 +1,11 @@
+# Guard: paid skill files never go in this public repo.
+*.zip
+SKILL.md
+**/SKILL.md
+skills/
+public-access/
+references/
+scripts/
+# System files
+.DS_Store
+Thumbs.db

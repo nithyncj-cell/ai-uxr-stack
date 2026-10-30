@@ -1,0 +1,51 @@
+name: Skill feedback or problem
+description: Something a skill did that it shouldn't, or didn't do that it should.
+labels: ["feedback"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time. Please don't paste participant data, transcripts, client names or anything confidential. Describe the situation instead.
+  - type: dropdown
+    id: skill
+    attributes:
+      label: Which skill?
+      options:
+        - Question Zero
+        - Diagnostic Partner
+        - Research Plan Creator
+        - Transcript Collator
+        - Collated Synth
+        - Collation Sorter
+        - Quant Analyst
+        - Report Builder
+        - Research-Driven Prototype
+        - Stakeholder Panel
+        - Stop AI Slop
+        - Case Study Builder
+    validations:
+      required: true
+  - type: dropdown
+    id: where
+    attributes:
+      label: Where were you running it?
+      options:
+        - claude.ai in a browser
+        - Claude desktop app
+        - Claude Code
+        - Claude in Excel
+        - Somewhere else
+    validations:
+      required: true
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened?
+      description: What you asked for, what the skill did, and what you expected instead.
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Which version?
+      description: The date you downloaded it, or the version on the website.
