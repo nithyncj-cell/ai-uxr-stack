@@ -813,8 +813,8 @@
   noWidows(document.body);
 
   // ---- waitlist pop-up on every Buy button ----
-  // Paste the Google Apps Script web app URL here. While it's empty, Buy buttons open LinkedIn as before.
-  const WAITLIST_ENDPOINT = "";
+  // Paste the Google Apps Script web app URL here. If it is ever emptied, Buy buttons fall back to opening LinkedIn.
+  const WAITLIST_ENDPOINT = "https://script.google.com/macros/s/AKfycbzGlUblM7VqHf6TyUNmoOktGWsK0ngoxOFt0_UBw3jNJ95jMTNq35ReYYOULS8g7jnnug/exec";
   const dlg = document.getElementById("waitlist");
   const wlForm = document.getElementById("wl-form");
   const wlDone = document.getElementById("wl-done");
