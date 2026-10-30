@@ -1,0 +1,50 @@
+/**
+ * AI UXR Stack waitlist: receives the website's "Buy" form and adds one row per answer.
+ *
+ * Setup (once):
+ * 1. Open the Google Sheet "AI UXR Stack waitlist responses".
+ * 2. Extensions -> Apps Script. Delete what is there and paste this whole file. Save.
+ * 3. Deploy -> New deployment -> type "Web app".
+ *    Execute as: Me. Who has access: Anyone. Deploy, allow access, copy the Web app URL.
+ * 4. Send that URL to be added to the website.
+ *
+ * Columns: Time, Email, Interested in, Slowest part of research,
+ *          Changes or additions wanted, Manual task to hand off, Region, Consent
+ */
+
+const MAX_LEN = 2000;
+
+function doPost(e) {
+  const lock = LockService.getScriptLock();
+  lock.tryLock(10000);
+  try {
+    const d = JSON.parse((e && e.postData && e.postData.contents) || "{}");
+    if (d.website) return reply({ ok: true });            // hidden field: filled only by bots
+    const email = String(d.email || "").trim().slice(0, 254);
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return reply({ ok: false, error: "email" });
+    if (d.consent !== true) return reply({ ok: false, error: "consent" });
+
+    const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheets()[0];
+    if (sheet.getLastRow() === 0) {
+      sheet.appendRow(["Time", "Email", "Interested in", "Slowest part of research",
+        "Changes or additions wanted", "Manual task to hand off", "Region", "Consent"]);
+    }
+    sheet.appendRow([new Date(), clean(email), clean(d.item), clean(d.pain),
+      clean(d.changes), clean(d.automate), clean(d.region), "yes"]);
+    return reply({ ok: true });
+  } catch (err) {
+    return reply({ ok: false, error: "bad request" });
+  } finally {
+    lock.releaseLock();
+  }
+}
+
+// Stops a typed answer from running as a spreadsheet formula, and caps its length.
+function clean(v) {
+  const s = String(v == null ? "" : v).slice(0, MAX_LEN);
+  return /^[=+\-@\t\r]/.test(s) ? "'" + s : s;
+}
+
+function reply(obj) {
+  return ContentService.createTextOutput(JSON.stringify(obj)).setMimeType(ContentService.MimeType.JSON);
+}
