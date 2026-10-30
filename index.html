@@ -409,7 +409,7 @@
       <div class="ph">
         <div class="sh">
           <h2 class="h-40" id="pricing-title">Pricing</h2>
-          <p class="copy-18 muted">One price per skill, pack or the full stack.</p>
+          <p class="copy-18 muted">Buy any pack and you get every future update to the library, plus every new skill Nithyn publishes, at no extra cost.</p>
         </div>
         <div class="seg" role="group" aria-label="Show prices for">
           <button type="button" data-region="in" aria-pressed="false">India ₹</button>
@@ -424,6 +424,7 @@
           <p class="save" data-price="stack-save"></p>
           <ul class="ticks">
             <li>Each skill hands its output to the next.</li>
+            <li>Every future update and new skill included.</li>
             <li>One licence covers one person.</li>
           </ul>
           <a class="btn brand lg" href="https://www.linkedin.com/in/nithyn/" target="_blank" rel="noopener" data-buy="Full stack">Buy the full stack · coming soon</a>
@@ -452,7 +453,7 @@
               <p><b>8. No warranty.</b> To the extent the law allows, skills are provided as they are, without any warranty that they will be error-free or suit a particular purpose.</p>
               <p><b>9. Limit of liability.</b> To the extent the law allows, Nithyn is not liable for indirect or consequential loss, lost profits or lost data. Nithyn's total liability for any claim about a skill is limited to the amount you paid for that skill. For a free download, that amount is zero. Nothing in these terms limits liability that cannot be limited by law.</p>
               <p><b>10. Free launch.</b> The UXR Transcript Collator is free to download until 11:59 pm on 24 November 2026, India time. Copies downloaded free during that period stay licensed to you under these terms after that date.</p>
-              <p><b>11. Updates.</b> Nithyn may update, replace or retire any skill. Any update you receive is covered by these terms.</p>
+              <p><b>11. Updates and new skills.</b> If you buy a pack or the full stack, you get every future update to the skills in the AI UXR Stack and every new skill Nithyn adds to it, at no extra cost, for as long as Nithyn offers the stack. If you buy a single skill, you get every future update to that skill. Nithyn may update, replace or retire any skill. Every update and new skill you receive is covered by these terms.</p>
               <p><b>12. Ending the licence.</b> Your licence ends automatically if you break these terms. When it ends, you must delete every copy of the skill you hold.</p>
               <p><b>13. Changes to these terms.</b> Nithyn may change these terms. The version shown on this page on the day you download a skill applies to that download.</p>
               <p><b>14. Law and disputes.</b> These terms are governed by the laws of India. The courts at Bengaluru, Karnataka have exclusive jurisdiction, without affecting any consumer rights you have where you live.</p>
@@ -700,7 +701,7 @@
         </li>`).join("")}
       </ul>
       <div class="pack-foot">
-        <div class="pack-buy"><span class="pp" data-price="pack" data-pack="${p.key}"></span>${p.single ? "" : `<s class="was" data-price="pack-list" data-pack="${p.key}"></s>`}</div>
+        <div><div class="pack-buy"><span class="pp" data-price="pack" data-pack="${p.key}"></span>${p.single ? "" : `<s class="was" data-price="pack-list" data-pack="${p.key}"></s>`}</div><p class="copy-14 muted">Includes all future updates and new skills.</p></div>
         <div class="pack-actions">
           <button class="btn sm toggle" type="button" aria-expanded="false" aria-controls="pack-${p.key}">Show details</button>
           <a class="btn sm brand" href="${LINKEDIN}" target="_blank" rel="noopener" data-buy="${p.name}">Buy pack · coming soon</a>
