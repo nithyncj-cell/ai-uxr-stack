@@ -43,7 +43,7 @@ Turns kickoff calls, briefs and ad hoc asks into a stakeholder-ready research pl
 
 *“Fieldwork's done. Now a week of retyping.”*
 
-### Transcript Collator (free until 11 December 2026)
+### Transcript Collator (free until 24 November 2026)
 
 Turns raw transcripts into one theme-tagged notesheet, with a verbatim quote and timestamp on every row.
 

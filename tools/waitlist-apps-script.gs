@@ -9,10 +9,14 @@
  * 4. Send that URL to be added to the website.
  *
  * Columns: Time, Email, Interested in, Slowest part of research,
- *          Changes or additions wanted, Manual task to hand off, Region, Consent
+ *          Changes or additions wanted, Manual task to hand off, Region, Consent, Discount code
+ *
+ * After changing this code: Deploy -> Manage deployments -> pencil -> Version: New version -> Deploy.
+ * The web app URL stays the same.
  */
 
 const MAX_LEN = 2000;
+const SHEET_ID = "1epCYP87y_o43FZUWwOC3Gn83QvmFcmbwUjdN_Gya6Aw";   // works whether this script is attached to the sheet or not
 
 function doPost(e) {
   const lock = LockService.getScriptLock();
@@ -24,13 +28,14 @@ function doPost(e) {
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return reply({ ok: false, error: "email" });
     if (d.consent !== true) return reply({ ok: false, error: "consent" });
 
-    const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheets()[0];
+    const sheet = SpreadsheetApp.openById(SHEET_ID).getSheets()[0];
     if (sheet.getLastRow() === 0) {
       sheet.appendRow(["Time", "Email", "Interested in", "Slowest part of research",
-        "Changes or additions wanted", "Manual task to hand off", "Region", "Consent"]);
+        "Changes or additions wanted", "Manual task to hand off", "Region", "Consent", "Discount code"]);
     }
+    if (!sheet.getRange(1, 9).getValue()) sheet.getRange(1, 9).setValue("Discount code");
     sheet.appendRow([new Date(), clean(email), clean(d.item), clean(d.pain),
-      clean(d.changes), clean(d.automate), clean(d.region), "yes"]);
+      clean(d.changes), clean(d.automate), clean(d.region), "yes", clean(String(d.code || "").slice(0, 40))]);
     return reply({ ok: true });
   } catch (err) {
     return reply({ ok: false, error: "bad request" });

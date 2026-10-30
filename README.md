@@ -23,9 +23,9 @@ Each skill takes one slow part of the research cycle and does it the way a senio
 
 > **This repo is the public listing for the stack.** It doesn't contain the paid skill files. The website is served from the `gh-pages` branch, and skills are downloaded from the [website](https://nithyncj-cell.github.io/ai-uxr-stack/) under the Skill Licence Terms.
 
-## Free until 11 December 2026: Transcript Collator
+## Free until 24 November 2026: Transcript Collator
 
-The Transcript Collator turns raw interview transcripts into one theme-tagged notesheet, with a verbatim quote and timestamp on every row. It's free to download from the [website](https://nithyncj-cell.github.io/ai-uxr-stack/#free) until 11:59 pm on 11 December 2026, India time. Follow on LinkedIn, tick the licence box, and download the zip.
+The Transcript Collator turns raw interview transcripts into one theme-tagged notesheet, with a verbatim quote and timestamp on every row. It's free to download from the [website](https://nithyncj-cell.github.io/ai-uxr-stack/#free) until 11:59 pm on 24 November 2026, India time. Follow on LinkedIn, tick the licence box, and download the zip.
 
 ## The five packs
 
