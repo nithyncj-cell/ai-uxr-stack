@@ -364,7 +364,6 @@
                   Download for Claude (.zip)
                 </button>
                 <button class="btn" type="button" data-skill="collator" data-kind="md">Download .md</button>
-                <button class="btn" type="button" data-skill="collator" data-kind="copy" hidden>Copy skill text</button>
               </div>
               <div class="gate" id="gate-collator" hidden></div>
               <p class="status" id="status-collator" role="status" aria-live="polite"></p>
@@ -903,9 +902,9 @@
   async function buildMd(s) {
     return new Blob([await getText(s.md.path)], { type: "text/markdown" });
   }
-  function showCopy(skill, reason) {
-    document.querySelector(`.dl [data-skill="${skill}"][data-kind="copy"]`).hidden = false;
-    say(skill, reason + " Copy the skill text instead and save it as SKILL.md.", "warn");
+  function showFail(skill, kind) {
+    const other = kind === "zip" ? "Try the .md download instead." : "Try again in a moment.";
+    say(skill, "That download didn't go through. " + other, "warn");
   }
 
   async function offer(btn, skill, kind) {
@@ -920,23 +919,10 @@
       document.getElementById("gate-" + skill).hidden = true;
     } catch (err) {
       if (kind === "zip" && err && err.message === "zip") say(skill, `The zip tool didn't load. Download the .md, save it as SKILL.md in a folder named ${s.folder}, and zip the folder.`, "warn");
-      else showCopy(skill, "That download didn't go through.");
+      else showFail(skill, kind);
     } finally {
       btn.disabled = false;
     }
-  }
-
-  function copyText(skill) {
-    const s = FREE[skill];
-    const text = texts[s.files["SKILL.md"]];
-    if (!text) { say(skill, "Still loading. Try again in a moment.", "warn"); return; }
-    const fail = () => say(skill, "Copying is blocked in this browser. Use the .md download instead.", "warn");
-    try {
-      navigator.clipboard.writeText(text).then(
-        () => say(skill, `Copied. Save it as SKILL.md in a folder named ${s.folder}, then zip the folder.`, "ok"),
-        fail
-      );
-    } catch (e) { fail(); }
   }
 
   // ---- legal links open their section ----
@@ -966,7 +952,6 @@
     const btn = e.target.closest("button[data-skill]");
     if (!btn || !freeActive) return;
     const { skill, kind } = btn.dataset;
-    if (kind === "copy") { copyText(skill); return; }
     if (agree && !agree.checked) {
       agreeLabel.classList.add("need");
       say(skill, "Tick the box to accept the Skill Licence Terms first.", "warn");
