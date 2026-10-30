@@ -114,7 +114,7 @@ Claude Code, updating and troubleshooting: [docs/install.md](docs/install.md).
 
 ## Credits
 
-Question Zero builds on James Chudley's knowledge-mapping workshop and his importance and confidence matrix. Stop AI Slop draws on [hardikpandya/stop-slop](https://github.com/hardikpandya/stop-slop) (MIT License) and Wikipedia's [Signs of AI writing](https://en.wikipedia.org/wiki/Wikipedia:Signs_of_AI_writing). Thanks to *The Goal* by Eliyahu M. Goldratt and to Constantine Papas, PhD.
+Question Zero builds on James Chudley's knowledge-mapping workshop and his importance and confidence matrix. Stop AI Slop draws on [hardikpandya/stop-slop](https://github.com/hardikpandya/stop-slop) (MIT License) and Wikipedia's [Signs of AI writing](https://en.wikipedia.org/wiki/Wikipedia:Signs_of_AI_writing). Thanks to *The Goal* by Eliyahu M. Goldratt and to Constantine Papas, PhD. The website's skill icons are 3D renders from [NVIDIA SimReady Assets](https://huggingface.co/datasets/nvidia/simready-assets), used under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
 
 ## Author
 
