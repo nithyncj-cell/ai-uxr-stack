@@ -292,6 +292,27 @@
   .hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
   .modal .agree { margin-top: var(--s5); }
   .modal-actions { display: flex; justify-content: flex-end; gap: var(--s3); margin-top: var(--s6); }
+  /* Collator block: hero, proof and download read as one story, joined by a thin gradient thread */
+  .chapter section { border-top: 0; padding-block: 0; }
+  .chapter > section > .wrap { padding-block: var(--s8) var(--s12); }
+  .chapter > #free > .wrap { padding-bottom: var(--s16); }
+  @media (min-width: 900px) {
+    .chapter > section > .wrap { padding-block: var(--s8) var(--s16); }
+    .chapter > #free > .wrap { padding-bottom: var(--s24); }
+    .chapter .hero { padding-bottom: var(--s12); }
+  }
+  @media (min-width: 720px) {
+    .chapter > .wrap, .chapter > section > .wrap { position: relative; }
+    .chapter > .wrap::before, .chapter > section > .wrap::before { content: ""; position: absolute; left: 12px; top: 0; bottom: 0; width: 1px;
+      background: linear-gradient(180deg, rgba(41,151,255,.55), rgba(191,90,242,.45)); }
+    .chapter > #why > .wrap::before { background: linear-gradient(180deg, rgba(191,90,242,.45), rgba(255,55,95,.4)); }
+    .chapter > #free > .wrap::before { background: linear-gradient(180deg, rgba(255,55,95,.4), rgba(255,159,10,.45) 60%, transparent); }
+    .chapter > .wrap:first-child::before { top: var(--node-y, 0px); }
+    /* a node on the thread beside each heading */
+    .chapter > .wrap::after, .chapter > section > .wrap::after { content: ""; position: absolute; left: 8px; width: 9px; height: 9px;
+      top: var(--node-y, 0px); border-radius: 50%; background: var(--bg); border: 2px solid var(--brand); box-sizing: border-box; }
+
+  }
   @media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; transition: none !important; animation: none !important; } }
 </style>
 </head>
@@ -319,6 +340,7 @@
 </header>
 
 <main id="top">
+  <div class="chapter">
   <div class="wrap hero">
     <div>
       <h1 class="h-72">Ten interviews to one notesheet, the same day.</h1>
@@ -393,6 +415,8 @@
       </div>
     </div>
   </section>
+
+  </div>
 
   <section id="skills" aria-labelledby="skills-title">
     <div class="wrap">
@@ -838,6 +862,21 @@
     });
   }
   noWidows(document.body);
+
+  // Place each thread node level with the first line of its heading.
+  function placeNodes() {
+    document.querySelectorAll(".chapter > .wrap, .chapter > section > .wrap").forEach((wrap) => {
+      const h = wrap.querySelector("h1, h2");
+      if (!h) return;
+      let y = 0, el = h;
+      while (el && el !== wrap) { y += el.offsetTop; el = el.offsetParent; }
+      const line = parseFloat(getComputedStyle(h).lineHeight) || h.offsetHeight;
+      wrap.style.setProperty("--node-y", Math.round(y + line / 2 - 4.5) + "px");
+    });
+  }
+  placeNodes();
+  window.addEventListener("resize", placeNodes);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(placeNodes);
 
   // ---- waitlist pop-up on every Buy button ----
   // Paste the Google Apps Script web app URL here. If it is ever emptied, Buy buttons fall back to opening LinkedIn.
