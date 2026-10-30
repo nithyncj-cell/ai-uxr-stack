@@ -139,7 +139,7 @@ A final editing pass that strips AI-writing tells from anything you're about to 
 - **What it needs from you:** Any draft text. Output skills in the stack also call it automatically.
 - **Folder:** `stop-ai-slop`
 
-## Career
+## Career pack
 
 *“The work was strong. The portfolio isn't.”*
 
