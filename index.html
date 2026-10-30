@@ -147,7 +147,7 @@
   .layer.lit { border-color: var(--c); box-shadow: 0 0 0 1px var(--c), 0 0 64px color-mix(in srgb, var(--c) 55%, transparent); }
   .layer .ln { font: 600 calc(var(--w) * .04)/1 var(--sans); letter-spacing: -0.04em; color: var(--gray-1000); }
   .layer .lc { display: flex; gap: calc(var(--w) * .008); }
-  .layer .lc img { width: calc(var(--w) * .085); height: calc(var(--w) * .085); }
+  .layer .lc img { width: calc(var(--w) * .13); height: calc(var(--w) * .13); }
 
   /* why it works: four short points, no boxes */
   .points { display: grid; gap: var(--s8) var(--s12); margin-top: var(--s12); }
@@ -185,25 +185,33 @@
     display: grid; place-items: center; font: 500 12px/1 var(--mono); color: var(--gray-1000); }
   .steps b { color: var(--gray-1000); font-weight: 500; }
 
-  /* skills: pack name on the left, skill rows on the right (F pattern) */
-  .packs { margin-top: var(--s12); display: grid; gap: var(--s12); }
-  .pack { display: grid; gap: var(--s4); }
-  @media (min-width: 900px) { .pack { grid-template-columns: 280px 1fr; gap: var(--s12); } }
-  .pack-h p { margin-top: var(--s1); }
-  .pack-buy { display: flex; align-items: baseline; gap: var(--s2); margin-top: var(--s4); }
+  /* skills: pack cards, two per row; each expands in place */
+  .packs { margin-top: var(--s12); display: grid; gap: var(--s6); align-items: stretch; }
+  @media (min-width: 900px) { .packs { grid-template-columns: 1fr 1fr; } }
+  .pack { border: 1px solid var(--border-strong); border-radius: var(--r-lg); padding: var(--s8); display: flex; flex-direction: column; gap: var(--s6); }
+  .pack-foot { margin-top: auto; }
+  .pack-top { display: grid; grid-template-columns: 1fr 96px; gap: var(--s4); align-items: start; }
+  .pack-top p { margin-top: var(--s1); }
+  .pack-icon { width: 96px; height: 96px; will-change: transform; }
+  .sk { list-style: none; margin: 0; padding: 0; }
+  .sk > li { display: grid; grid-template-columns: 12px 1fr auto; gap: var(--s3); align-items: start; padding-block: var(--s3); }
+  .sk > li + li { border-top: 1px solid var(--border); }
+  .sk > li:first-child { padding-top: 0; }
+  .sk > li:last-child { padding-bottom: 0; }
+  .blob { width: 12px; height: 12px; margin-top: 6px; border-radius: 60% 40% 55% 45% / 50% 60% 40% 50%;
+    background: radial-gradient(circle at 35% 30%, color-mix(in srgb, var(--c) 40%, #fff), var(--c) 70%); }
+  .sk .sp { font: 500 14px/24px var(--mono); white-space: nowrap; text-align: right; }
+  .sk .sp s { color: var(--gray-700); margin-right: var(--s2); }
+  .sk-desc { display: none; }
+  .pack.open .sk-desc { display: block; margin-top: var(--s1); }
+  .pack-foot { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--s3); }
+  .pack-buy { display: flex; align-items: baseline; gap: var(--s2); }
   .pack-buy .pp { font: 500 20px/28px var(--mono); }
-  .pack-h .btn { margin-top: var(--s3); }
-  @media (min-width: 900px) { .pack-h { position: sticky; top: calc(var(--header-h) + var(--s6)); align-self: start; } }
-  .rows { list-style: none; margin: 0; padding: 0; }
-  .rows > li + li { border-top: 1px solid var(--border); }
-  .row { display: grid; grid-template-columns: 48px 1fr auto; gap: var(--s4); align-items: start; padding-block: var(--s4); }
-  .rows > li:first-child .row { padding-top: 0; }
-  .rows > li:last-child .row { padding-bottom: 0; }
-  .row .icon { width: 48px; height: 48px; will-change: transform; }
-  .row h4 { padding-top: 2px; }
-  .row p { margin-top: var(--s1); }
-  .row .sp { font: 500 14px/24px var(--mono); padding-top: 2px; text-align: right; white-space: nowrap; }
-  .row .sp s { color: var(--gray-700); margin-right: var(--s2); }
+  .pack-actions { display: flex; flex-wrap: wrap; gap: var(--s2); }
+  .toggle { display: inline-flex; align-items: center; gap: var(--s1); }
+  .toggle::after { content: ""; width: 12px; height: 12px; transition: transform .2s ease;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' fill='none' stroke='%23ededed' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 4.5l3 3 3-3'/%3E%3C/svg%3E") center/12px no-repeat; }
+  .pack.open .toggle::after { transform: rotate(180deg); }
   .more { margin-top: var(--s2); }
   .more summary { display: inline-flex; align-items: center; gap: var(--s1); list-style: none; cursor: pointer; font-size: 14px; line-height: 20px; color: var(--gray-900); }
   .more summary::-webkit-details-marker { display: none; }
@@ -212,7 +220,6 @@
   .more[open] summary::after { transform: rotate(180deg); }
   .more summary:hover { color: var(--gray-1000); }
   .more ul { margin: var(--s2) 0 0; padding-left: var(--s4); display: grid; gap: var(--s1); color: var(--gray-900); font-size: 14px; line-height: 20px; }
-  .row.flash { animation: flash 1.2s ease; }
   @keyframes flash { 0%, 40% { box-shadow: inset 2px 0 0 var(--brand); } 100% { box-shadow: inset 2px 0 0 transparent; } }
 
   /* pricing: one highlighted card, plain list beside it */
@@ -352,7 +359,7 @@
       <div class="offer">
         <div>
           <div class="offer-h">
-            <img src="assets/icons/hd/transcript-collator.webp" alt="" width="64" height="64">
+            <img src="assets/icons/hd/pack-collate.webp" alt="" width="64" height="64">
             <h3 class="h-24">UXR Transcript Collator</h3>
           </div>
           <div class="price-line"><span class="now">Free</span><span class="was" data-price="single"></span></div>
@@ -667,26 +674,42 @@
   const icon = (id, size) => `assets/icons/${size === "hd" ? "hd/" : ""}${id}.webp`;
   const GENERIC = /^(Knows all 12|Reads your files|Guards its own)/;
 
-  // ---- skills, grouped by pack ----
+  // ---- skills: one card per pack; the pack gets the 3D icon, its skills get a small blob ----
+  const packIcon = (key) => `assets/icons/hd/pack-${key}.webp`;
   document.getElementById("packlist").innerHTML = PACKS.map((p) => `
-    <div class="pack" id="pack-${p.key}">
-      <div class="pack-h"><h3 class="h-24">${p.name}</h3><p class="muted">${p.pain}</p>
-        <div class="pack-buy"><span class="pp" data-price="pack" data-pack="${p.key}"></span>${p.single ? "" : `<s class="was" data-price="pack-list" data-pack="${p.key}"></s>`}</div>
-        <a class="btn sm" href="${LINKEDIN}" target="_blank" rel="noopener" data-buy="${p.name}">Buy pack · coming soon</a></div>
-      <ul class="rows">${p.skills.map((s) => `
-        <li><div class="row" id="skill-${s.id}">
-          <img class="icon" src="${icon(s.id, "hd")}" alt="" width="48" height="48" loading="lazy" decoding="async">
+    <article class="pack" id="pack-${p.key}" style="--c:${p.c}">
+      <div class="pack-top">
+        <div><h3 class="h-24">${p.name}</h3><p class="muted">${p.pain}</p></div>
+        <img class="pack-icon" src="${packIcon(p.key)}" alt="" width="96" height="96" loading="lazy" decoding="async">
+      </div>
+      <ul class="sk">${p.skills.map((s) => `
+        <li id="skill-${s.id}"><span class="blob" aria-hidden="true"></span>
           <div>
             <h4 class="h-16">${s.name}</h4>
-            <p class="copy-14 muted">${s.more}</p>
-            <details class="more"><summary>How it's built</summary>
-              <ul>${s.hood.filter((h) => !GENERIC.test(h)).slice(0, 3).map((h) => `<li>${h}</li>`).join("")}<li>${s.stat}.</li></ul>
-            </details>
+            <div class="sk-desc">
+              <p class="copy-14 muted">${s.more}</p>
+              <details class="more"><summary>How it's built</summary>
+                <ul>${s.hood.filter((h) => !GENERIC.test(h)).slice(0, 3).map((h) => `<li>${h}</li>`).join("")}<li>${s.stat}.</li></ul>
+              </details>
+            </div>
           </div>
           <div class="sp">${s.free && freeActive ? `<s data-price="single"></s><a class="link" href="#free">Free</a>` : `<span data-price="single"></span>`}</div>
-        </div></li>`).join("")}
+        </li>`).join("")}
       </ul>
-    </div>`).join("");
+      <div class="pack-foot">
+        <div class="pack-buy"><span class="pp" data-price="pack" data-pack="${p.key}"></span>${p.single ? "" : `<s class="was" data-price="pack-list" data-pack="${p.key}"></s>`}</div>
+        <div class="pack-actions">
+          <button class="btn sm toggle" type="button" aria-expanded="false" aria-controls="pack-${p.key}">Show details</button>
+          <a class="btn sm brand" href="${LINKEDIN}" target="_blank" rel="noopener" data-buy="${p.name}">Buy pack · coming soon</a>
+        </div>
+      </div>
+    </article>`).join("");
+  document.querySelectorAll(".pack .toggle").forEach((b) => b.addEventListener("click", () => {
+    const card = b.closest(".pack");
+    const open = card.classList.toggle("open");
+    b.setAttribute("aria-expanded", String(open));
+    b.textContent = open ? "Hide details" : "Show details";
+  }));
 
   // ---- pack price list ----
   document.getElementById("plist").innerHTML = PACKS.map((p) => `
@@ -764,7 +787,7 @@
       el.style.setProperty("--k", String(i * 0.13));
       el.style.setProperty("--c", p.c);
       el.title = p.name;
-      el.innerHTML = `<div class="ln">${p.short}</div><div class="lc">${p.skills.map((s) => `<img src="${icon(s.id, "hd")}" alt="" width="44" height="44">`).join("")}</div>`;
+      el.innerHTML = `<div class="ln">${p.short}</div><div class="lc"><img src="${packIcon(p.key)}" alt="" width="64" height="64"></div>`;
       el.addEventListener("click", () => document.getElementById("pack-" + p.key).scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" }));
       iso.appendChild(el);
       return el;
@@ -786,9 +809,9 @@
   function initMotion() {
     const G = window.gsap;
     if (!G || reduceMotion) return;
-    document.querySelectorAll(".row").forEach((row) => {
-      const img = row.querySelector(".icon");
-      row.addEventListener("pointerenter", () => G.to(img, { y: -4, rotation: -6, scale: 1.12, duration: 0.35, ease: "back.out(2)" }));
+    document.querySelectorAll(".pack").forEach((row) => {
+      const img = row.querySelector(".pack-icon");
+      row.addEventListener("pointerenter", () => G.to(img, { y: -6, rotation: -8, scale: 1.1, duration: 0.4, ease: "back.out(2.5)" }));
       row.addEventListener("pointerleave", () => G.to(img, { y: 0, rotation: 0, scale: 1, duration: 0.4, ease: "power3.out" }));
     });
     if (window.ScrollTrigger) {
