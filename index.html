@@ -70,6 +70,7 @@
   .ic { --c: var(--blue); --s: 44px; flex: none; width: var(--s); height: var(--s); border-radius: 28%; display: grid; place-items: center; color: #fff;
     background: linear-gradient(150deg, color-mix(in srgb, var(--c) 88%, #fff), color-mix(in srgb, var(--c) 58%, #000));
     box-shadow: inset 0 1px 0 rgba(255,255,255,.35), inset 0 -1px 0 rgba(0,0,0,.25), 0 10px 24px -12px var(--c); }
+  .ic img { width: 84%; height: 84%; object-fit: contain; filter: drop-shadow(0 3px 4px rgba(0,0,0,.35)); }
   .ic svg { width: 56%; height: 56%; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
 
   /* top bar */
@@ -477,6 +478,7 @@
             <div class="lt">
               <p>Claude is a product of Anthropic. Figma, FigJam and Miro are trademarks of their owners. The AI UXR Stack is independent and is not affiliated with, sponsored by or endorsed by Anthropic or any other company named on this website.</p>
               <p>Question Zero builds on James Chudley's knowledge-mapping workshop and importance and confidence matrix. The thanks to The Goal by Eliyahu M. Goldratt and to Constantine Papas, PhD, are personal acknowledgements and do not mean they endorse these skills.</p>
+              <p>The skill icons are 3D renders from <a href="https://huggingface.co/datasets/nvidia/simready-assets" target="_blank" rel="noopener">NVIDIA SimReady Assets</a>, used under the <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a> licence. They were cropped and resized for this website. NVIDIA does not endorse the AI UXR Stack.</p>
             </div>
           </details>
           <details id="legal-contact">
@@ -496,7 +498,7 @@
         <h2>More skills coming.</h2>
         <a class="btn primary" href="https://www.linkedin.com/in/nithyn/" target="_blank" rel="noopener" data-follow>Follow on LinkedIn</a>
       </div>
-      <p class="credits">Thanks to The Goal by Eliyahu M. Goldratt and to Constantine Papas, PhD.</p>
+      <p class="credits">Thanks to The Goal by Eliyahu M. Goldratt and to Constantine Papas, PhD. Skill icons: <a href="https://huggingface.co/datasets/nvidia/simready-assets" target="_blank" rel="noopener">NVIDIA SimReady Assets</a>, CC BY 4.0.</p>
       <nav class="flinks" aria-label="Legal">
         <a href="#legal-licence" data-legal>Licence</a><a href="#legal-site" data-legal>Website terms</a><a href="#legal-refunds" data-legal>Refunds</a><a href="#legal-privacy" data-legal>Privacy</a><a href="#legal-contact" data-legal>Contact</a>
       </nav>
@@ -541,7 +543,13 @@
     pen: '<path d="M4 20l4.5-1 10-10a2.1 2.1 0 0 0-3-3l-10 10z"/><path d="M14 7l3 3"/>',
     folder: '<path d="M3.5 7a1.5 1.5 0 0 1 1.5-1.5h4l2 2h8a1.5 1.5 0 0 1 1.5 1.5v8.5A1.5 1.5 0 0 1 19 19H5a1.5 1.5 0 0 1-1.5-1.5z"/><path d="M12 10.5l1 2 2.2.3-1.6 1.5.4 2.2-2-1-2 1 .4-2.2-1.6-1.5 2.2-.3z"/>',
   };
-  const tile = (name, c) => `<span class="ic" style="--c:${c}" aria-hidden="true"><svg viewBox="0 0 24 24">${IC[name]}</svg></span>`;
+  // Skill icons: 3D renders from NVIDIA SimReady Assets (CC BY 4.0), cropped and resized. Pack icons stay as line glyphs.
+  const IMG = { question: "question-zero", funnel: "diagnostic-partner", clipboard: "research-plan-creator", chat: "transcript-collator",
+    bulb: "collated-synth", sort: "collation-sorter", trend: "quant-analyst", report: "report-builder",
+    phone: "research-driven-prototype", people: "stakeholder-panel", pen: "stop-ai-slop", folder: "case-study-builder" };
+  const tile = (name, c) => IMG[name]
+    ? `<span class="ic" style="--c:${c}" aria-hidden="true"><img src="assets/icons/${IMG[name]}.webp" alt="" width="88" height="88" loading="lazy" decoding="async"></span>`
+    : `<span class="ic" style="--c:${c}" aria-hidden="true"><svg viewBox="0 0 24 24">${IC[name]}</svg></span>`;
 
   // ---- packs, each named for the problem it solves ----
   // Each skill: short "more" line, SPIN copy (situation, problem, implication, need-payoff), and "hood": how it's built.
