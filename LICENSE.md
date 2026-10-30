@@ -4,13 +4,13 @@
 
 ## This repository
 
-This repository is a public listing for the AI UXR Stack. Its text, images and design are Nithyn's work. You may read it, link to it and share the link. You may not copy, republish or adapt its contents without written permission.
+This repository is the public listing and website for the AI UXR Stack. Its text, images, website code and design are Nithyn's work. You may read it, link to it and share the link. You may not copy, republish or adapt its contents without written permission.
 
 This repository is **not** open source. No open-source licence applies to it or to the skills it describes.
 
 ## The skills
 
-The twelve skills are not in this repository. They are licensed, not sold, under the **Skill Licence Terms** published on the [website](https://claude.ai/artifact/2EdHDS4i5F6DBt9CKNfajS#legal-licence). Those terms apply when you download, install or use a skill. In short:
+The paid skills are not in this repository. The free Transcript Collator file sits on the `gh-pages` branch only so the website can serve its download. All twelve skills are licensed, not sold, under the **Skill Licence Terms** published on the [website](https://nithyncj-cell.github.io/ai-uxr-stack/#legal-licence). Those terms apply when you download, install or use a skill. In short:
 
 - You may run a skill on your own work, or your employer's or client's work.
 - Your outputs (notesheets, reports, prototypes and the rest) belong to you or your employer.

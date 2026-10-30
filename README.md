@@ -3,7 +3,7 @@
 </p>
 
 <p align="center">
-  <a href="https://claude.ai/artifact/2EdHDS4i5F6DBt9CKNfajS"><b>Website</b></a> ·
+  <a href="https://nithyncj-cell.github.io/ai-uxr-stack/"><b>Website</b></a> ·
   <a href="docs/skills.md"><b>The 12 skills</b></a> ·
   <a href="docs/install.md"><b>Install</b></a> ·
   <a href="https://www.linkedin.com/in/nithyn/"><b>Follow on LinkedIn</b></a>
@@ -21,11 +21,11 @@ Twelve Claude skills for UX research, in five packs. Built by Nithyn.
 
 Each skill takes one slow part of the research cycle and does it the way a senior researcher would: scoping a study, planning it, collating transcripts, reading them for contradictions, running the numbers, building the report, turning findings into a prototype, pressure-testing the work before it goes out, and writing it up as a portfolio case study. They run inside Claude (claude.ai, the desktop app and Claude Code), and each one hands its output to the next.
 
-> **This repo is the public listing for the stack.** It doesn't contain the skill files. Skills are downloaded from the [website](https://claude.ai/artifact/2EdHDS4i5F6DBt9CKNfajS) under the Skill Licence Terms.
+> **This repo is the public listing for the stack.** It doesn't contain the paid skill files. The website is served from the `gh-pages` branch, and skills are downloaded from the [website](https://nithyncj-cell.github.io/ai-uxr-stack/) under the Skill Licence Terms.
 
 ## Free until 11 December 2026: Transcript Collator
 
-The Transcript Collator turns raw interview transcripts into one theme-tagged notesheet, with a verbatim quote and timestamp on every row. It's free to download from the [website](https://claude.ai/artifact/2EdHDS4i5F6DBt9CKNfajS#free) until 11:59 pm on 11 December 2026, India time. Follow on LinkedIn, tick the licence box, and download the zip.
+The Transcript Collator turns raw interview transcripts into one theme-tagged notesheet, with a verbatim quote and timestamp on every row. It's free to download from the [website](https://nithyncj-cell.github.io/ai-uxr-stack/#free) until 11:59 pm on 11 December 2026, India time. Follow on LinkedIn, tick the licence box, and download the zip.
 
 ## The five packs
 
@@ -102,7 +102,7 @@ Claude Code, updating and troubleshooting: [docs/install.md](docs/install.md).
 
 ## Questions
 
-**Is this open source?** No. The skills are paid, proprietary work. This repo is a listing only. See [LICENSE.md](LICENSE.md).
+**Is this open source?** No. The skills are paid, proprietary work. This repo holds the listing and the website only. See [LICENSE.md](LICENSE.md).
 
 **Can I read a skill's instructions before I buy?** The website and [docs/skills.md](docs/skills.md) describe what each skill does and what it needs. The instructions themselves stay private.
 

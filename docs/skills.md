@@ -156,4 +156,4 @@ Turns project documents into portfolio case studies built the way hiring manager
 
 ---
 
-Prices and downloads are on the [website](https://claude.ai/artifact/2EdHDS4i5F6DBt9CKNfajS). Install steps are in [install.md](install.md).
+Prices and downloads are on the [website](https://nithyncj-cell.github.io/ai-uxr-stack/). Install steps are in [install.md](install.md).

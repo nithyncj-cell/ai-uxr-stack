@@ -4,7 +4,7 @@ Each skill comes as one `.zip` file holding a folder with a `SKILL.md` inside. P
 
 ## Claude (claude.ai and the desktop app)
 
-1. Download the skill's zip from the [website](https://claude.ai/artifact/2EdHDS4i5F6DBt9CKNfajS). Leave it zipped.
+1. Download the skill's zip from the [website](https://nithyncj-cell.github.io/ai-uxr-stack/). Leave it zipped.
 2. In Claude, open **Customize → Skills**.
 3. Choose **+ → Create skill → Upload a skill**, and pick the zip.
 4. Make sure the skill is switched on.
