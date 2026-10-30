@@ -49,6 +49,7 @@
     --mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   }
   * { box-sizing: border-box; }
+  [hidden] { display: none !important; }
   html { -webkit-text-size-adjust: 100%; }
   body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--text); font-size: 17px; line-height: 1.5;
     font-optical-sizing: auto; -webkit-font-smoothing: antialiased; }
@@ -357,6 +358,7 @@
                 <li><span>Keeps the verbatim quote and timestamp on every row, Hinglish included.</span></li>
                 <li><span>Writes <span class="missing">missing</span> when a quote isn't there.</span></li>
               </ul>
+              <div id="collator-more"></div>
               <label class="agree"><input type="checkbox" id="agree"> <span>I agree to the <a href="#legal-licence" data-legal>Skill Licence Terms</a>.</span></label>
               <div class="dl">
                 <button class="btn primary" type="button" data-skill="collator" data-kind="zip">
@@ -672,6 +674,11 @@
     iso.appendChild(layer);
   });
   document.getElementById("collator-icon").outerHTML = tile("chat", "var(--purple)");
+  {
+    const c = PACKS.flatMap((p) => p.skills).find((s) => s.id === "transcript-collator");
+    document.getElementById("collator-more").outerHTML =
+      `<details class="more" style="--c:var(--purple);margin-top:18px"><summary>Know more</summary><p>${c.more}</p><p class="kstat">${c.stat}</p><a href="#about-${c.id}" data-about>Why it's hard to copy ↓</a></details>`;
+  }
 
   // ---- pack carousel ----
   const track = document.getElementById("track");
