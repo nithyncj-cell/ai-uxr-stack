@@ -282,6 +282,8 @@
   .modal > form > p, .modal #wl-done > p { margin-top: var(--s2); }
   .field { display: grid; gap: var(--s2); margin-top: var(--s5); font-size: 14px; line-height: 20px; }
   .field span { font-weight: 500; }
+  .field .opt { font-weight: 400; color: var(--gray-700); }
+  .field input[name="code"] { font-family: var(--mono); text-transform: uppercase; letter-spacing: .04em; }
   .field input, .field textarea { width: 100%; font: 400 16px/24px var(--sans); color: var(--gray-1000); background: transparent;
     border: 1px solid var(--border-strong); border-radius: var(--r-sm); padding: var(--s2) var(--s3); resize: vertical; }
   .field input:focus, .field textarea:focus { outline: none; border-color: var(--brand); box-shadow: 0 0 0 3px rgba(10,114,239,.25); }
@@ -330,7 +332,7 @@
         <a class="btn brand lg" href="#free" data-free-only>Get the Collator free</a>
         <a class="btn lg" href="#pricing">See pricing for all skills</a>
       </div>
-      <p class="soon copy-14 muted">Free until 11 December. One of 12 skills in the AI UXR Stack; paid packs are coming soon.</p>
+      <p class="soon copy-14 muted">Free until 24 November. One of 12 skills in the AI UXR Stack; paid packs are coming soon.</p>
     </div>
     <figure class="stackfig"><div class="stackviz" role="img" aria-label="Five stacked cards, one per pack: Scope, Collate, Analyse, Influence and Career."><div class="iso" id="iso"></div></div></figure>
   </div>
@@ -353,7 +355,7 @@
   <section id="free" aria-labelledby="free-title" data-free-only>
     <div class="wrap">
       <div class="sh">
-        <h2 class="h-40" id="free-title">Get the Collator. Free until 11 December.</h2>
+        <h2 class="h-40" id="free-title">Get the Collator. Free until 24 November.</h2>
         <p class="copy-18 muted">Download it, add it to Claude, and collate your next study today.</p>
       </div>
       <div class="offer">
@@ -449,7 +451,7 @@
               <p><b>7. AI output.</b> A skill guides an AI model; it does not control or guarantee what the model produces. Check the output before you rely on it or share it.</p>
               <p><b>8. No warranty.</b> To the extent the law allows, skills are provided as they are, without any warranty that they will be error-free or suit a particular purpose.</p>
               <p><b>9. Limit of liability.</b> To the extent the law allows, Nithyn is not liable for indirect or consequential loss, lost profits or lost data. Nithyn's total liability for any claim about a skill is limited to the amount you paid for that skill. For a free download, that amount is zero. Nothing in these terms limits liability that cannot be limited by law.</p>
-              <p><b>10. Free launch.</b> The UXR Transcript Collator is free to download until 11:59 pm on 11 December 2026, India time. Copies downloaded free during that period stay licensed to you under these terms after that date.</p>
+              <p><b>10. Free launch.</b> The UXR Transcript Collator is free to download until 11:59 pm on 24 November 2026, India time. Copies downloaded free during that period stay licensed to you under these terms after that date.</p>
               <p><b>11. Updates.</b> Nithyn may update, replace or retire any skill. Any update you receive is covered by these terms.</p>
               <p><b>12. Ending the licence.</b> Your licence ends automatically if you break these terms. When it ends, you must delete every copy of the skill you hold.</p>
               <p><b>13. Changes to these terms.</b> Nithyn may change these terms. The version shown on this page on the day you download a skill applies to that download.</p>
@@ -475,7 +477,7 @@
           <details id="legal-privacy">
             <summary>Privacy</summary>
             <div class="lt">
-              <p><b>Waitlist.</b> If you click a Buy button, a short form asks for your email address and, if you choose to answer, three questions about your research work. Nithyn uses them only to email you when paid skills open and to decide what to build next. They are stored in a Google Sheet that only Nithyn can open, so Google's privacy policy covers that storage. They are not sold or shared. To see, correct or delete your answers, message Nithyn on LinkedIn or write to the email under Contact and Grievances.</p>
+              <p><b>Waitlist.</b> If you click a Buy button, a short form asks for your email address and, if you choose to answer, three questions about your research work and a discount code. Nithyn uses them only to email you when paid skills open and to decide what to build next. They are stored in a Google Sheet that only Nithyn can open, so Google's privacy policy covers that storage. They are not sold or shared. To see, correct or delete your answers, message Nithyn on LinkedIn or write to the email under Contact and Grievances.</p>
               <p>The website never asks for payment details. It saves two settings in your own browser: your price region, and whether you clicked Follow. They never leave your device, and you can clear them in your browser settings.</p>
               <p>The website is hosted on GitHub Pages, and GitHub's privacy statement covers hosting and access logs. Fonts load from Google Fonts, and the zip and animation scripts load from cdnjs, so those services receive your IP address. When you click a LinkedIn link, LinkedIn's privacy policy applies. Downloads are built in your own browser, and Nithyn does not receive a list of who downloaded a skill.</p>
             </div>
@@ -509,6 +511,7 @@
     <label class="field"><span>What slows you down most in your research right now?</span><textarea name="pain" rows="2" maxlength="2000"></textarea></label>
     <label class="field"><span>Is there anything you'd change or add in these skills?</span><textarea name="changes" rows="2" maxlength="2000"></textarea></label>
     <label class="field"><span>Which manual research task would you hand off first?</span><textarea name="automate" rows="2" maxlength="2000"></textarea></label>
+    <label class="field"><span>Discount code <span class="opt">(optional)</span></span><input type="text" name="code" autocomplete="off" autocapitalize="characters" spellcheck="false" maxlength="40" placeholder="If you have one"></label>
     <input class="hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
     <label class="agree"><input type="checkbox" name="consent" required> <span>Email me when it opens. I've read the <a class="link" href="#legal-privacy" data-legal data-close>privacy note</a>.</span></label>
     <p class="status" id="wl-status" role="status" aria-live="polite"></p>
@@ -543,8 +546,8 @@
 <script>
 (() => {
   const LINKEDIN = "https://www.linkedin.com/in/nithyn/";
-  // The Collator stays free through 11 Dec 2026 (India time), then shows its price like every other skill.
-  const FREE_UNTIL = new Date("2026-12-11T23:59:59+05:30");
+  // The Collator stays free through 24 Nov 2026 (India time), then shows its price like every other skill.
+  const FREE_UNTIL = new Date("2026-11-24T23:59:59+05:30");
   const freeActive = Date.now() <= FREE_UNTIL.getTime();
 
   // ---- prices: edit here ----
@@ -866,7 +869,7 @@
     if (!f.consent.checked) { wlStatus.textContent = "Tick the box so Nithyn can email you."; wlStatus.className = "status warn"; return; }
     const btn = f.querySelector('button[type="submit"]');
     btn.disabled = true; wlStatus.textContent = "Sending…"; wlStatus.className = "status";
-    const data = { email, item: wlItem, pain: f.pain.value.trim(), changes: f.changes.value.trim(), automate: f.automate.value.trim(),
+    const data = { email, item: wlItem, pain: f.pain.value.trim(), changes: f.changes.value.trim(), automate: f.automate.value.trim(), code: f.code.value.trim().toUpperCase(),
       region, consent: true, website: f.website.value };
     try {
       // text/plain keeps this a simple request, which Google Apps Script accepts from any site.
