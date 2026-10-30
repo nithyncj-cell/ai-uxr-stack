@@ -122,15 +122,20 @@
   .proof li { display: flex; align-items: center; gap: var(--s2); }
   .proof li::before { content: ""; width: 16px; height: 16px; flex: none;
     background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%23a1a1a1' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3.5 8.5l3 3 6-7'/%3E%3C/svg%3E") center/16px no-repeat; }
-  .stage { position: relative; height: 380px; }
-  @media (min-width: 960px) { .stage { height: 460px; } }
-  .stage canvas { position: absolute; inset: 0; width: 100% !important; height: 100% !important; }
-  .stage .tip { position: absolute; z-index: 2; pointer-events: none; transform: translate(-50%, calc(-100% - 8px));
-    padding: var(--s1) var(--s2); border-radius: var(--r-sm); border: 1px solid var(--border-strong); background: var(--bg);
-    font: 500 13px/16px var(--sans); white-space: nowrap; opacity: 0; transition: opacity .15s ease; }
-  .stage .tip.on { opacity: 1; }
-  .stage-fallback { position: absolute; inset: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--s4); align-content: center; }
-  .stage-fallback img { width: 100%; height: auto; }
+  /* hero: the five packs as a stack of cards, neutral, lit one at a time in the brand colour */
+  .stackfig { margin: 0; }
+  .stackviz { --w: min(520px, 88vw); position: relative; width: var(--w); height: calc(var(--w) * 0.9); margin-inline: auto; }
+  .iso { position: absolute; left: 50%; top: 68%; transform-style: preserve-3d; transform: rotateX(58deg) rotateZ(-42deg); }
+  .layer { --lift: 0px; --drop: 0px; position: absolute; width: calc(var(--w) * .62); height: calc(var(--w) * .34);
+    left: calc(var(--w) * -.31); top: calc(var(--w) * -.17); border-radius: var(--r-lg);
+    transform: translateZ(calc(var(--w) * var(--k) + var(--lift) + var(--drop)));
+    background: var(--bg); border: 1px solid var(--border-strong); box-shadow: 0 16px 40px rgba(0,0,0,.45);
+    padding: calc(var(--w) * .026) calc(var(--w) * .032); display: flex; align-items: flex-end; justify-content: space-between;
+    gap: calc(var(--w) * .02); cursor: pointer; transition: border-color .4s ease, box-shadow .4s ease; }
+  .layer.lit { border-color: var(--brand); box-shadow: 0 0 0 1px var(--brand), 0 16px 48px rgba(10,114,239,.35); }
+  .layer .ln { font: 600 calc(var(--w) * .04)/1 var(--sans); letter-spacing: -0.04em; color: var(--gray-1000); }
+  .layer .lc { display: flex; gap: calc(var(--w) * .008); }
+  .layer .lc img { width: calc(var(--w) * .085); height: calc(var(--w) * .085); }
 
   /* why it works: four short points, no boxes */
   .points { display: grid; gap: var(--s8) var(--s12); margin-top: var(--s12); }
@@ -283,7 +288,7 @@
         <li>Built by a UX researcher</li>
       </ul>
     </div>
-    <div class="stage" id="stage" aria-hidden="true"><div class="tip" id="tip"></div></div>
+    <figure class="stackfig"><div class="stackviz" role="img" aria-label="Five stacked cards, one per pack: Scope, Collate, Analyse, Influence and Career."><div class="iso" id="iso"></div></div></figure>
   </div>
 
   <section id="why" aria-labelledby="why-title">
@@ -428,7 +433,7 @@
             <summary>Privacy</summary>
             <div class="lt">
               <p>This website does not ask for your name, email address or payment details. It saves two settings in your own browser: your price region, and whether you clicked Follow. They never leave your device, and you can clear them in your browser settings.</p>
-              <p>The website is hosted on GitHub Pages, and GitHub's privacy statement covers hosting and access logs. Fonts load from Google Fonts, and the zip, 3D and animation scripts load from cdnjs, so those services receive your IP address. When you click a LinkedIn link, LinkedIn's privacy policy applies. Downloads are built in your own browser, and Nithyn does not receive a list of who downloaded a skill.</p>
+              <p>The website is hosted on GitHub Pages, and GitHub's privacy statement covers hosting and access logs. Fonts load from Google Fonts, and the zip and animation scripts load from cdnjs, so those services receive your IP address. When you click a LinkedIn link, LinkedIn's privacy policy applies. Downloads are built in your own browser, and Nithyn does not receive a list of who downloaded a skill.</p>
             </div>
           </details>
           <details id="legal-marks">
@@ -466,7 +471,6 @@
 </footer>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
 <script>
@@ -688,115 +692,30 @@
 
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  // ---- 3D hero: the twelve skill objects float in a scene that follows the pointer ----
-  function heroFallback(stage) {
-    const g = document.createElement("div");
-    g.className = "stage-fallback";
-    g.innerHTML = ALL.map((s) => `<img src="${icon(s.id, "hd")}" alt="" width="160" height="160">`).join("");
-    stage.appendChild(g);
-  }
-  function initHero() {
-    const stage = document.getElementById("stage");
-    const tip = document.getElementById("tip");
-    let gl = false;
-    try { const c = document.createElement("canvas"); gl = !!(c.getContext("webgl") || c.getContext("experimental-webgl")); } catch (e) {}
-    if (!window.THREE || !gl) { heroFallback(stage); return; }
-    const T = window.THREE;
-    const renderer = new T.WebGLRenderer({ antialias: true, alpha: true, powerPreference: "low-power" });
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
-    renderer.outputEncoding = T.sRGBEncoding;
-    stage.appendChild(renderer.domElement);
-    const scene = new T.Scene();
-    const camera = new T.PerspectiveCamera(32, 1, 0.1, 100);
-    camera.position.set(0, 0, 13);
-    const group = new T.Group();
-    scene.add(group);
-    const loader = new T.TextureLoader();
-    const cols = 4, gapX = 2.25, gapY = 2.15;
-    const items = ALL.map((s, i) => {
-      const tex = loader.load(icon(s.id, "hd"));
-      tex.encoding = T.sRGBEncoding;
-      tex.anisotropy = renderer.capabilities.getMaxAnisotropy();
-      const mat = new T.MeshBasicMaterial({ map: tex, transparent: true, depthWrite: false, opacity: 1 });
-      const mesh = new T.Mesh(new T.PlaneGeometry(1.8, 1.8), mat);
-      const col = i % cols, row = Math.floor(i / cols);
-      const base = { x: (col - (cols - 1) / 2) * gapX + (row % 2 ? 0.4 : -0.2), y: (1 - row) * gapY, z: Math.sin(i * 2.3) * 0.9 };
-      mesh.position.set(base.x, base.y, base.z);
-      mesh.userData = { id: s.id, name: s.name, base, phase: i * 0.7 };
-      group.add(mesh);
-      return mesh;
+  // ---- hero stack: one card per pack, lit bottom to top; hover lifts a card, click opens that pack ----
+  function initStack() {
+    const iso = document.getElementById("iso");
+    const layers = PACKS.map((p, i) => {
+      const el = document.createElement("div");
+      el.className = "layer";
+      el.style.setProperty("--k", String(i * 0.13));
+      el.title = p.name;
+      el.innerHTML = `<div class="ln">${p.short}</div><div class="lc">${p.skills.map((s) => `<img src="${icon(s.id, "hd")}" alt="" width="44" height="44">`).join("")}</div>`;
+      el.addEventListener("click", () => document.getElementById("pack-" + p.key).scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" }));
+      iso.appendChild(el);
+      return el;
     });
-
-    function size() {
-      const w = stage.clientWidth, h = stage.clientHeight;
-      renderer.setSize(w, h, false);
-      camera.aspect = w / h;
-      camera.position.z = w < 520 ? 18 : 13;
-      camera.updateProjectionMatrix();
-    }
-    size();
-    new ResizeObserver(size).observe(stage);
-
-    const ray = new T.Raycaster();
-    const ptr = new T.Vector2(9, 9);
-    const look = { x: 0, y: 0 };
-    let hovered = null;
-    stage.addEventListener("pointermove", (e) => {
-      const r = stage.getBoundingClientRect();
-      ptr.x = ((e.clientX - r.left) / r.width) * 2 - 1;
-      ptr.y = -((e.clientY - r.top) / r.height) * 2 + 1;
-      look.x = ptr.x; look.y = ptr.y;
-    });
-    stage.addEventListener("pointerleave", () => { ptr.set(9, 9); look.x = 0; look.y = 0; });
-    stage.addEventListener("click", () => { if (hovered) goToSkill(hovered.userData.id); });
-
     const G = window.gsap;
-    function setHover(m) {
-      if (m === hovered) return;
-      if (hovered && G) G.to(hovered.scale, { x: 1, y: 1, duration: 0.4, ease: "power3.out" });
-      hovered = m;
-      stage.style.cursor = m ? "pointer" : "";
-      if (m) {
-        if (G) G.to(m.scale, { x: 1.22, y: 1.22, duration: 0.4, ease: "back.out(2)" });
-        tip.textContent = m.userData.name;
-        tip.classList.add("on");
-      } else tip.classList.remove("on");
-    }
-
-    if (G && !reduceMotion) {
-      items.forEach((m, i) => {
-        G.from(m.position, { z: -8, duration: 1.4, delay: 0.15 + i * 0.05, ease: "expo.out" });
-        G.from(m.material, { opacity: 0, duration: 0.9, delay: 0.15 + i * 0.05, ease: "power2.out" });
-      });
-    }
-
-    let visible = true, running = true;
-    new IntersectionObserver((en) => { visible = en[0].isIntersecting; }).observe(stage);
-    document.addEventListener("visibilitychange", () => { running = !document.hidden; });
-    const clock = new T.Clock();
-    const v = new T.Vector3();
-    function frame() {
-      requestAnimationFrame(frame);
-      if (!visible || !running) return;
-      const t = clock.getElapsedTime();
-      group.rotation.y += ((look.x * 0.28) - group.rotation.y) * 0.06;
-      group.rotation.x += ((-look.y * 0.18) - group.rotation.x) * 0.06;
-      if (!reduceMotion) items.forEach((m) => {
-        const d = m.userData;
-        m.position.y = d.base.y + Math.sin(t * 0.9 + d.phase) * 0.09;
-        m.rotation.z = Math.sin(t * 0.6 + d.phase) * 0.05;
-      });
-      ray.setFromCamera(ptr, camera);
-      const hit = ray.intersectObjects(items)[0];
-      setHover(hit ? hit.object : null);
-      if (hovered) {
-        hovered.getWorldPosition(v).project(camera);
-        tip.style.left = ((v.x + 1) / 2) * stage.clientWidth + "px";
-        tip.style.top = ((1 - v.y) / 2) * stage.clientHeight - 40 + "px";
-      }
-      renderer.render(scene, camera);
-    }
-    frame();
+    if (!G || reduceMotion) { layers[0].classList.add("lit"); return; }
+    G.from(layers, { "--drop": "140px", opacity: 0, duration: 1, ease: "expo.out", stagger: 0.09, delay: 0.1 });
+    layers.forEach((el) => {
+      el.addEventListener("pointerenter", () => G.to(el, { "--lift": "22px", duration: 0.35, ease: "back.out(2)" }));
+      el.addEventListener("pointerleave", () => G.to(el, { "--lift": "0px", duration: 0.4, ease: "power3.out" }));
+    });
+    let i = 0;
+    const step = () => { layers.forEach((l, k) => l.classList.toggle("lit", k === i)); i = (i + 1) % layers.length; };
+    step();
+    G.delayedCall(1.2, function loop() { step(); G.delayedCall(1.2, loop); });
   }
 
   // ---- list icons lift on hover; sections ease in on scroll ----
@@ -815,7 +734,7 @@
       });
     }
   }
-  window.addEventListener("load", () => { initHero(); initMotion(); });
+  window.addEventListener("load", () => { initStack(); initMotion(); });
 
   // ---- follow on LinkedIn before the first download ----
   let followed = store.get("followed") === "1";
