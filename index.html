@@ -6,7 +6,7 @@
 <title>AI UXR Stack</title>
 <meta name="description" content="Twelve Claude skills for UX research, in five packs. Built by Nithyn.">
 <link rel="canonical" href="https://nithyncj-cell.github.io/ai-uxr-stack/">
-<meta name="theme-color" content="#050507">
+<meta name="theme-color" content="#0a0a0a">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="icon" href="favicon-32.png" type="image/png" sizes="32x32">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
@@ -25,412 +25,370 @@
 <meta name="twitter:image" content="https://nithyncj-cell.github.io/ai-uxr-stack/assets/social-preview.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400..800&family=JetBrains+Mono:wght@500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400..700&family=Geist+Mono:wght@400..600&display=swap">
 <style>
-  /* Layout: dark keynote world from the launch video. Hero (the stack as five layers), the free Collator,
-     five packs, full stack, footer. One text colour family: white and near-white, no grey copy. */
+  /* Foundations follow the Geist design system (Vercel), dark theme.
+     Colour: neutral greys plus one brand blue, used for the primary action, links, focus and the highlighted price.
+     Type: Geist and Geist Mono on the Geist scale. Space: 4px grid. */
   :root {
     color-scheme: dark;
-    --bg: #050507;
-    --panel: #141417;
-    --line: rgba(255, 255, 255, 0.10);
-    --line-2: rgba(255, 255, 255, 0.18);
-    --ink: #f5f5f7;
-    --soft: rgba(245, 245, 247, 0.84);
-    --blue: #2997ff;
-    --purple: #bf5af2;
-    --cyan: #32ade6;
-    --pink: #ff375f;
-    --orange: #ff9f0a;
-    --green: #30d158;
-    --grad: linear-gradient(90deg, #2997ff 0%, #bf5af2 38%, #ff375f 70%, #ff9f0a 100%);
-    --display: "Inter", "SF Pro Display", system-ui, -apple-system, "Segoe UI", sans-serif;
-    --text: "Inter", "SF Pro Text", system-ui, -apple-system, "Segoe UI", sans-serif;
-    --mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    --bg: #0a0a0a;               /* background-100, never pure black */
+    --gray-100: #1a1a1a;
+    --gray-200: #1f1f1f;
+    --gray-400: #2e2e2e;
+    --gray-700: #8f8f8f;
+    --gray-900: #a1a1a1;         /* secondary text */
+    --gray-1000: #ededed;        /* primary text */
+    --border: rgba(255, 255, 255, 0.10);
+    --border-strong: rgba(255, 255, 255, 0.16);
+    --brand: #0a72ef;
+    --brand-hover: #2a85f5;
+    --sans: "Geist", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+    --mono: "Geist Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    --r-sm: 6px; --r-md: 8px; --r-lg: 12px; --r-full: 9999px;
+    --s1: 4px; --s2: 8px; --s3: 12px; --s4: 16px; --s5: 20px; --s6: 24px; --s8: 32px; --s10: 40px; --s12: 48px; --s16: 64px; --s24: 96px;
+    --header-h: 64px;
   }
   * { box-sizing: border-box; }
   [hidden] { display: none !important; }
-  html { -webkit-text-size-adjust: 100%; }
-  body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--text); font-size: 17px; line-height: 1.5;
-    font-optical-sizing: auto; -webkit-font-smoothing: antialiased; }
+  html { -webkit-text-size-adjust: 100%; scroll-padding-top: calc(var(--header-h) + var(--s4)); }
+  body { margin: 0; background: var(--bg); color: var(--gray-1000); font: 400 16px/24px var(--sans);
+    -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
   a { color: inherit; }
-  :focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; border-radius: 6px; }
+  img { display: block; max-width: 100%; }
+  :focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; border-radius: var(--r-sm); }
+  ::selection { background: var(--brand); color: #fff; }
 
-  .page { position: relative; overflow: hidden; }
-  .glow { position: absolute; inset: 0 0 auto 0; height: 1400px; pointer-events: none;
-    background:
-      radial-gradient(circle 520px at 88% 4%, rgba(191, 90, 242, 0.28), transparent 70%),
-      radial-gradient(circle 520px at 4% 62%, rgba(41, 151, 255, 0.20), transparent 70%),
-      radial-gradient(circle 420px at 62% 92%, rgba(255, 55, 95, 0.10), transparent 70%); }
-  .wrap { position: relative; max-width: 1160px; margin: 0 auto;
+  /* Geist type scale */
+  .h-72 { font-size: clamp(40px, 6.4vw, 72px); line-height: 1; letter-spacing: -0.06em; font-weight: 600; }
+  .h-40 { font-size: clamp(28px, 3.6vw, 40px); line-height: 1.2; letter-spacing: -0.06em; font-weight: 600; }
+  .h-24 { font-size: 24px; line-height: 32px; letter-spacing: -0.04em; font-weight: 600; }
+  .h-20 { font-size: 20px; line-height: 26px; letter-spacing: -0.02em; font-weight: 600; }
+  .h-16 { font-size: 16px; line-height: 24px; letter-spacing: -0.02em; font-weight: 600; }
+  .copy-18 { font-size: 18px; line-height: 28px; }
+  .copy-14 { font-size: 14px; line-height: 20px; }
+  .muted { color: var(--gray-900); }
+  h1, h2, h3, h4, p { margin: 0; }
+
+  .wrap { max-width: 1120px; margin: 0 auto;
     padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
   @media (min-width: 720px) { .wrap { padding-left: max(32px, env(safe-area-inset-left, 0px)); padding-right: max(32px, env(safe-area-inset-right, 0px)); } }
 
-  /* icon tile */
-  .ic { --c: var(--blue); --s: 44px; flex: none; width: var(--s); height: var(--s); border-radius: 28%; display: grid; place-items: center; color: #fff;
-    background: linear-gradient(150deg, color-mix(in srgb, var(--c) 88%, #fff), color-mix(in srgb, var(--c) 58%, #000));
-    box-shadow: inset 0 1px 0 rgba(255,255,255,.35), inset 0 -1px 0 rgba(0,0,0,.25), 0 10px 24px -12px var(--c); }
-  .ic img { width: 84%; height: 84%; object-fit: contain; filter: drop-shadow(0 3px 4px rgba(0,0,0,.35)); }
-  .ic svg { width: 56%; height: 56%; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
-
-  /* top bar */
-  .top { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 22px; }
-  .mark { display: flex; align-items: center; gap: 10px; font-weight: 650; letter-spacing: -0.01em; text-decoration: none; }
-  .mark svg { width: 28px; height: 28px; flex: none; }
-  .mark small { color: var(--soft); font-weight: 500; font-size: 14px; }
-  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 44px;
-    padding: 0 20px; border-radius: 999px; font: 600 15px/1 var(--text); letter-spacing: -0.005em;
-    text-decoration: none; cursor: pointer; border: 1px solid var(--line-2); background: rgba(255,255,255,0.07); color: var(--ink);
-    transition: background .15s ease, border-color .15s ease, transform .15s ease; }
-  .btn:hover { background: rgba(255,255,255,0.12); border-color: rgba(255,255,255,0.28); }
-  .btn:active { transform: translateY(1px); }
-  .btn svg { width: 18px; height: 18px; flex: none; }
-  .btn.primary { background: var(--ink); color: #000; border-color: var(--ink); }
-  .btn.primary:hover { background: #fff; }
-  .btn.gradient { border: 2px solid transparent; background: linear-gradient(#000, #000) padding-box, var(--grad) border-box;
-    box-shadow: 0 0 30px rgba(191, 90, 242, 0.25); }
+  /* buttons */
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: var(--s2); height: 40px; padding: 0 var(--s4);
+    border-radius: var(--r-full); border: 1px solid var(--border-strong); background: transparent; color: var(--gray-1000);
+    font: 500 14px/20px var(--sans); text-decoration: none; cursor: pointer; white-space: nowrap;
+    transition: background-color .15s ease, border-color .15s ease, color .15s ease; }
+  .btn:hover { background: var(--gray-100); border-color: rgba(255,255,255,.24); }
+  .btn.lg { height: 48px; padding: 0 var(--s6); font-size: 16px; }
+  .btn.sm { height: 32px; padding: 0 var(--s3); font-size: 14px; }
+  .btn.brand { background: var(--brand); border-color: var(--brand); color: #fff; }
+  .btn.brand:hover { background: var(--brand-hover); border-color: var(--brand-hover); }
+  .btn svg { width: 16px; height: 16px; flex: none; }
   .btn[disabled] { opacity: .5; cursor: progress; }
+  .link { color: var(--gray-1000); text-decoration: underline; text-decoration-color: var(--gray-700); text-underline-offset: 3px; }
+  .link:hover { text-decoration-color: var(--gray-1000); }
 
-  /* hero */
-  .hero { display: grid; gap: 24px; align-items: center; padding-block: 36px 40px; }
-  @media (min-width: 960px) { .hero { grid-template-columns: 1fr 1fr; gap: 40px; padding-block: 56px 72px; } }
-  .hero > div, .hero > figure { min-width: 0; }
-  h1 { font-family: var(--display); font-weight: 750; font-size: clamp(48px, 8.2vw, 96px); line-height: .98;
-    letter-spacing: -0.045em; margin: 0; text-wrap: balance; }
-  .g { background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
-  .lede { color: var(--soft); font-size: clamp(18px, 2.1vw, 21px); line-height: 1.5; max-width: 30em; margin: 22px 0 0; }
-  .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
-
-  /* hero visual: five pack layers lighting up from the bottom */
-  .stackfig { margin: 0; }
-  .stackviz { --w: min(540px, 90vw); position: relative; width: var(--w); height: calc(var(--w) * 0.92); margin-inline: auto; }
-  .iso { position: absolute; left: 50%; top: 70%; transform-style: preserve-3d; transform: rotateX(58deg) rotateZ(-42deg); }
-  .layer { --c: var(--blue); position: absolute; width: calc(var(--w) * .6); height: calc(var(--w) * .34);
-    left: calc(var(--w) * -.3); top: calc(var(--w) * -.17); border-radius: calc(var(--w) * .035);
-    transform: translateZ(calc(var(--w) * var(--k)));
-    background: color-mix(in srgb, var(--c) 16%, #0e0e11);
-    border: 1px solid color-mix(in srgb, var(--c) 60%, transparent);
-    box-shadow: 0 0 0 1px rgba(0,0,0,.4), 0 12px 32px rgba(0,0,0,.55);
-    padding: calc(var(--w) * .024) calc(var(--w) * .03); display: flex; flex-direction: column; justify-content: flex-end; }
-  .lrow { display: flex; align-items: center; justify-content: space-between; gap: calc(var(--w) * .02); }
-  .ln { font: 700 calc(var(--w) * .038)/1 var(--display); letter-spacing: -0.02em; color: var(--ink); }
-  .lc { display: flex; gap: calc(var(--w) * .012); }
-  .lc .ic { --s: calc(var(--w) * .066); box-shadow: inset 0 1px 0 rgba(255,255,255,.35); }
-  @media (prefers-reduced-motion: no-preference) {
-    .iso { animation: bob 6s ease-in-out infinite; }
-    .layer { animation: lit 6s ease-in-out infinite; animation-delay: calc(var(--i) * 0.9s); }
-    @keyframes bob { 0%, 100% { transform: rotateX(58deg) rotateZ(-42deg) translateZ(0); } 50% { transform: rotateX(58deg) rotateZ(-42deg) translateZ(10px); } }
-    @keyframes lit {
-      0%, 26%, 100% { background: color-mix(in srgb, var(--c) 16%, #0e0e11); box-shadow: 0 0 0 1px rgba(0,0,0,.4), 0 12px 32px rgba(0,0,0,.55); }
-      8%, 16% { background: color-mix(in srgb, var(--c) 38%, #0e0e11); box-shadow: 0 0 0 1px color-mix(in srgb, var(--c) 70%, transparent), 0 0 70px color-mix(in srgb, var(--c) 65%, transparent); }
-    }
-  }
+  /* header */
+  .hdr { position: sticky; top: 0; z-index: 20; background: rgba(10,10,10,.8);
+    -webkit-backdrop-filter: saturate(180%) blur(12px); backdrop-filter: saturate(180%) blur(12px);
+    border-bottom: 1px solid transparent; transition: border-color .2s ease; }
+  .hdr.scrolled { border-bottom-color: var(--border); }
+  .hdr .wrap { height: var(--header-h); display: flex; align-items: center; gap: var(--s6); }
+  .logo { display: inline-flex; align-items: center; gap: var(--s2); text-decoration: none; font-weight: 600; letter-spacing: -0.02em; }
+  .logo svg { width: 24px; height: 24px; color: var(--brand); }
+  .logo { white-space: nowrap; }
+  .logo span { color: var(--gray-900); font-weight: 400; }
+  @media (max-width: 480px) { .logo span { display: none; } }
+  .nav { display: none; gap: var(--s6); margin-right: auto; }
+  .nav a { color: var(--gray-900); text-decoration: none; font-size: 14px; }
+  .nav a:hover { color: var(--gray-1000); }
+  .hdr .btn { margin-left: auto; }
+  @media (min-width: 760px) { .nav { display: flex; } .hdr .btn { margin-left: 0; } }
 
   /* sections */
-  section { padding-block: 56px; scroll-margin-top: 16px; }
-  h2 { font-family: var(--display); font-weight: 720; font-size: clamp(32px, 4.6vw, 52px); line-height: 1.04;
-    letter-spacing: -0.035em; margin: 0; text-wrap: balance; }
+  section { padding-block: var(--s16); border-top: 1px solid var(--border); }
+  @media (min-width: 900px) { section { padding-block: var(--s24); } }
+  .sh { max-width: 640px; }
+  .sh p { margin-top: var(--s3); }
 
-  /* free collator */
-  .feature { margin-top: 32px; border-radius: 28px; padding: 2px; background: var(--grad); box-shadow: 0 40px 120px -50px rgba(191, 90, 242, 0.7); }
-  .feature-in { border-radius: 26px; background: linear-gradient(180deg, #121215, #0b0b0d); padding: clamp(22px, 4vw, 44px); display: grid; gap: 36px; }
-  @media (min-width: 900px) { .feature-in { grid-template-columns: 1.15fr 1fr; gap: 48px; } }
-  .feature-in > div, .feature-in > aside { min-width: 0; }
-  .fhead { display: flex; align-items: center; gap: 16px; }
-  .fhead .ic { --s: 64px; }
-  .fhead h3 { font-family: var(--display); font-size: clamp(26px, 3.4vw, 36px); line-height: 1.05; letter-spacing: -0.03em; margin: 0; }
-  .badge { display: inline-block; margin-top: 6px; padding: 5px 11px; border-radius: 999px; font-size: 13px; font-weight: 650;
-    color: #04210c; background: var(--green); }
-  .price { display: flex; align-items: baseline; gap: 14px; margin-top: 22px; flex-wrap: wrap; }
-  .was { font: 500 24px/1 var(--mono); color: var(--soft); text-decoration: line-through; text-decoration-color: var(--pink); text-decoration-thickness: 2px; }
-  .now { font-family: var(--display); font-weight: 750; font-size: 44px; line-height: 1; letter-spacing: -0.035em; font-variant-numeric: tabular-nums; }
-  .ticks { list-style: none; padding: 0; margin: 24px 0 0; display: grid; gap: 10px; }
-  .ticks li { display: grid; grid-template-columns: 22px 1fr; gap: 12px; color: var(--soft); }
-  .ticks li::before { content: ""; width: 18px; height: 18px; margin-top: 3px; border-radius: 6px;
-    background: rgba(48,209,88,.16) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2330d158' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12.5l4.5 4.5L19 7.5'/%3E%3C/svg%3E") center/12px no-repeat; }
-  .missing { font: 500 13px/1 var(--mono); color: var(--ink); padding: 2px 8px; border: 1px dashed rgba(255,255,255,.5); border-radius: 6px; white-space: nowrap; }
-  .dl { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
-  .gate { margin-top: 16px; padding: 16px 18px; border-radius: 16px; background: rgba(41,151,255,.10); border: 1px solid rgba(41,151,255,.4);
-    display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; }
-  .gate p { margin: 0; font-size: 15px; font-weight: 600; }
-  .status { min-height: 22px; margin: 12px 0 0; font-size: 14px; color: var(--soft); }
-  .status.ok { color: var(--green); }
-  .status.warn { color: var(--orange); }
-  .terms { margin: 16px 0 0; font-size: 13px; color: var(--soft); }
-  .install { background: rgba(255,255,255,0.04); border: 1px solid var(--line); border-radius: 20px; padding: 24px; align-self: start; }
-  .install h4 { margin: 0; font-size: 18px; letter-spacing: -0.01em; }
-  .install ol { list-style: none; counter-reset: s; padding: 0; margin: 16px 0 0; display: grid; gap: 14px; }
-  .install li { counter-increment: s; display: grid; grid-template-columns: 30px 1fr; gap: 12px; font-size: 15px; color: var(--soft); }
-  .install li::before { content: counter(s); width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center;
-    font: 600 13px/1 var(--mono); color: var(--ink); background: rgba(255,255,255,0.08); border: 1px solid var(--line-2); }
-  .install b { color: var(--ink); font-weight: 600; }
-  .install code { font: 500 13px/1.4 var(--mono); color: var(--ink); background: rgba(255,255,255,0.08); padding: 1px 6px; border-radius: 5px; }
+  /* hero */
+  .hero { display: grid; gap: var(--s10); padding-block: var(--s12) var(--s16); align-items: center; }
+  @media (min-width: 960px) { .hero { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--s12); padding-block: var(--s16) var(--s24); } }
+  .hero h1 { max-width: 11ch; }
+  .hero .lede { margin-top: var(--s6); max-width: 34em; }
+  .actions { display: flex; flex-wrap: wrap; gap: var(--s3); margin-top: var(--s8); }
+  .proof { display: flex; flex-wrap: wrap; gap: var(--s2) var(--s6); margin: var(--s8) 0 0; padding: 0; list-style: none; }
+  .proof li { display: flex; align-items: center; gap: var(--s2); }
+  .proof li::before { content: ""; width: 16px; height: 16px; flex: none;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%23a1a1a1' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3.5 8.5l3 3 6-7'/%3E%3C/svg%3E") center/16px no-repeat; }
+  .stage { position: relative; height: 380px; }
+  @media (min-width: 960px) { .stage { height: 460px; } }
+  .stage canvas { position: absolute; inset: 0; width: 100% !important; height: 100% !important; }
+  .stage .tip { position: absolute; z-index: 2; pointer-events: none; transform: translate(-50%, calc(-100% - 8px));
+    padding: var(--s1) var(--s2); border-radius: var(--r-sm); border: 1px solid var(--border-strong); background: var(--bg);
+    font: 500 13px/16px var(--sans); white-space: nowrap; opacity: 0; transition: opacity .15s ease; }
+  .stage .tip.on { opacity: 1; }
+  .stage-fallback { position: absolute; inset: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--s4); align-content: center; }
+  .stage-fallback img { width: 100%; height: auto; }
 
-  /* packs carousel */
-  .head-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px 24px; }
-  .controls { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
-  .seg { display: inline-flex; padding: 4px; border-radius: 999px; background: rgba(255,255,255,0.07); border: 1px solid var(--line-2); }
-  .seg button { appearance: none; border: 0; background: transparent; color: var(--soft); font: 600 14px/1 var(--text);
-    padding: 10px 16px; border-radius: 999px; cursor: pointer; min-height: 38px; }
-  .seg button[aria-pressed="true"] { background: var(--ink); color: #000; }
-  .arrows { display: flex; gap: 8px; }
-  .arrow { width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--line-2); background: rgba(255,255,255,0.07); color: var(--ink);
-    display: grid; place-items: center; cursor: pointer; }
-  .arrow:hover { background: rgba(255,255,255,0.13); }
-  .arrow[disabled] { opacity: .35; cursor: default; }
-  .arrow svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
-  .tabs { display: flex; gap: 8px; margin-top: 24px; overflow-x: auto; scrollbar-width: none; padding-bottom: 2px; }
-  .tabs::-webkit-scrollbar { display: none; }
-  .tab { --c: var(--blue); flex: none; display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px 8px 8px; border-radius: 999px;
-    border: 1px solid var(--line-2); background: rgba(255,255,255,0.05); color: var(--ink); font: 600 14px/1 var(--text); cursor: pointer; }
-  .tab .ic { --s: 26px; box-shadow: none; }
-  .tab[aria-selected="true"] { background: color-mix(in srgb, var(--c) 24%, #0e0e11); border-color: color-mix(in srgb, var(--c) 70%, transparent); }
-  .track { display: flex; gap: 20px; margin-top: 20px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth;
-    scrollbar-width: none; overscroll-behavior-x: contain; padding-bottom: 6px; }
-  .track::-webkit-scrollbar { display: none; }
-  @media (prefers-reduced-motion: reduce) { .track { scroll-behavior: auto; } }
-  .slide { --c: var(--blue); flex: 0 0 88%; scroll-snap-align: start; position: relative; overflow: hidden; min-width: 0;
-    display: grid; gap: 28px; padding: clamp(22px, 4vw, 44px); border-radius: 28px;
-    background: linear-gradient(160deg, color-mix(in srgb, var(--c) 14%, #121215), #0b0b0d 60%);
-    border: 1px solid color-mix(in srgb, var(--c) 45%, transparent); }
-  @media (min-width: 980px) { .slide { flex-basis: min(100%, 900px); grid-template-columns: .9fr 1.1fr; gap: 44px; } }
-  .slide::before { content: ""; position: absolute; right: -160px; top: -180px; width: 440px; height: 440px; border-radius: 50%; pointer-events: none;
-    background: radial-gradient(circle, color-mix(in srgb, var(--c) 30%, transparent), transparent 65%); }
-  .slide > * { position: relative; min-width: 0; }
-  .sl { display: flex; flex-direction: column; gap: 18px; }
-  .sl .ic { --s: 80px; }
-  .slide h3 { font-family: var(--display); font-size: clamp(30px, 4vw, 46px); line-height: 1.02; letter-spacing: -0.035em; margin: 0; }
-  .pain { margin: 0; font: 600 clamp(18px, 2vw, 21px)/1.35 var(--display); letter-spacing: -0.01em; color: var(--soft); }
-  .pprice { display: flex; align-items: baseline; flex-wrap: wrap; gap: 10px 12px; margin-top: auto; }
-  .pprice .was { font-size: 18px; }
-  .pprice .now { font-size: clamp(40px, 5vw, 52px); }
-  .save { font: 650 13px/1 var(--text); color: #04210c; background: var(--green); padding: 6px 10px; border-radius: 999px; }
-  .skills { list-style: none; margin: 0; padding: 0; display: grid; align-content: start; }
-  .skills li { display: grid; grid-template-columns: 44px 1fr auto; gap: 14px; align-items: start; padding-block: 14px; border-top: 1px solid var(--line); }
-  .skills li:last-child { border-bottom: 1px solid var(--line); }
-  .skills .ic { --s: 44px; }
-  .skills h4 { margin: 0; font-size: 17px; letter-spacing: -0.01em; line-height: 1.25; padding-top: 2px; }
-  .more { margin-top: 6px; }
-  .more summary { list-style: none; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; font: 600 13px/1.4 var(--text);
-    color: color-mix(in srgb, var(--c) 70%, #fff); }
+  /* why it works: four short points, no boxes */
+  .points { display: grid; gap: var(--s8) var(--s12); margin-top: var(--s12); }
+  @media (min-width: 720px) { .points { grid-template-columns: 1fr 1fr; } }
+  .points p { margin-top: var(--s2); max-width: 40ch; }
+
+  /* free collator: one bordered container, nothing nested */
+  .offer { margin-top: var(--s12); border: 1px solid var(--border-strong); border-radius: var(--r-lg); padding: var(--s8);
+    display: grid; gap: var(--s10); }
+  @media (min-width: 900px) { .offer { grid-template-columns: 1.2fr 1fr; padding: var(--s12); gap: var(--s16); } }
+  .offer-h { display: flex; align-items: center; gap: var(--s4); }
+  .offer-h img { width: 64px; height: 64px; }
+  .price-line { display: flex; align-items: baseline; gap: var(--s3); margin-top: var(--s6); }
+  .price-line .now { font: 600 40px/48px var(--sans); letter-spacing: -0.06em; }
+  .was { font-family: var(--mono); color: var(--gray-700); text-decoration: line-through; }
+  .ticks { list-style: none; padding: 0; margin: var(--s6) 0 0; display: grid; gap: var(--s3); }
+  .ticks li { display: grid; grid-template-columns: 20px 1fr; gap: var(--s3); color: var(--gray-900); }
+  .ticks li::before { content: ""; width: 16px; height: 16px; margin-top: 4px;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%23ededed' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3.5 8.5l3 3 6-7'/%3E%3C/svg%3E") center/16px no-repeat; }
+  code, .missing { font: 500 13px/20px var(--mono); padding: 0 var(--s1); border-radius: 4px; background: var(--gray-200); color: var(--gray-1000); }
+  .agree { display: flex; align-items: flex-start; gap: var(--s3); margin-top: var(--s8); font-size: 14px; line-height: 20px; cursor: pointer; }
+  .agree input { width: 16px; height: 16px; margin: 2px 0 0; accent-color: var(--brand); flex: none; cursor: pointer; }
+  .agree.need { color: #f5a524; }
+  .dl { display: flex; flex-wrap: wrap; gap: var(--s3); margin-top: var(--s4); }
+  .gate { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s3); margin-top: var(--s4); }
+  .gate p { font-size: 14px; color: var(--gray-900); }
+  .status { min-height: 20px; margin-top: var(--s3); font-size: 14px; line-height: 20px; color: var(--gray-900); }
+  .status.ok { color: var(--gray-1000); }
+  .status.warn { color: #f5a524; }
+  .terms { margin-top: var(--s2); font-size: 13px; line-height: 16px; color: var(--gray-700); }
+  .steps { list-style: none; counter-reset: s; padding: 0; margin: var(--s4) 0 0; display: grid; gap: var(--s6); }
+  .steps li { counter-increment: s; display: grid; grid-template-columns: 28px 1fr; gap: var(--s3); color: var(--gray-900); }
+  .steps li::before { content: counter(s); width: 24px; height: 24px; border-radius: var(--r-full); border: 1px solid var(--border-strong);
+    display: grid; place-items: center; font: 500 12px/1 var(--mono); color: var(--gray-1000); }
+  .steps b { color: var(--gray-1000); font-weight: 500; }
+
+  /* skills: pack name on the left, skill rows on the right (F pattern) */
+  .packs { margin-top: var(--s12); display: grid; gap: var(--s12); }
+  .pack { display: grid; gap: var(--s4); }
+  @media (min-width: 900px) { .pack { grid-template-columns: 280px 1fr; gap: var(--s12); } }
+  .pack-h p { margin-top: var(--s1); }
+  .rows { list-style: none; margin: 0; padding: 0; }
+  .rows > li + li { border-top: 1px solid var(--border); }
+  .row { display: grid; grid-template-columns: 48px 1fr auto; gap: var(--s4); align-items: start; padding-block: var(--s4); }
+  .rows > li:first-child .row { padding-top: 0; }
+  .rows > li:last-child .row { padding-bottom: 0; }
+  .row .icon { width: 48px; height: 48px; will-change: transform; }
+  .row h4 { padding-top: 2px; }
+  .row p { margin-top: var(--s1); }
+  .row .sp { font: 500 14px/24px var(--mono); padding-top: 2px; text-align: right; white-space: nowrap; }
+  .row .sp s { color: var(--gray-700); margin-right: var(--s2); }
+  .more { margin-top: var(--s2); }
+  .more summary { display: inline-flex; align-items: center; gap: var(--s1); list-style: none; cursor: pointer; font-size: 14px; line-height: 20px; color: var(--gray-900); }
   .more summary::-webkit-details-marker { display: none; }
-  .more summary::after { content: "+"; font: 600 15px/1 var(--mono); }
-  .more[open] summary::after { content: "−"; }
-  .more p { margin: 8px 0 0; color: var(--soft); font-size: 14.5px; line-height: 1.5; }
-  .more a { display: inline-block; margin-top: 6px; font: 600 13px/1.4 var(--text); color: var(--ink); }
-  .sp { text-align: right; font: 500 14px/1.3 var(--mono); font-variant-numeric: tabular-nums; white-space: nowrap; padding-top: 4px; }
-  .sp s { display: block; color: var(--soft); text-decoration-color: var(--pink); font-size: 12px; }
-  .sp a { display: block; color: var(--green); font: 650 13px/1.4 var(--text); text-decoration: none; }
-  .sp a:hover { text-decoration: underline; }
+  .more summary::after { content: ""; width: 12px; height: 12px; transition: transform .2s ease;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' fill='none' stroke='%23a1a1a1' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 4.5l3 3 3-3'/%3E%3C/svg%3E") center/12px no-repeat; }
+  .more[open] summary::after { transform: rotate(180deg); }
+  .more summary:hover { color: var(--gray-1000); }
+  .more ul { margin: var(--s2) 0 0; padding-left: var(--s4); display: grid; gap: var(--s1); color: var(--gray-900); font-size: 14px; line-height: 20px; }
+  .row.flash { animation: flash 1.2s ease; }
+  @keyframes flash { 0%, 40% { box-shadow: inset 2px 0 0 var(--brand); } 100% { box-shadow: inset 2px 0 0 transparent; } }
 
-  /* about each skill */
-  .readall { margin-top: 28px; border: 1px solid var(--line-2); border-radius: 22px; background: rgba(255,255,255,0.03); }
-  .readall > summary { list-style: none; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 16px;
-    padding: 20px 24px; font: 650 18px/1.3 var(--text); }
-  .readall > summary::-webkit-details-marker { display: none; }
-  .readall > summary::after { content: "+"; width: 32px; height: 32px; border-radius: 50%; display: grid; place-items: center;
-    font: 600 18px/1 var(--mono); background: rgba(255,255,255,0.08); border: 1px solid var(--line-2); flex: none; }
-  .readall[open] > summary::after { content: "−"; }
-  .about { display: grid; gap: 16px; padding: 0 16px 16px; }
-  @media (min-width: 900px) { .about { grid-template-columns: 1fr 1fr; padding: 0 24px 24px; } }
-  .ab { --c: var(--blue); scroll-margin-top: 20px; padding: 22px; border-radius: 18px; background: var(--panel); border: 1px solid var(--line); min-width: 0; }
-  .ab:target { border-color: color-mix(in srgb, var(--c) 70%, transparent); box-shadow: 0 0 0 1px color-mix(in srgb, var(--c) 50%, transparent); }
-  .abh { display: flex; align-items: center; gap: 14px; }
-  .abh h3 { margin: 0; font-size: 19px; letter-spacing: -0.015em; line-height: 1.2; }
-  .abh small { display: block; margin-top: 2px; font: 600 12px/1.3 var(--mono); letter-spacing: .04em; text-transform: uppercase; color: color-mix(in srgb, var(--c) 70%, #fff); }
-  .ab dl { margin: 16px 0 0; display: grid; gap: 12px; }
-  .ab dt { font: 650 13px/1.3 var(--text); color: color-mix(in srgb, var(--c) 70%, #fff); }
-  .ab dd { margin: 3px 0 0; color: var(--soft); font-size: 15px; line-height: 1.5; }
+  /* pricing: one highlighted card, plain list beside it */
+  .ph { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: var(--s4); }
+  .seg { display: inline-flex; padding: 2px; border-radius: var(--r-full); border: 1px solid var(--border-strong); }
+  .seg button { appearance: none; border: 0; background: transparent; color: var(--gray-900); font: 500 14px/20px var(--sans);
+    height: 32px; padding: 0 var(--s3); border-radius: var(--r-full); cursor: pointer; }
+  .seg button[aria-pressed="true"] { background: var(--gray-1000); color: var(--bg); }
+  .pricing { margin-top: var(--s12); display: grid; gap: var(--s12); align-items: start; }
+  @media (min-width: 900px) { .pricing { grid-template-columns: 400px 1fr; } }
+  .main-price { border: 1px solid var(--brand); box-shadow: 0 0 0 1px var(--brand), 0 24px 64px -32px rgba(10,114,239,.6);
+    border-radius: var(--r-lg); padding: var(--s8); }
+  .main-price .big { display: flex; align-items: baseline; flex-wrap: wrap; gap: var(--s3); margin-top: var(--s4); }
+  .main-price .now { font: 600 56px/56px var(--sans); letter-spacing: -0.06em; }
+  .main-price .save { margin-top: var(--s2); font-size: 14px; color: var(--brand-hover); }
+  .main-price .ticks { margin-top: var(--s6); }
+  .main-price .btn { width: 100%; margin-top: var(--s8); }
+  .main-price .note { margin-top: var(--s3); font-size: 13px; line-height: 16px; color: var(--gray-700); text-align: center; }
+  .plist { list-style: none; margin: 0; padding: 0; }
+  .plist > li { display: grid; grid-template-columns: 1fr auto; gap: var(--s2) var(--s4); align-items: baseline; padding-block: var(--s5); }
+  .plist > li + li { border-top: 1px solid var(--border); }
+  .plist > li:first-child { padding-top: 0; }
+  .plist > li:last-child { padding-bottom: 0; }
+  .plist .pp { font: 500 16px/24px var(--mono); text-align: right; }
+  .plist .ps { font: 400 13px/16px var(--mono); color: var(--gray-700); text-align: right; }
 
-  /* full stack */
-  .bundle { display: grid; gap: 28px; padding: clamp(22px, 4vw, 44px); border-radius: 28px; position: relative; overflow: hidden;
-    background: linear-gradient(180deg, #131317, #0b0b0d); border: 1px solid var(--line-2); }
-  .bundle::before { content: ""; position: absolute; inset: -40% -10% auto auto; width: 560px; height: 560px; border-radius: 50%;
-    background: radial-gradient(circle, rgba(191,90,242,.26), transparent 65%); pointer-events: none; }
-  @media (min-width: 900px) { .bundle { grid-template-columns: 1.2fr 1fr; align-items: center; } }
-  .bundle > div { position: relative; min-width: 0; }
-  .bprice { display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; }
-  .bprice .now { font-size: clamp(48px, 7vw, 72px); }
-  .icons { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
-  .icons .ic { --s: 40px; }
-
-
-  /* SPIN cards */
-  .spin { margin: 16px 0 0; display: grid; gap: 12px; }
-  .spin dt { font: 650 13px/1.3 var(--text); color: color-mix(in srgb, var(--c) 70%, #fff); }
-  .spin dd { margin: 3px 0 0; color: var(--soft); font-size: 15px; line-height: 1.5; }
-  .spin div:last-child dd { color: var(--ink); font-weight: 600; }
-  .hood { margin-top: 18px; padding: 16px 18px; border-radius: 14px; background: color-mix(in srgb, var(--c) 10%, #0c0c0f);
-    border: 1px solid color-mix(in srgb, var(--c) 35%, transparent); }
-  .hood h4 { margin: 0; font-size: 14px; letter-spacing: -0.005em; }
-  .hood ul { margin: 10px 0 0; padding-left: 18px; display: grid; gap: 6px; color: var(--soft); font-size: 14.5px; line-height: 1.45; }
-  .hood li::marker { color: color-mix(in srgb, var(--c) 70%, #fff); }
-  .stat { margin: 12px 0 0; font: 600 12.5px/1.4 var(--mono); color: var(--ink); }
-  .kstat { font: 600 12.5px/1.4 var(--mono) !important; color: var(--ink) !important; }
-
-  /* agree + legal */
-  .agree { display: flex; align-items: flex-start; gap: 10px; margin-top: 26px; font-size: 15px; cursor: pointer; }
-  .agree input { width: 20px; height: 20px; margin: 1px 0 0; accent-color: var(--blue); flex: none; cursor: pointer; }
-  .agree a { color: var(--ink); text-decoration-color: var(--blue); }
-  .agree.need { color: var(--orange); }
-  .dl { margin-top: 16px !important; }
-  .legal-meta { margin: 12px 0 0; color: var(--soft); font-size: 14px; }
-  .legal { margin-top: 24px; border: 1px solid var(--line-2); border-radius: 22px; overflow: hidden; }
-  .legal details { border-top: 1px solid var(--line); scroll-margin-top: 20px; }
-  .legal details:first-child { border-top: 0; }
-  .legal summary { list-style: none; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 16px;
-    padding: 18px 22px; font: 650 17px/1.3 var(--text); }
+  /* terms */
+  .legal { margin-top: var(--s8); max-width: 760px; }
+  .legal details + details { border-top: 1px solid var(--border); }
+  .legal summary { list-style: none; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: var(--s4);
+    padding-block: var(--s4); font-weight: 500; }
+  .legal details:first-child summary { padding-top: 0; }
   .legal summary::-webkit-details-marker { display: none; }
-  .legal summary::after { content: "+"; font: 600 18px/1 var(--mono); }
-  .legal details[open] summary::after { content: "−"; }
-  .lt { padding: 0 22px 20px; max-width: 72ch; display: grid; gap: 10px; }
-  .lt p { margin: 0; color: var(--soft); font-size: 14.5px; line-height: 1.6; }
-  .lt b { color: var(--ink); font-weight: 650; }
-  .flinks { display: flex; flex-wrap: wrap; gap: 8px 18px; margin-top: 16px; font-size: 14px; }
-  .flinks a { color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--line-2); }
-  .flinks a:hover { border-bottom-color: var(--ink); }
+  .legal summary::after { content: ""; width: 16px; height: 16px; flex: none; transition: transform .2s ease;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%23a1a1a1' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 6l4 4 4-4'/%3E%3C/svg%3E") center/16px no-repeat; }
+  .legal details[open] summary::after { transform: rotate(180deg); }
+  .legal details:last-child:not([open]) summary { padding-bottom: 0; }
+  .lt { padding-bottom: var(--s6); display: grid; gap: var(--s3); }
+  .legal details:last-child .lt { padding-bottom: 0; }
+  .lt p { color: var(--gray-900); font-size: 14px; line-height: 22px; }
+  .lt b { color: var(--gray-1000); font-weight: 500; }
 
   /* footer */
-  footer { padding-block: 56px 40px; margin-top: 24px; border-top: 1px solid var(--line); }
-  .foot { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 24px; }
-  .foot h2 { font-size: clamp(28px, 3.6vw, 40px); }
-  .credits { margin: 32px 0 0; font-size: 14px; color: var(--soft); max-width: 46em; }
-  .copy { margin: 10px 0 0; font-size: 13px; color: var(--soft); }
+  footer { border-top: 1px solid var(--border); padding-block: var(--s12); }
+  .foot { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--s6); }
+  .flinks { display: flex; flex-wrap: wrap; gap: var(--s2) var(--s5); margin-top: var(--s8); font-size: 14px; }
+  .flinks a { color: var(--gray-900); text-decoration: none; }
+  .flinks a:hover { color: var(--gray-1000); }
+  .credits { margin-top: var(--s4); font-size: 13px; line-height: 20px; color: var(--gray-700); max-width: 70ch; }
+  .credits a { color: var(--gray-900); }
+
+  @media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; transition: none !important; animation: none !important; } }
 </style>
 </head>
 <body>
-<div class="page">
-  <div class="glow" aria-hidden="true"></div>
+
+<header class="hdr" id="hdr">
   <div class="wrap">
-    <header class="top">
-      <a class="mark" href="#top" aria-label="AI UXR Stack, home">
-        <svg viewBox="0 0 40 40" aria-hidden="true">
-          <defs><linearGradient id="lg" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#2997ff"/><stop offset=".45" stop-color="#bf5af2"/><stop offset=".75" stop-color="#ff375f"/><stop offset="1" stop-color="#ff9f0a"/></linearGradient></defs>
-          <g fill="url(#lg)" opacity=".95">
-            <path d="M20 6c4 5 4 14 0 21c-4-7-4-16 0-21z"/>
-            <path d="M20 27c-2-7-7-13-13-14c1 7 6 13 13 14z" opacity=".85"/>
-            <path d="M20 27c2-7 7-13 13-14c-1 7-6 13-13 14z" opacity=".85"/>
-            <path d="M20 29c-5-3-11-4-16-1c5 4 11 4 16 1z" opacity=".7"/>
-            <path d="M20 29c5-3 11-4 16-1c-5 4-11 4-16 1z" opacity=".7"/>
-          </g>
-        </svg>
-        <span>AI UXR Stack <small>by Nithyn</small></span>
-      </a>
-      <a class="btn" href="https://www.linkedin.com/in/nithyn/" target="_blank" rel="noopener" data-follow>
-        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9.75h4v11H3zM9.5 9.75h3.8v1.5h.05c.53-1 1.83-2.05 3.77-2.05 4.03 0 4.78 2.65 4.78 6.1v5.45h-4v-4.83c0-1.15-.02-2.63-1.6-2.63-1.6 0-1.85 1.25-1.85 2.55v4.91h-4z"/></svg>
-        Follow on LinkedIn
-      </a>
-    </header>
+    <a class="logo" href="#top" aria-label="AI UXR Stack, home">
+      <svg viewBox="0 0 40 40" aria-hidden="true"><g fill="currentColor">
+        <path d="M20 6c4 5 4 14 0 21c-4-7-4-16 0-21z"/>
+        <path d="M20 27c-2-7-7-13-13-14c1 7 6 13 13 14z" opacity=".8"/>
+        <path d="M20 27c2-7 7-13 13-14c-1 7-6 13-13 14z" opacity=".8"/>
+        <path d="M20 29c-5-3-11-4-16-1c5 4 11 4 16 1z" opacity=".6"/>
+        <path d="M20 29c5-3 11-4 16-1c-5 4-11 4-16 1z" opacity=".6"/>
+      </g></svg>
+      AI UXR Stack <span>by Nithyn</span>
+    </a>
+    <nav class="nav" aria-label="Sections">
+      <a href="#skills">Skills</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#free" data-free-only>Free Collator</a>
+    </nav>
+    <a class="btn brand sm" href="#free" data-free-only>Get the Collator free</a>
+  </div>
+</header>
 
-    <main id="top">
-      <div class="hero">
-        <div>
-          <h1>The AI <span class="g">UXR</span> Stack</h1>
-          <p class="lede">Twelve Claude skills for UX research, in five packs. Built by Nithyn.</p>
-          <div class="actions">
-            <a class="btn primary" href="#free" data-free-only>Get the Collator free</a>
-            <a class="btn" href="#packs">See the packs</a>
-          </div>
-        </div>
-        <figure class="stackfig">
-          <div class="stackviz" role="img" aria-label="Five stacked layers, one per pack: Scope, Collate, Analyse, Influence and Career, lighting up one after another from the bottom."><div class="iso" id="iso"></div></div>
-        </figure>
+<main id="top">
+  <div class="wrap hero">
+    <div>
+      <h1 class="h-72">The slow parts of UX research, done right.</h1>
+      <p class="lede copy-18 muted">Twelve Claude skills that scope the study, collate transcripts, run the numbers and build the report, the way a senior researcher would.</p>
+      <div class="actions">
+        <a class="btn brand lg" href="#free" data-free-only>Get the Collator free</a>
+        <a class="btn lg" href="#pricing">See pricing</a>
       </div>
+      <ul class="proof copy-14 muted">
+        <li>Runs in your own Claude account</li>
+        <li>Never invents a quote</li>
+        <li>Built by a UX researcher</li>
+      </ul>
+    </div>
+    <div class="stage" id="stage" aria-hidden="true"><div class="tip" id="tip"></div></div>
+  </div>
 
-      <section id="free" aria-labelledby="free-title" data-free-only>
-        <h2 id="free-title">The Collator is free until 11 December.</h2>
-        <div class="feature">
-          <div class="feature-in">
-            <div>
-              <div class="fhead">
-                <span id="collator-icon"></span>
-                <div>
-                  <h3>UXR Transcript Collator</h3>
-                  <span class="badge">Free until 11 Dec</span>
-                </div>
-              </div>
-              <div class="price">
-                <span class="was" data-price="single"></span>
-                <span class="now">Free</span>
-              </div>
-              <ul class="ticks">
-                <li><span>Asks for your plan, discussion guide or notesheet headers first. Transcripts alone also work.</span></li>
-                <li><span>Fills one notesheet mapped to your themes.</span></li>
-                <li><span>Keeps the verbatim quote and timestamp on every row, Hinglish included.</span></li>
-                <li><span>Writes <span class="missing">missing</span> when a quote isn't there.</span></li>
-              </ul>
-              <div id="collator-more"></div>
-              <label class="agree"><input type="checkbox" id="agree"> <span>I agree to the <a href="#legal-licence" data-legal>Skill Licence Terms</a>.</span></label>
-              <div class="dl">
-                <button class="btn primary" type="button" data-skill="collator" data-kind="zip">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11"/><path d="M7 10l5 5 5-5"/><path d="M5 20h14"/></svg>
-                  Download for Claude (.zip)
-                </button>
-                <button class="btn" type="button" data-skill="collator" data-kind="md">Download .md</button>
-              </div>
-              <div class="gate" id="gate-collator" hidden></div>
-              <p class="status" id="status-collator" role="status" aria-live="polite"></p>
-              <p class="terms">Licensed for use on your own research. Sharing, reselling or rebuilding it is not allowed.</p>
-            </div>
-            <aside class="install" aria-labelledby="install-title">
-              <h4 id="install-title">Install in Claude</h4>
-              <ol>
-                <li><span>Settings → Capabilities → turn on <b>Code execution and file creation</b>.</span></li>
-                <li><span>Customize → Skills → <b>+</b> → <b>Create skill</b> → <b>Upload a skill</b>, then pick the .zip.</span></li>
-                <li><span>Start a chat and type <code>collate my transcripts</code>.</span></li>
-              </ol>
-            </aside>
-          </div>
-        </div>
-      </section>
+  <section id="why" aria-labelledby="why-title">
+    <div class="wrap">
+      <div class="sh">
+        <h2 class="h-40" id="why-title">Research you can stand behind in the room.</h2>
+        <p class="copy-18 muted">AI speeds up research only if you can trust what comes out. Every skill follows the same rules.</p>
+      </div>
+      <div class="points">
+        <div><h3 class="h-20">Evidence stays verbatim</h3><p class="muted">Quotes, timestamps and numbers come straight from your files. Anything missing is marked <span class="missing">missing</span>.</p></div>
+        <div><h3 class="h-20">It asks before it acts</h3><p class="muted">Each skill says what it does, then asks what you already have before doing any work.</p></div>
+        <div><h3 class="h-20">Your data stays yours</h3><p class="muted">Skills run inside your Claude account. Nothing is sent to Nithyn, and planted instructions in a file are flagged, not followed.</p></div>
+        <div><h3 class="h-20">Tested before release</h3><p class="muted">94 test runs in a clean Claude setup, the way a buyer would install and use them.</p></div>
+      </div>
+    </div>
+  </section>
 
-      <section id="packs" aria-labelledby="packs-title">
-        <div class="head-row">
-          <h2 id="packs-title">Pick a pack.</h2>
-          <div class="controls">
-            <div class="seg" role="group" aria-label="Show prices for">
-              <button type="button" data-region="in" aria-pressed="false">India ₹</button>
-              <button type="button" data-region="intl" aria-pressed="true">International $</button>
-            </div>
-            <div class="arrows">
-              <button class="arrow" type="button" id="prev" aria-label="Previous pack"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
-              <button class="arrow" type="button" id="next" aria-label="Next pack"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button>
-            </div>
+  <section id="free" aria-labelledby="free-title" data-free-only>
+    <div class="wrap">
+      <div class="sh">
+        <h2 class="h-40" id="free-title">Start with the Collator. It's free until 11 December.</h2>
+        <p class="copy-18 muted">Fieldwork to a theme-tagged notesheet the same day.</p>
+      </div>
+      <div class="offer">
+        <div>
+          <div class="offer-h">
+            <img src="assets/icons/hd/transcript-collator.webp" alt="" width="64" height="64">
+            <h3 class="h-24">UXR Transcript Collator</h3>
           </div>
+          <div class="price-line"><span class="now">Free</span><span class="was" data-price="single"></span></div>
+          <ul class="ticks">
+            <li>Maps every transcript to your themes in one notesheet.</li>
+            <li>Keeps the verbatim quote and timestamp on every row.</li>
+            <li><span>Writes <span class="missing">missing</span> instead of guessing.</span></li>
+          </ul>
+          <label class="agree"><input type="checkbox" id="agree"> <span>I agree to the <a class="link" href="#legal-licence" data-legal>Skill Licence Terms</a>.</span></label>
+          <div class="dl">
+            <button class="btn brand" type="button" data-skill="collator" data-kind="zip">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 2.5v8"/><path d="M4.5 7L8 10.5 11.5 7"/><path d="M3 13.5h10"/></svg>
+              Download for Claude (.zip)
+            </button>
+            <button class="btn" type="button" data-skill="collator" data-kind="md">Download .md</button>
+          </div>
+          <div class="gate" id="gate-collator" hidden></div>
+          <p class="status" id="status-collator" role="status" aria-live="polite"></p>
+          <p class="terms">Licensed for your own research. Sharing, reselling or rebuilding it is not allowed.</p>
         </div>
-        <div class="tabs" role="tablist" aria-label="Packs" id="tabs"></div>
-        <div class="track" id="track" aria-live="polite"></div>
-      </section>
+        <div>
+          <h3 class="h-16">Install in three steps</h3>
+          <ol class="steps">
+            <li><span>In Claude, open <b>Settings → Capabilities</b> and turn on <b>Code execution and file creation</b>.</span></li>
+            <li><span>Open <b>Customize → Skills → + → Create skill → Upload a skill</b> and pick the zip.</span></li>
+            <li><span>Start a chat and type <code>collate my transcripts</code>.</span></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </section>
 
-      <section id="bundle" aria-labelledby="bundle-title">
-        <div class="bundle">
-          <div>
-            <h2 id="bundle-title">Full stack: all twelve skills.</h2>
-            <div class="icons" id="allicons" aria-hidden="true"></div>
-          </div>
-          <div>
-            <div class="bprice">
-              <span class="was" data-price="stack-list"></span>
-              <span class="now" data-price="stack"></span>
-              <span class="save" data-price="stack-save"></span>
-            </div>
-            <div class="actions" style="margin-top:20px">
-              <a class="btn gradient" href="https://www.linkedin.com/in/nithyn/" target="_blank" rel="noopener" data-follow>Get notified on LinkedIn</a>
-            </div>
-          </div>
+  <section id="skills" aria-labelledby="skills-title">
+    <div class="wrap">
+      <div class="sh">
+        <h2 class="h-40" id="skills-title">One skill for each slow step.</h2>
+        <p class="copy-18 muted">Five packs, from scoping a study to writing it up for your portfolio. Each skill hands its output to the next.</p>
+      </div>
+      <div class="packs" id="packlist"></div>
+    </div>
+  </section>
+
+  <section id="pricing" aria-labelledby="pricing-title">
+    <div class="wrap">
+      <div class="ph">
+        <div class="sh">
+          <h2 class="h-40" id="pricing-title">Pricing</h2>
+          <p class="copy-18 muted">One price per skill, pack or the full stack.</p>
         </div>
-      </section>
-      <section id="about" aria-labelledby="about-title">
-        <h2 id="about-title">About each skill.</h2>
-        <details class="readall" id="readall">
-          <summary>Read more about all twelve skills</summary>
-          <div class="about" id="aboutlist"></div>
-        </details>
-      </section>
-      <section id="legal" aria-labelledby="legal-title">
-        <h2 id="legal-title">Terms and policies.</h2>
-        <p class="legal-meta">Last updated 30 October 2026. Plain-English terms; the bold headings are part of the terms.</p>
-        <div class="legal">
+        <div class="seg" role="group" aria-label="Show prices for">
+          <button type="button" data-region="in" aria-pressed="false">India ₹</button>
+          <button type="button" data-region="intl" aria-pressed="true">International $</button>
+        </div>
+      </div>
+      <div class="pricing">
+        <div class="main-price">
+          <h3 class="h-20">Full stack</h3>
+          <p class="copy-14 muted">All 12 skills, every pack.</p>
+          <div class="big"><span class="now" data-price="stack"></span><span class="was" data-price="stack-list"></span></div>
+          <p class="save" data-price="stack-save"></p>
+          <ul class="ticks">
+            <li>Every skill routes work to the next one.</li>
+            <li>All five packs in one licence.</li>
+            <li>One licence for one person.</li>
+          </ul>
+          <a class="btn brand lg" href="https://www.linkedin.com/in/nithyn/" target="_blank" rel="noopener" data-follow>Get notified on LinkedIn</a>
+          <p class="note">Paid skills open soon. No payment is taken on this site.</p>
+        </div>
+        <ul class="plist" id="plist"></ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="legal" aria-labelledby="legal-title">
+    <div class="wrap">
+      <h2 class="h-24" id="legal-title">Terms and policies</h2>
+      <p class="copy-14 muted" style="margin-top:var(--s2)">Last updated 30 October 2026. Plain-English terms; the bold headings are part of the terms.</p>
+<div class="legal">
           <details id="legal-licence">
             <summary>Skill Licence Terms</summary>
             <div class="lt">
@@ -470,7 +428,7 @@
             <summary>Privacy</summary>
             <div class="lt">
               <p>This website does not ask for your name, email address or payment details. It saves two settings in your own browser: your price region, and whether you clicked Follow. They never leave your device, and you can clear them in your browser settings.</p>
-              <p>The website is hosted on GitHub Pages, and GitHub's privacy statement covers hosting and access logs. Fonts load from Google Fonts and the zip helper loads from cdnjs, so those services receive your IP address. When you click a LinkedIn link, LinkedIn's privacy policy applies. Downloads are built in your own browser, and Nithyn does not receive a list of who downloaded a skill.</p>
+              <p>The website is hosted on GitHub Pages, and GitHub's privacy statement covers hosting and access logs. Fonts load from Google Fonts, and the zip, 3D and animation scripts load from cdnjs, so those services receive your IP address. When you click a LinkedIn link, LinkedIn's privacy policy applies. Downloads are built in your own browser, and Nithyn does not receive a list of who downloaded a skill.</p>
             </div>
           </details>
           <details id="legal-marks">
@@ -490,24 +448,27 @@
             </div>
           </details>
         </div>
-      </section>
-    </main>
+    </div>
+  </section>
+</main>
 
-    <footer>
-      <div class="foot">
-        <h2>More skills coming.</h2>
-        <a class="btn primary" href="https://www.linkedin.com/in/nithyn/" target="_blank" rel="noopener" data-follow>Follow on LinkedIn</a>
-      </div>
-      <p class="credits">Thanks to The Goal by Eliyahu M. Goldratt and to Constantine Papas, PhD. Skill icons: <a href="https://huggingface.co/datasets/nvidia/simready-assets" target="_blank" rel="noopener">NVIDIA SimReady Assets</a>, CC BY 4.0.</p>
-      <nav class="flinks" aria-label="Legal">
-        <a href="#legal-licence" data-legal>Licence</a><a href="#legal-site" data-legal>Website terms</a><a href="#legal-refunds" data-legal>Refunds</a><a href="#legal-privacy" data-legal>Privacy</a><a href="#legal-contact" data-legal>Contact</a>
-      </nav>
-      <p class="copy">© 2026 Nithyn. All rights reserved.</p>
-    </footer>
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <p class="h-20">More skills coming.</p>
+      <a class="btn" href="https://www.linkedin.com/in/nithyn/" target="_blank" rel="noopener" data-follow>Follow on LinkedIn</a>
+    </div>
+    <nav class="flinks" aria-label="Legal">
+      <a href="#legal-licence" data-legal>Licence</a><a href="#legal-site" data-legal>Website terms</a><a href="#legal-refunds" data-legal>Refunds</a><a href="#legal-privacy" data-legal>Privacy</a><a href="#legal-contact" data-legal>Contact</a>
+    </nav>
+    <p class="credits">Thanks to The Goal by Eliyahu M. Goldratt and to Constantine Papas, PhD. Skill icons: <a href="https://huggingface.co/datasets/nvidia/simready-assets" target="_blank" rel="noopener">NVIDIA SimReady Assets</a>, CC BY 4.0. © 2026 Nithyn. All rights reserved.</p>
   </div>
-</div>
+</footer>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
 <script>
 (() => {
   const LINKEDIN = "https://www.linkedin.com/in/nithyn/";
@@ -523,36 +484,7 @@
             fmt: (n) => "$" + n },
   };
 
-  // ---- icons (24px line glyphs) ----
-  const IC = {
-    compass: '<circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/>',
-    rows: '<rect x="4" y="5" width="16" height="3.5" rx="1"/><rect x="4" y="10.25" width="16" height="3.5" rx="1"/><rect x="4" y="15.5" width="10" height="3.5" rx="1"/>',
-    chart: '<path d="M4 20h16"/><rect x="6" y="11" width="3" height="7" rx=".8"/><rect x="11" y="6" width="3" height="12" rx=".8"/><rect x="16" y="13" width="3" height="5" rx=".8"/>',
-    megaphone: '<path d="M4 10v4a1 1 0 0 0 1 1h2l5 4V5L7 9H5a1 1 0 0 0-1 1z"/><path d="M16 9a4 4 0 0 1 0 6"/><path d="M18.5 6.5a7.5 7.5 0 0 1 0 11"/>',
-    briefcase: '<rect x="3.5" y="7.5" width="17" height="12" rx="2"/><path d="M9 7.5V6a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v1.5"/><path d="M3.5 12.5h17"/>',
-    question: '<circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .8-1 1.5V14"/><path d="M12 17.2v.1"/>',
-    funnel: '<path d="M4 5h16l-6 7.5V19l-4-2v-4.5z"/>',
-    clipboard: '<rect x="5" y="4.5" width="14" height="16" rx="2"/><path d="M9 4.5h6v2.5H9z"/><path d="M8.5 11.5l1.5 1.5 3-3"/><path d="M8.5 16.5h7"/>',
-    chat: '<path d="M4 5h16v11H9l-5 4z"/><path d="M8 9h8M8 12h5"/>',
-    bulb: '<path d="M9 18h6"/><path d="M10 21h4"/><path d="M12 3a6 6 0 0 0-3.5 10.9c.6.4 1 1.1 1 1.9V16h5v-.2c0-.8.4-1.5 1-1.9A6 6 0 0 0 12 3z"/>',
-    sort: '<path d="M7 4v16"/><path d="M4 7l3-3 3 3"/><path d="M17 20V4"/><path d="M14 17l3 3 3-3"/>',
-    trend: '<path d="M4 19h16"/><path d="M5 15l4-4 3 3 6-6"/><path d="M15 8h3v3"/>',
-    report: '<rect x="3.5" y="4.5" width="17" height="12" rx="1.5"/><path d="M8 20h8"/><path d="M12 16.5V20"/><path d="M7.5 13v-3M11 13V8.5M14.5 13v-2"/>',
-    phone: '<rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M10 6h4"/><rect x="9.5" y="9" width="5" height="4" rx=".8"/><path d="M9.5 16h5"/>',
-    people: '<circle cx="9" cy="8.5" r="3"/><path d="M3.5 19a5.5 5.5 0 0 1 11 0"/><circle cx="17" cy="9.5" r="2.4"/><path d="M15.5 14.2A4.5 4.5 0 0 1 20.5 19"/>',
-    pen: '<path d="M4 20l4.5-1 10-10a2.1 2.1 0 0 0-3-3l-10 10z"/><path d="M14 7l3 3"/>',
-    folder: '<path d="M3.5 7a1.5 1.5 0 0 1 1.5-1.5h4l2 2h8a1.5 1.5 0 0 1 1.5 1.5v8.5A1.5 1.5 0 0 1 19 19H5a1.5 1.5 0 0 1-1.5-1.5z"/><path d="M12 10.5l1 2 2.2.3-1.6 1.5.4 2.2-2-1-2 1 .4-2.2-1.6-1.5 2.2-.3z"/>',
-  };
-  // Skill icons: 3D renders from NVIDIA SimReady Assets (CC BY 4.0), cropped and resized. Pack icons stay as line glyphs.
-  const IMG = { question: "question-zero", funnel: "diagnostic-partner", clipboard: "research-plan-creator", chat: "transcript-collator",
-    bulb: "collated-synth", sort: "collation-sorter", trend: "quant-analyst", report: "report-builder",
-    phone: "research-driven-prototype", people: "stakeholder-panel", pen: "stop-ai-slop", folder: "case-study-builder" };
-  const tile = (name, c) => IMG[name]
-    ? `<span class="ic" style="--c:${c}" aria-hidden="true"><img src="assets/icons/${IMG[name]}.webp" alt="" width="88" height="88" loading="lazy" decoding="async"></span>`
-    : `<span class="ic" style="--c:${c}" aria-hidden="true"><svg viewBox="0 0 24 24">${IC[name]}</svg></span>`;
 
-  // ---- packs, each named for the problem it solves ----
-  // Each skill: short "more" line, SPIN copy (situation, problem, implication, need-payoff), and "hood": how it's built.
   const PACKS = [
     { key: "scope", short: "Scope", name: "Scope pack", icon: "compass", c: "var(--blue)", pain: "“Don't tell us what we already know.”",
       skills: [
@@ -654,7 +586,7 @@
           n: "Text that reads like you wrote it, with quotes and numbers untouched.",
           hood: ["A seven-step pass in a fixed order.", "Scores the result on five dimensions and runs again below the bar.", "Runs as the last step inside every other output skill in the stack."] },
       ] },
-    { key: "career", short: "Career", name: "Career", icon: "briefcase", c: "var(--orange)", pain: "“The work was strong. The portfolio isn't.”", single: true,
+    { key: "career", short: "Career", name: "Career pack", icon: "briefcase", c: "var(--orange)", pain: "“The work was strong. The portfolio isn't.”", single: true,
       skills: [
         { id: "case-study-builder", name: "Case Study Builder", icon: "folder",
           more: "Turns project documents into portfolio case studies built the way hiring managers read them.",
@@ -666,140 +598,37 @@
           hood: ["Works out what the specific team rewards before drafting.", "Probes impact at four levels, from insight to business.", "Plans how you'll walk the panel through it."] },
       ] },
   ];
-  const ALL = PACKS.flatMap((p) => p.skills.map((s) => ({ ...s, c: p.c, pack: p.name })));
 
-  // ---- hero layers (click a layer to open that pack) ----
-  const iso = document.getElementById("iso");
-  PACKS.forEach((p, i) => {
-    const layer = document.createElement("div");
-    layer.className = "layer";
-    layer.style.setProperty("--c", p.c);
-    layer.style.setProperty("--k", String(i * 0.13));
-    layer.style.setProperty("--i", String(i));
-    layer.style.cursor = "pointer";
-    layer.innerHTML = `<div class="lrow"><div class="ln">${p.short}</div><div class="lc">${p.skills.map((s) => tile(s.icon, p.c)).join("")}</div></div>`;
-    layer.addEventListener("click", () => { document.getElementById("packs").scrollIntoView({ behavior: "smooth" }); goTo(i); });
-    iso.appendChild(layer);
-  });
-  document.getElementById("collator-icon").outerHTML = tile("chat", "var(--purple)");
-  {
-    const c = PACKS.flatMap((p) => p.skills).find((s) => s.id === "transcript-collator");
-    document.getElementById("collator-more").outerHTML =
-      `<details class="more" style="--c:var(--purple);margin-top:18px"><summary>Know more</summary><p>${c.more}</p><p class="kstat">${c.stat}</p><a href="#about-${c.id}" data-about>How it's built ↓</a></details>`;
-  }
+  const ALL = PACKS.flatMap((p) => p.skills.map((s) => ({ ...s, pack: p.key })));
+  const icon = (id, size) => `assets/icons/${size === "hd" ? "hd/" : ""}${id}.webp`;
+  const GENERIC = /^(Knows all 12|Reads your files|Guards its own)/;
 
-  // ---- pack carousel ----
-  const track = document.getElementById("track");
-  const tabs = document.getElementById("tabs");
-  PACKS.forEach((p, i) => {
-    const slide = document.createElement("article");
-    slide.className = "slide";
-    slide.id = "pack-" + p.key;
-    slide.style.setProperty("--c", p.c);
-    slide.setAttribute("aria-label", `${p.name}, ${i + 1} of ${PACKS.length}`);
-    slide.innerHTML = `
-      <div class="sl">
-        ${tile(p.icon, p.c)}
-        <h3>${p.name}</h3>
-        <p class="pain">${p.pain}</p>
-        <div class="pprice">
-          ${p.single ? "" : `<span class="was" data-price="pack-list" data-pack="${p.key}"></span>`}
-          <span class="now" data-price="pack" data-pack="${p.key}"></span>
-          ${p.single ? "" : `<span class="save" data-price="pack-save" data-pack="${p.key}"></span>`}
-        </div>
-        <div><a class="btn" href="${LINKEDIN}" target="_blank" rel="noopener" data-follow>Get notified</a></div>
-      </div>
-      <ul class="skills">${p.skills.map((s) => `
-        <li>${tile(s.icon, p.c)}
+  // ---- skills, grouped by pack ----
+  document.getElementById("packlist").innerHTML = PACKS.map((p) => `
+    <div class="pack" id="pack-${p.key}">
+      <div class="pack-h"><h3 class="h-24">${p.name}</h3><p class="muted">${p.pain}</p></div>
+      <ul class="rows">${p.skills.map((s) => `
+        <li><div class="row" id="skill-${s.id}">
+          <img class="icon" src="${icon(s.id, "hd")}" alt="" width="48" height="48" loading="lazy" decoding="async">
           <div>
-            <h4>${s.name}</h4>
-            <details class="more"><summary>Know more</summary><p>${s.more}</p><p class="kstat">${s.stat}</p><a href="#about-${s.id}" data-about>How it's built ↓</a></details>
+            <h4 class="h-16">${s.name}</h4>
+            <p class="copy-14 muted">${s.more}</p>
+            <details class="more"><summary>How it's built</summary>
+              <ul>${s.hood.filter((h) => !GENERIC.test(h)).slice(0, 3).map((h) => `<li>${h}</li>`).join("")}<li>${s.stat}.</li></ul>
+            </details>
           </div>
-          <div class="sp">${s.free && freeActive
-            ? `<s data-price="single"></s><a href="#free">Free ↓</a>`
-            : `<span data-price="single"></span>`}</div>
-        </li>`).join("")}
-      </ul>`;
-    track.appendChild(slide);
+          <div class="sp">${s.free && freeActive ? `<s data-price="single"></s><a class="link" href="#free">Free</a>` : `<span data-price="single"></span>`}</div>
+        </div></li>`).join("")}
+      </ul>
+    </div>`).join("");
 
-    const tab = document.createElement("button");
-    tab.type = "button";
-    tab.className = "tab";
-    tab.setAttribute("role", "tab");
-    tab.setAttribute("aria-controls", slide.id);
-    tab.style.setProperty("--c", p.c);
-    tab.innerHTML = `${tile(p.icon, p.c)}${p.short}`;
-    tab.addEventListener("click", () => goTo(i));
-    tabs.appendChild(tab);
-  });
-  const slides = [...track.children];
-  const tabEls = [...tabs.children];
-  const prevBtn = document.getElementById("prev");
-  const nextBtn = document.getElementById("next");
-  let current = 0;
-  function goTo(i) {
-    i = Math.max(0, Math.min(slides.length - 1, i));
-    track.scrollTo({ left: slides[i].offsetLeft - track.offsetLeft });
-    setCurrent(i);
-  }
-  function setCurrent(i) {
-    current = i;
-    tabEls.forEach((t, k) => t.setAttribute("aria-selected", String(k === i)));
-    prevBtn.disabled = i === 0;
-    nextBtn.disabled = i === slides.length - 1;
-  }
-  let raf = 0;
-  track.addEventListener("scroll", () => {
-    cancelAnimationFrame(raf);
-    raf = requestAnimationFrame(() => {
-      const x = track.scrollLeft;
-      let best = 0, bestD = Infinity;
-      slides.forEach((sl, k) => { const d = Math.abs(sl.offsetLeft - track.offsetLeft - x); if (d < bestD) { bestD = d; best = k; } });
-      if (best !== current) setCurrent(best);
-    });
-  });
-  prevBtn.addEventListener("click", () => goTo(current - 1));
-  nextBtn.addEventListener("click", () => goTo(current + 1));
-  track.addEventListener("keydown", (e) => {
-    if (e.key === "ArrowRight") { e.preventDefault(); goTo(current + 1); }
-    if (e.key === "ArrowLeft") { e.preventDefault(); goTo(current - 1); }
-  });
-  track.tabIndex = 0;
-  setCurrent(0);
-
-  document.getElementById("allicons").innerHTML = ALL.map((s) => tile(s.icon, s.c)).join("");
-
-  // ---- about each skill ----
-  document.getElementById("aboutlist").innerHTML = ALL.map((s) => `
-    <article class="ab" id="about-${s.id}" style="--c:${s.c}">
-      <div class="abh">${tile(s.icon, s.c)}<div><h3>${s.name}</h3><small>${s.pack}</small></div></div>
-      <dl class="spin">
-        <div><dt>Where you are</dt><dd>${s.s}</dd></div>
-        <div><dt>The problem</dt><dd>${s.p}</dd></div>
-        <div><dt>What it costs you</dt><dd>${s.i}</dd></div>
-        <div><dt>With this skill</dt><dd>${s.n}</dd></div>
-      </dl>
-      <div class="hood">
-        <h4>How it's built</h4>
-        <ul>${s.hood.map((h) => `<li>${h}</li>`).join("")}</ul>
-        <p class="stat">${s.stat}</p>
-      </div>
-    </article>`).join("");
-  const readall = document.getElementById("readall");
-  function openAbout(id) {
-    readall.open = true;
-    const el = document.getElementById(id);
-    if (el) requestAnimationFrame(() => el.scrollIntoView({ behavior: "smooth", block: "start" }));
-  }
-  document.addEventListener("click", (e) => {
-    const a = e.target.closest("a[data-about]");
-    if (!a) return;
-    e.preventDefault();
-    const id = a.getAttribute("href").slice(1);
-    try { history.replaceState(null, "", "#" + id); } catch (err) {}
-    openAbout(id);
-  });
-  if (location.hash.startsWith("#about-")) openAbout(location.hash.slice(1));
+  // ---- pack price list ----
+  document.getElementById("plist").innerHTML = PACKS.map((p) => `
+    <li>
+      <div><h3 class="h-16">${p.name}</h3><p class="copy-14 muted">${p.skills.map((s) => s.name).join(", ")}</p></div>
+      <div><p class="pp" data-price="pack" data-pack="${p.key}"></p>${p.single ? "" : `<p class="ps"><s data-price="pack-list" data-pack="${p.key}"></s> <span data-price="pack-save" data-pack="${p.key}"></span></p>`}</div>
+    </li>`).join("") + `
+    <li><div><h3 class="h-16">Single skill</h3><p class="copy-14 muted">Any one skill on its own.</p></div><div><p class="pp" data-price="single"></p></div></li>`;
 
   // ---- free period ----
   if (!freeActive) document.querySelectorAll("[data-free-only]").forEach((el) => { el.hidden = true; });
@@ -827,13 +656,13 @@
       q("pack").textContent = P.fmt(price);
       if (!p.single) {
         q("pack-list").textContent = P.fmt(listPrice);
-        q("pack-save").textContent = "Save " + pct(price, listPrice) + "%";
+        q("pack-save").textContent = "save " + pct(price, listPrice) + "%";
       }
     });
     const stackList = P.single * ALL.length;
     document.querySelector('[data-price="stack-list"]').textContent = P.fmt(stackList);
     document.querySelector('[data-price="stack"]').textContent = P.fmt(P.stack);
-    document.querySelector('[data-price="stack-save"]').textContent = "Save " + pct(P.stack, stackList) + "%";
+    document.querySelector('[data-price="stack-save"]').textContent = "You save " + pct(P.stack, stackList) + "% against single skills.";
     document.querySelectorAll(".seg button").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.region === region)));
   }
   let region = store.get("region") || guessRegion();
@@ -843,6 +672,151 @@
     region = b.dataset.region; store.set("region", region); applyPrices(region);
   }));
 
+  // ---- sticky header gets a hairline once the page scrolls ----
+  const hdr = document.getElementById("hdr");
+  const onScroll = () => hdr.classList.toggle("scrolled", window.scrollY > 8);
+  window.addEventListener("scroll", onScroll, { passive: true });
+  onScroll();
+
+  // ---- jump to a skill row from the 3D hero ----
+  function goToSkill(id) {
+    const row = document.getElementById("skill-" + id);
+    if (!row) return;
+    row.scrollIntoView({ behavior: "smooth", block: "center" });
+    row.classList.remove("flash"); void row.offsetWidth; row.classList.add("flash");
+  }
+
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  // ---- 3D hero: the twelve skill objects float in a scene that follows the pointer ----
+  function heroFallback(stage) {
+    const g = document.createElement("div");
+    g.className = "stage-fallback";
+    g.innerHTML = ALL.map((s) => `<img src="${icon(s.id, "hd")}" alt="" width="160" height="160">`).join("");
+    stage.appendChild(g);
+  }
+  function initHero() {
+    const stage = document.getElementById("stage");
+    const tip = document.getElementById("tip");
+    let gl = false;
+    try { const c = document.createElement("canvas"); gl = !!(c.getContext("webgl") || c.getContext("experimental-webgl")); } catch (e) {}
+    if (!window.THREE || !gl) { heroFallback(stage); return; }
+    const T = window.THREE;
+    const renderer = new T.WebGLRenderer({ antialias: true, alpha: true, powerPreference: "low-power" });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    renderer.outputEncoding = T.sRGBEncoding;
+    stage.appendChild(renderer.domElement);
+    const scene = new T.Scene();
+    const camera = new T.PerspectiveCamera(32, 1, 0.1, 100);
+    camera.position.set(0, 0, 13);
+    const group = new T.Group();
+    scene.add(group);
+    const loader = new T.TextureLoader();
+    const cols = 4, gapX = 2.25, gapY = 2.15;
+    const items = ALL.map((s, i) => {
+      const tex = loader.load(icon(s.id, "hd"));
+      tex.encoding = T.sRGBEncoding;
+      tex.anisotropy = renderer.capabilities.getMaxAnisotropy();
+      const mat = new T.MeshBasicMaterial({ map: tex, transparent: true, depthWrite: false, opacity: 1 });
+      const mesh = new T.Mesh(new T.PlaneGeometry(1.8, 1.8), mat);
+      const col = i % cols, row = Math.floor(i / cols);
+      const base = { x: (col - (cols - 1) / 2) * gapX + (row % 2 ? 0.4 : -0.2), y: (1 - row) * gapY, z: Math.sin(i * 2.3) * 0.9 };
+      mesh.position.set(base.x, base.y, base.z);
+      mesh.userData = { id: s.id, name: s.name, base, phase: i * 0.7 };
+      group.add(mesh);
+      return mesh;
+    });
+
+    function size() {
+      const w = stage.clientWidth, h = stage.clientHeight;
+      renderer.setSize(w, h, false);
+      camera.aspect = w / h;
+      camera.position.z = w < 520 ? 18 : 13;
+      camera.updateProjectionMatrix();
+    }
+    size();
+    new ResizeObserver(size).observe(stage);
+
+    const ray = new T.Raycaster();
+    const ptr = new T.Vector2(9, 9);
+    const look = { x: 0, y: 0 };
+    let hovered = null;
+    stage.addEventListener("pointermove", (e) => {
+      const r = stage.getBoundingClientRect();
+      ptr.x = ((e.clientX - r.left) / r.width) * 2 - 1;
+      ptr.y = -((e.clientY - r.top) / r.height) * 2 + 1;
+      look.x = ptr.x; look.y = ptr.y;
+    });
+    stage.addEventListener("pointerleave", () => { ptr.set(9, 9); look.x = 0; look.y = 0; });
+    stage.addEventListener("click", () => { if (hovered) goToSkill(hovered.userData.id); });
+
+    const G = window.gsap;
+    function setHover(m) {
+      if (m === hovered) return;
+      if (hovered && G) G.to(hovered.scale, { x: 1, y: 1, duration: 0.4, ease: "power3.out" });
+      hovered = m;
+      stage.style.cursor = m ? "pointer" : "";
+      if (m) {
+        if (G) G.to(m.scale, { x: 1.22, y: 1.22, duration: 0.4, ease: "back.out(2)" });
+        tip.textContent = m.userData.name;
+        tip.classList.add("on");
+      } else tip.classList.remove("on");
+    }
+
+    if (G && !reduceMotion) {
+      items.forEach((m, i) => {
+        G.from(m.position, { z: -8, duration: 1.4, delay: 0.15 + i * 0.05, ease: "expo.out" });
+        G.from(m.material, { opacity: 0, duration: 0.9, delay: 0.15 + i * 0.05, ease: "power2.out" });
+      });
+    }
+
+    let visible = true, running = true;
+    new IntersectionObserver((en) => { visible = en[0].isIntersecting; }).observe(stage);
+    document.addEventListener("visibilitychange", () => { running = !document.hidden; });
+    const clock = new T.Clock();
+    const v = new T.Vector3();
+    function frame() {
+      requestAnimationFrame(frame);
+      if (!visible || !running) return;
+      const t = clock.getElapsedTime();
+      group.rotation.y += ((look.x * 0.28) - group.rotation.y) * 0.06;
+      group.rotation.x += ((-look.y * 0.18) - group.rotation.x) * 0.06;
+      if (!reduceMotion) items.forEach((m) => {
+        const d = m.userData;
+        m.position.y = d.base.y + Math.sin(t * 0.9 + d.phase) * 0.09;
+        m.rotation.z = Math.sin(t * 0.6 + d.phase) * 0.05;
+      });
+      ray.setFromCamera(ptr, camera);
+      const hit = ray.intersectObjects(items)[0];
+      setHover(hit ? hit.object : null);
+      if (hovered) {
+        hovered.getWorldPosition(v).project(camera);
+        tip.style.left = ((v.x + 1) / 2) * stage.clientWidth + "px";
+        tip.style.top = ((1 - v.y) / 2) * stage.clientHeight - 40 + "px";
+      }
+      renderer.render(scene, camera);
+    }
+    frame();
+  }
+
+  // ---- list icons lift on hover; sections ease in on scroll ----
+  function initMotion() {
+    const G = window.gsap;
+    if (!G || reduceMotion) return;
+    document.querySelectorAll(".row").forEach((row) => {
+      const img = row.querySelector(".icon");
+      row.addEventListener("pointerenter", () => G.to(img, { y: -4, rotation: -6, scale: 1.12, duration: 0.35, ease: "back.out(2)" }));
+      row.addEventListener("pointerleave", () => G.to(img, { y: 0, rotation: 0, scale: 1, duration: 0.4, ease: "power3.out" }));
+    });
+    if (window.ScrollTrigger) {
+      G.registerPlugin(window.ScrollTrigger);
+      G.utils.toArray(".sh, .points > div, .offer, .pack, .main-price, .plist > li").forEach((el) => {
+        G.from(el, { y: 16, opacity: 0, duration: 0.6, ease: "power2.out", scrollTrigger: { trigger: el, start: "top 88%", once: true } });
+      });
+    }
+  }
+  window.addEventListener("load", () => { initHero(); initMotion(); });
+
   // ---- follow on LinkedIn before the first download ----
   let followed = store.get("followed") === "1";
   const pendingKind = {};
@@ -850,7 +824,7 @@
   function showGate(skill) {
     const g = document.getElementById("gate-" + skill);
     g.innerHTML = `<p>Follow Nithyn on LinkedIn to download.</p>
-      <a class="btn gradient" href="${LINKEDIN}" target="_blank" rel="noopener" data-follow>${LI_ICON} Follow on LinkedIn</a>`;
+      <a class="btn brand sm" href="${LINKEDIN}" target="_blank" rel="noopener" data-follow>${LI_ICON} Follow on LinkedIn</a>`;
     g.hidden = false;
   }
   function showReady(skill) {
@@ -976,6 +950,7 @@
     if (!followed) { pendingKind[skill] = kind; showGate(skill); return; }
     offer(btn, skill, kind);
   });
+
 })();
 </script>
 </body>
