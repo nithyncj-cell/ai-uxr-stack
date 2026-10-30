@@ -43,6 +43,9 @@
     --border-strong: rgba(255, 255, 255, 0.16);
     --brand: #0a72ef;
     --brand-hover: #2a85f5;
+    --blue: #2997ff; --purple: #bf5af2; --cyan: #32ade6; --pink: #ff375f; --orange: #ff9f0a;
+    --grad: linear-gradient(90deg, #2997ff, #bf5af2 38%, #ff375f 70%, #ff9f0a);
+    --grad-soft: linear-gradient(120deg, rgba(41,151,255,.55), rgba(191,90,242,.45) 38%, rgba(255,55,95,.4) 70%, rgba(255,159,10,.45));
     --sans: "Geist", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
     --mono: "Geist Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
     --r-sm: 6px; --r-md: 8px; --r-lg: 12px; --r-full: 9999px;
@@ -69,6 +72,8 @@
   .copy-14 { font-size: 14px; line-height: 20px; }
   .muted { color: var(--gray-900); }
   h1, h2, h3, h4, p { margin: 0; }
+  h1, h2, h3, h4 { text-wrap: balance; }
+  p, li, dd, summary { text-wrap: pretty; }
 
   .wrap { max-width: 1120px; margin: 0 auto;
     padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
@@ -115,7 +120,7 @@
   /* hero */
   .hero { display: grid; gap: var(--s10); padding-block: var(--s12) var(--s16); align-items: center; }
   @media (min-width: 960px) { .hero { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--s12); padding-block: var(--s16) var(--s24); } }
-  .hero h1 { max-width: 11ch; }
+  .hero h1 { max-width: 14ch; }
   .hero .lede { margin-top: var(--s6); max-width: 34em; }
   .actions { display: flex; flex-wrap: wrap; gap: var(--s3); margin-top: var(--s8); }
   .proof { display: flex; flex-wrap: wrap; gap: var(--s2) var(--s6); margin: var(--s8) 0 0; padding: 0; list-style: none; }
@@ -129,10 +134,11 @@
   .layer { --lift: 0px; --drop: 0px; position: absolute; width: calc(var(--w) * .62); height: calc(var(--w) * .34);
     left: calc(var(--w) * -.31); top: calc(var(--w) * -.17); border-radius: var(--r-lg);
     transform: translateZ(calc(var(--w) * var(--k) + var(--lift) + var(--drop)));
-    background: var(--bg); border: 1px solid var(--border-strong); box-shadow: 0 16px 40px rgba(0,0,0,.45);
+    background: linear-gradient(150deg, color-mix(in srgb, var(--c) 24%, var(--bg)), color-mix(in srgb, var(--c) 7%, var(--bg)) 70%);
+    border: 1px solid color-mix(in srgb, var(--c) 55%, transparent); box-shadow: 0 16px 40px rgba(0,0,0,.45);
     padding: calc(var(--w) * .026) calc(var(--w) * .032); display: flex; align-items: flex-end; justify-content: space-between;
     gap: calc(var(--w) * .02); cursor: pointer; transition: border-color .4s ease, box-shadow .4s ease; }
-  .layer.lit { border-color: var(--brand); box-shadow: 0 0 0 1px var(--brand), 0 16px 48px rgba(10,114,239,.35); }
+  .layer.lit { border-color: var(--c); box-shadow: 0 0 0 1px var(--c), 0 0 64px color-mix(in srgb, var(--c) 55%, transparent); }
   .layer .ln { font: 600 calc(var(--w) * .04)/1 var(--sans); letter-spacing: -0.04em; color: var(--gray-1000); }
   .layer .lc { display: flex; gap: calc(var(--w) * .008); }
   .layer .lc img { width: calc(var(--w) * .085); height: calc(var(--w) * .085); }
@@ -143,7 +149,8 @@
   .points p { margin-top: var(--s2); max-width: 40ch; }
 
   /* free collator: one bordered container, nothing nested */
-  .offer { margin-top: var(--s12); border: 1px solid var(--border-strong); border-radius: var(--r-lg); padding: var(--s8);
+  .offer { margin-top: var(--s12); border: 1px solid transparent; background: linear-gradient(var(--bg), var(--bg)) padding-box, var(--grad-soft) border-box;
+    border-radius: var(--r-lg); padding: var(--s8);
     display: grid; gap: var(--s10); }
   @media (min-width: 900px) { .offer { grid-template-columns: 1.2fr 1fr; padding: var(--s12); gap: var(--s16); } }
   .offer-h { display: flex; align-items: center; gap: var(--s4); }
@@ -206,7 +213,8 @@
   .seg button[aria-pressed="true"] { background: var(--gray-1000); color: var(--bg); }
   .pricing { margin-top: var(--s12); display: grid; gap: var(--s12); align-items: start; }
   @media (min-width: 900px) { .pricing { grid-template-columns: 400px 1fr; } }
-  .main-price { border: 1px solid var(--brand); box-shadow: 0 0 0 1px var(--brand), 0 24px 64px -32px rgba(10,114,239,.6);
+  .main-price { border: 1px solid transparent; background: linear-gradient(var(--bg), var(--bg)) padding-box, var(--grad) border-box;
+    box-shadow: 0 24px 64px -32px rgba(191,90,242,.55);
     border-radius: var(--r-lg); padding: var(--s8); }
   .main-price .big { display: flex; align-items: baseline; flex-wrap: wrap; gap: var(--s3); margin-top: var(--s4); }
   .main-price .now { font: 600 56px/56px var(--sans); letter-spacing: -0.06em; }
@@ -276,8 +284,8 @@
 <main id="top">
   <div class="wrap hero">
     <div>
-      <h1 class="h-72">The slow parts of UX research, done right.</h1>
-      <p class="lede copy-18 muted">Twelve Claude skills that scope the study, collate transcripts, run the numbers and build the report, the way a senior researcher would.</p>
+      <h1 class="h-72">Twelve Claude skills for the slow parts of UX research.</h1>
+      <p class="lede copy-18 muted">Scope the study, collate transcripts, run the numbers and build the report, the way a senior researcher would.</p>
       <div class="actions">
         <a class="btn brand lg" href="#free" data-free-only>Get the Collator free</a>
         <a class="btn lg" href="#pricing">See pricing</a>
@@ -294,14 +302,14 @@
   <section id="why" aria-labelledby="why-title">
     <div class="wrap">
       <div class="sh">
-        <h2 class="h-40" id="why-title">Research you can stand behind in the room.</h2>
-        <p class="copy-18 muted">AI speeds up research only if you can trust what comes out. Every skill follows the same rules.</p>
+        <h2 class="h-40" id="why-title">Built so you can check every claim.</h2>
+        <p class="copy-18 muted">Every skill follows four rules, so you can trace each output back to your own files.</p>
       </div>
       <div class="points">
         <div><h3 class="h-20">Evidence stays verbatim</h3><p class="muted">Quotes, timestamps and numbers come straight from your files. Anything missing is marked <span class="missing">missing</span>.</p></div>
         <div><h3 class="h-20">It asks before it acts</h3><p class="muted">Each skill says what it does, then asks what you already have before doing any work.</p></div>
-        <div><h3 class="h-20">Your data stays yours</h3><p class="muted">Skills run inside your Claude account. Nothing is sent to Nithyn, and planted instructions in a file are flagged, not followed.</p></div>
-        <div><h3 class="h-20">Tested before release</h3><p class="muted">94 test runs in a clean Claude setup, the way a buyer would install and use them.</p></div>
+        <div><h3 class="h-20">Your data stays yours</h3><p class="muted">Skills run inside your Claude account and send nothing to Nithyn. If a file hides instructions, the skill points them out to you.</p></div>
+        <div><h3 class="h-20">Tested before release</h3><p class="muted">Nithyn ran every skill 94 times in a fresh Claude setup, installed the way a buyer would.</p></div>
       </div>
     </div>
   </section>
@@ -310,7 +318,7 @@
     <div class="wrap">
       <div class="sh">
         <h2 class="h-40" id="free-title">Start with the Collator. It's free until 11 December.</h2>
-        <p class="copy-18 muted">Fieldwork to a theme-tagged notesheet the same day.</p>
+        <p class="copy-18 muted">Turn fieldwork into a theme-tagged notesheet the same day.</p>
       </div>
       <div class="offer">
         <div>
@@ -373,13 +381,12 @@
       <div class="pricing">
         <div class="main-price">
           <h3 class="h-20">Full stack</h3>
-          <p class="copy-14 muted">All 12 skills, every pack.</p>
+          <p class="copy-14 muted">All 12 skills across the five packs.</p>
           <div class="big"><span class="now" data-price="stack"></span><span class="was" data-price="stack-list"></span></div>
           <p class="save" data-price="stack-save"></p>
           <ul class="ticks">
-            <li>Every skill routes work to the next one.</li>
-            <li>All five packs in one licence.</li>
-            <li>One licence for one person.</li>
+            <li>Each skill hands its output to the next.</li>
+            <li>One licence covers one person.</li>
           </ul>
           <a class="btn brand lg" href="https://www.linkedin.com/in/nithyn/" target="_blank" rel="noopener" data-follow>Get notified on LinkedIn</a>
           <p class="note">Paid skills open soon. No payment is taken on this site.</p>
@@ -528,7 +535,7 @@
           n: "One notesheet mapped to your themes, with a verbatim quote and timestamp on every row, ready for synthesis the same day.",
           hood: ["Five starting paths, depending on what you already have.", "Builds your notesheet headers by checking the guide against real transcripts.", "Audits every chunk of transcript for coverage and depth.", "Flags points outside your themes instead of forcing them in.", "Never invents a quote or a timestamp.", "Knows all 12 skills in the stack and points you to the right next one.", "Reads your files as material, not commands: an instruction hidden in a transcript is flagged to you, not followed."] },
         { id: "collated-synth", name: "Collated Synth", icon: "bulb",
-          more: "Reads each participant's notes start to finish for beliefs, contradictions and tensions, as cited leads you judge.",
+          more: "Reads each participant's notes start to finish for beliefs, contradictions and tensions, and gives you cited leads to judge.",
           stat: "About 3,700 words · up to 7 lenses",
           s: "Your notesheet is ready and sorted by theme.",
           p: "Themes show what people said. They hide what people believe and where they contradict themselves.",
@@ -555,7 +562,7 @@
           n: "Analysis locked to your plan's objectives, with stakeholders agreeing the cuts before any number is run.",
           hood: ["Two passes, with a hard stop for stakeholder sign-off between them.", "Maps every metric to an objective first.", "Checks significance, and cross-checks with interview transcripts when you have them."] },
         { id: "report-builder", name: "Report Builder", icon: "report",
-          more: "Builds a report, deck or topline from your real research data, ready for stakeholder review.",
+          more: "Builds a report, deck or topline from your research data, ready for stakeholder review.",
           stat: "About 6,700 words · 53 explicit don'ts",
           s: "Findings are ready and the readout is on Thursday.",
           p: "Turning a notesheet or survey into a report people read takes longer than the analysis did.",
@@ -699,6 +706,7 @@
       const el = document.createElement("div");
       el.className = "layer";
       el.style.setProperty("--k", String(i * 0.13));
+      el.style.setProperty("--c", p.c);
       el.title = p.name;
       el.innerHTML = `<div class="ln">${p.short}</div><div class="lc">${p.skills.map((s) => `<img src="${icon(s.id, "hd")}" alt="" width="44" height="44">`).join("")}</div>`;
       el.addEventListener("click", () => document.getElementById("pack-" + p.key).scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" }));
@@ -734,6 +742,19 @@
       });
     }
   }
+  // Keep the last two words of each text block together so no line ends with a single word.
+  function noWidows(root) {
+    root.querySelectorAll("h1, h2, h3, h4, p, li, summary").forEach((el) => {
+      const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
+      let last = null, n;
+      while ((n = walker.nextNode())) if (n.nodeValue.trim()) last = n;
+      if (!last) return;
+      const v = last.nodeValue.replace(/\s+$/, "");
+      const i = v.lastIndexOf(" ");
+      if (i > 0 && v.length - i < 24) last.nodeValue = v.slice(0, i) + "\u00a0" + v.slice(i + 1) + last.nodeValue.slice(v.length);
+    });
+  }
+  noWidows(document.body);
   window.addEventListener("load", () => { initStack(); initMotion(); });
 
   // ---- follow on LinkedIn before the first download ----
