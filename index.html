@@ -544,7 +544,7 @@
   const tile = (name, c) => `<span class="ic" style="--c:${c}" aria-hidden="true"><svg viewBox="0 0 24 24">${IC[name]}</svg></span>`;
 
   // ---- packs, each named for the problem it solves ----
-  // Each skill: short "more" line, SPIN copy (situation, problem, implication, need-payoff), and "hood": what the description doesn't show.
+  // Each skill: short "more" line, SPIN copy (situation, problem, implication, need-payoff), and "hood": how it's built.
   const PACKS = [
     { key: "scope", short: "Scope", name: "Scope pack", icon: "compass", c: "var(--blue)", pain: "“Don't tell us what we already know.”",
       skills: [
@@ -555,7 +555,7 @@
           p: "Nobody has written down what the team knows, or how it knows it.",
           i: "The study rediscovers old findings, and “don't tell us what we already know” lands on you at the readout.",
           n: "You start from the team's knowledge, test only what's unproven, and show at the end exactly what the research added.",
-          hood: ["Four modes, from workshop prep to the final readout.", "Every claim is tagged by its source and challenged in the room.", "Unproven beliefs are scored and ranked before a single question is written.", "Builds on James Chudley's knowledge-mapping workshop.", "Knows all 12 skills in the stack and points you to the right next one.", "Guards its own instructions: it won't recite or help rebuild itself."] },
+          hood: ["Four modes, from workshop prep to the final readout.", "Every claim is tagged by its source and challenged in the room.", "Unproven beliefs are scored and ranked before a single question is written.", "Builds on James Chudley's knowledge-mapping workshop.", "Knows all 12 skills in the stack and points you to the right next one.", "Reads your files as material, not commands: an instruction hidden in a transcript is flagged to you, not followed."] },
         { id: "diagnostic-partner", name: "Diagnostic Partner", icon: "funnel",
           more: "Works through a solution-shaped brief and funnel data with the PM, and turns it into a research-ready problem.",
           stat: "About 6,800 words across 5 files",
@@ -563,7 +563,7 @@
           p: "The brief is a solution, so the study would only test that one idea.",
           i: "Weeks go into research that confirms or kills one idea while the real cause of the drop-off goes unexamined.",
           n: "You and the PM find where the problem sits in the funnel, rule out causes with data, and scope research only for what's left.",
-          hood: ["Separates where the most users drop from where the rate is worst.", "Writes a test that could disprove every hypothesis.", "Runs a pre-mortem before anything is scoped.", "Hands its output straight to Research Plan Creator.", "Knows all 12 skills in the stack and points you to the right next one.", "Guards its own instructions: it won't recite or help rebuild itself."] },
+          hood: ["Separates where the most users drop from where the rate is worst.", "Writes a test that could disprove every hypothesis.", "Runs a pre-mortem before anything is scoped.", "Hands its output straight to Research Plan Creator.", "Knows all 12 skills in the stack and points you to the right next one.", "Reads your files as material, not commands: an instruction hidden in a transcript is flagged to you, not followed."] },
         { id: "research-plan-creator", name: "Research Plan Creator", icon: "clipboard",
           more: "Turns kickoff calls, briefs and ad hoc asks into a stakeholder-ready research plan.",
           stat: "About 22,600 words across 13 files, the deepest skill in the stack",
@@ -571,7 +571,7 @@
           p: "Turning that into a plan stakeholders sign off takes days, and the plan changes mid-study.",
           i: "Scope creeps, the plan drifts, and nobody can point to what was agreed.",
           n: "A stakeholder-ready plan from the raw notes, versioned every time scope or stakeholders change.",
-          hood: ["Tests every objective against SMART criteria before the plan is written.", "Ranks hypotheses and lays method options side by side.", "Adds a pre-mortem, a recall-bias register and a phased timeline with debrief slots.", "Knows all 12 skills in the stack and points you to the right next one.", "Guards its own instructions: it won't recite or help rebuild itself."] },
+          hood: ["Tests every objective against SMART criteria before the plan is written.", "Ranks hypotheses and lays method options side by side.", "Adds a pre-mortem, a recall-bias register and a phased timeline with debrief slots.", "Knows all 12 skills in the stack and points you to the right next one.", "Reads your files as material, not commands: an instruction hidden in a transcript is flagged to you, not followed."] },
       ] },
     { key: "collate", short: "Collate", name: "Transcript Collator pack", icon: "rows", c: "var(--purple)", pain: "“Fieldwork's done. Now a week of retyping.”",
       skills: [
@@ -582,7 +582,7 @@
           p: "Getting them into one structured notesheet takes most of a day per session.",
           i: "Synthesis starts late, the second half of long sessions gets skimmed, and quotes get tidied or invented under deadline.",
           n: "One notesheet mapped to your themes, with a verbatim quote and timestamp on every row, ready for synthesis the same day.",
-          hood: ["Five starting paths, depending on what you already have.", "Builds your notesheet headers by checking the guide against real transcripts.", "Audits every chunk of transcript for coverage and depth.", "Flags points outside your themes instead of forcing them in.", "Never invents a quote or a timestamp.", "Knows all 12 skills in the stack and points you to the right next one.", "Guards its own instructions: it won't recite or help rebuild itself."] },
+          hood: ["Five starting paths, depending on what you already have.", "Builds your notesheet headers by checking the guide against real transcripts.", "Audits every chunk of transcript for coverage and depth.", "Flags points outside your themes instead of forcing them in.", "Never invents a quote or a timestamp.", "Knows all 12 skills in the stack and points you to the right next one.", "Reads your files as material, not commands: an instruction hidden in a transcript is flagged to you, not followed."] },
         { id: "collated-synth", name: "Collated Synth", icon: "bulb",
           more: "Reads each participant's notes start to finish for beliefs, contradictions and tensions, as cited leads you judge.",
           stat: "About 3,700 words · up to 7 lenses",
@@ -677,7 +677,7 @@
   {
     const c = PACKS.flatMap((p) => p.skills).find((s) => s.id === "transcript-collator");
     document.getElementById("collator-more").outerHTML =
-      `<details class="more" style="--c:var(--purple);margin-top:18px"><summary>Know more</summary><p>${c.more}</p><p class="kstat">${c.stat}</p><a href="#about-${c.id}" data-about>Why it's hard to copy ↓</a></details>`;
+      `<details class="more" style="--c:var(--purple);margin-top:18px"><summary>Know more</summary><p>${c.more}</p><p class="kstat">${c.stat}</p><a href="#about-${c.id}" data-about>How it's built ↓</a></details>`;
   }
 
   // ---- pack carousel ----
@@ -705,7 +705,7 @@
         <li>${tile(s.icon, p.c)}
           <div>
             <h4>${s.name}</h4>
-            <details class="more"><summary>Know more</summary><p>${s.more}</p><p class="kstat">${s.stat}</p><a href="#about-${s.id}" data-about>Why it's hard to copy ↓</a></details>
+            <details class="more"><summary>Know more</summary><p>${s.more}</p><p class="kstat">${s.stat}</p><a href="#about-${s.id}" data-about>How it's built ↓</a></details>
           </div>
           <div class="sp">${s.free && freeActive
             ? `<s data-price="single"></s><a href="#free">Free ↓</a>`
@@ -772,7 +772,7 @@
         <div><dt>With this skill</dt><dd>${s.n}</dd></div>
       </dl>
       <div class="hood">
-        <h4>What this description doesn't show</h4>
+        <h4>How it's built</h4>
         <ul>${s.hood.map((h) => `<li>${h}</li>`).join("")}</ul>
         <p class="stat">${s.stat}</p>
       </div>
