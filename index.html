@@ -1,0 +1,982 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>AI UXR Stack</title>
+<meta name="description" content="Twelve Claude skills for UX research, in five packs. Built by Nithyn.">
+<link rel="canonical" href="https://nithyncj-cell.github.io/ai-uxr-stack/">
+<meta name="theme-color" content="#050507">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon-32.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="AI UXR Stack">
+<meta property="og:title" content="The AI UXR Stack">
+<meta property="og:description" content="Twelve Claude skills for UX research, in five packs. Built by Nithyn.">
+<meta property="og:url" content="https://nithyncj-cell.github.io/ai-uxr-stack/">
+<meta property="og:image" content="https://nithyncj-cell.github.io/ai-uxr-stack/assets/social-preview.jpg">
+<meta property="og:image:width" content="1280">
+<meta property="og:image:height" content="640">
+<meta property="og:image:alt" content="The AI UXR Stack: twelve Claude skills for UX research, in five packs. Built by Nithyn.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="The AI UXR Stack">
+<meta name="twitter:description" content="Twelve Claude skills for UX research, in five packs. Built by Nithyn.">
+<meta name="twitter:image" content="https://nithyncj-cell.github.io/ai-uxr-stack/assets/social-preview.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400..800&family=JetBrains+Mono:wght@500;600&display=swap">
+<style>
+  /* Layout: dark keynote world from the launch video. Hero (the stack as five layers), the free Collator,
+     five packs, full stack, footer. One text colour family: white and near-white, no grey copy. */
+  :root {
+    color-scheme: dark;
+    --bg: #050507;
+    --panel: #141417;
+    --line: rgba(255, 255, 255, 0.10);
+    --line-2: rgba(255, 255, 255, 0.18);
+    --ink: #f5f5f7;
+    --soft: rgba(245, 245, 247, 0.84);
+    --blue: #2997ff;
+    --purple: #bf5af2;
+    --cyan: #32ade6;
+    --pink: #ff375f;
+    --orange: #ff9f0a;
+    --green: #30d158;
+    --grad: linear-gradient(90deg, #2997ff 0%, #bf5af2 38%, #ff375f 70%, #ff9f0a 100%);
+    --display: "Inter", "SF Pro Display", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --text: "Inter", "SF Pro Text", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--text); font-size: 17px; line-height: 1.5;
+    font-optical-sizing: auto; -webkit-font-smoothing: antialiased; }
+  a { color: inherit; }
+  :focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; border-radius: 6px; }
+
+  .page { position: relative; overflow: hidden; }
+  .glow { position: absolute; inset: 0 0 auto 0; height: 1400px; pointer-events: none;
+    background:
+      radial-gradient(circle 520px at 88% 4%, rgba(191, 90, 242, 0.28), transparent 70%),
+      radial-gradient(circle 520px at 4% 62%, rgba(41, 151, 255, 0.20), transparent 70%),
+      radial-gradient(circle 420px at 62% 92%, rgba(255, 55, 95, 0.10), transparent 70%); }
+  .wrap { position: relative; max-width: 1160px; margin: 0 auto;
+    padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+  @media (min-width: 720px) { .wrap { padding-left: max(32px, env(safe-area-inset-left, 0px)); padding-right: max(32px, env(safe-area-inset-right, 0px)); } }
+
+  /* icon tile */
+  .ic { --c: var(--blue); --s: 44px; flex: none; width: var(--s); height: var(--s); border-radius: 28%; display: grid; place-items: center; color: #fff;
+    background: linear-gradient(150deg, color-mix(in srgb, var(--c) 88%, #fff), color-mix(in srgb, var(--c) 58%, #000));
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.35), inset 0 -1px 0 rgba(0,0,0,.25), 0 10px 24px -12px var(--c); }
+  .ic svg { width: 56%; height: 56%; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+
+  /* top bar */
+  .top { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 22px; }
+  .mark { display: flex; align-items: center; gap: 10px; font-weight: 650; letter-spacing: -0.01em; text-decoration: none; }
+  .mark svg { width: 28px; height: 28px; flex: none; }
+  .mark small { color: var(--soft); font-weight: 500; font-size: 14px; }
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 44px;
+    padding: 0 20px; border-radius: 999px; font: 600 15px/1 var(--text); letter-spacing: -0.005em;
+    text-decoration: none; cursor: pointer; border: 1px solid var(--line-2); background: rgba(255,255,255,0.07); color: var(--ink);
+    transition: background .15s ease, border-color .15s ease, transform .15s ease; }
+  .btn:hover { background: rgba(255,255,255,0.12); border-color: rgba(255,255,255,0.28); }
+  .btn:active { transform: translateY(1px); }
+  .btn svg { width: 18px; height: 18px; flex: none; }
+  .btn.primary { background: var(--ink); color: #000; border-color: var(--ink); }
+  .btn.primary:hover { background: #fff; }
+  .btn.gradient { border: 2px solid transparent; background: linear-gradient(#000, #000) padding-box, var(--grad) border-box;
+    box-shadow: 0 0 30px rgba(191, 90, 242, 0.25); }
+  .btn[disabled] { opacity: .5; cursor: progress; }
+
+  /* hero */
+  .hero { display: grid; gap: 24px; align-items: center; padding-block: 36px 40px; }
+  @media (min-width: 960px) { .hero { grid-template-columns: 1fr 1fr; gap: 40px; padding-block: 56px 72px; } }
+  .hero > div, .hero > figure { min-width: 0; }
+  h1 { font-family: var(--display); font-weight: 750; font-size: clamp(48px, 8.2vw, 96px); line-height: .98;
+    letter-spacing: -0.045em; margin: 0; text-wrap: balance; }
+  .g { background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .lede { color: var(--soft); font-size: clamp(18px, 2.1vw, 21px); line-height: 1.5; max-width: 30em; margin: 22px 0 0; }
+  .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
+
+  /* hero visual: five pack layers lighting up from the bottom */
+  .stackfig { margin: 0; }
+  .stackviz { --w: min(540px, 90vw); position: relative; width: var(--w); height: calc(var(--w) * 0.92); margin-inline: auto; }
+  .iso { position: absolute; left: 50%; top: 70%; transform-style: preserve-3d; transform: rotateX(58deg) rotateZ(-42deg); }
+  .layer { --c: var(--blue); position: absolute; width: calc(var(--w) * .6); height: calc(var(--w) * .34);
+    left: calc(var(--w) * -.3); top: calc(var(--w) * -.17); border-radius: calc(var(--w) * .035);
+    transform: translateZ(calc(var(--w) * var(--k)));
+    background: color-mix(in srgb, var(--c) 16%, #0e0e11);
+    border: 1px solid color-mix(in srgb, var(--c) 60%, transparent);
+    box-shadow: 0 0 0 1px rgba(0,0,0,.4), 0 12px 32px rgba(0,0,0,.55);
+    padding: calc(var(--w) * .024) calc(var(--w) * .03); display: flex; flex-direction: column; justify-content: flex-end; }
+  .lrow { display: flex; align-items: center; justify-content: space-between; gap: calc(var(--w) * .02); }
+  .ln { font: 700 calc(var(--w) * .038)/1 var(--display); letter-spacing: -0.02em; color: var(--ink); }
+  .lc { display: flex; gap: calc(var(--w) * .012); }
+  .lc .ic { --s: calc(var(--w) * .066); box-shadow: inset 0 1px 0 rgba(255,255,255,.35); }
+  @media (prefers-reduced-motion: no-preference) {
+    .iso { animation: bob 6s ease-in-out infinite; }
+    .layer { animation: lit 6s ease-in-out infinite; animation-delay: calc(var(--i) * 0.9s); }
+    @keyframes bob { 0%, 100% { transform: rotateX(58deg) rotateZ(-42deg) translateZ(0); } 50% { transform: rotateX(58deg) rotateZ(-42deg) translateZ(10px); } }
+    @keyframes lit {
+      0%, 26%, 100% { background: color-mix(in srgb, var(--c) 16%, #0e0e11); box-shadow: 0 0 0 1px rgba(0,0,0,.4), 0 12px 32px rgba(0,0,0,.55); }
+      8%, 16% { background: color-mix(in srgb, var(--c) 38%, #0e0e11); box-shadow: 0 0 0 1px color-mix(in srgb, var(--c) 70%, transparent), 0 0 70px color-mix(in srgb, var(--c) 65%, transparent); }
+    }
+  }
+
+  /* sections */
+  section { padding-block: 56px; scroll-margin-top: 16px; }
+  h2 { font-family: var(--display); font-weight: 720; font-size: clamp(32px, 4.6vw, 52px); line-height: 1.04;
+    letter-spacing: -0.035em; margin: 0; text-wrap: balance; }
+
+  /* free collator */
+  .feature { margin-top: 32px; border-radius: 28px; padding: 2px; background: var(--grad); box-shadow: 0 40px 120px -50px rgba(191, 90, 242, 0.7); }
+  .feature-in { border-radius: 26px; background: linear-gradient(180deg, #121215, #0b0b0d); padding: clamp(22px, 4vw, 44px); display: grid; gap: 36px; }
+  @media (min-width: 900px) { .feature-in { grid-template-columns: 1.15fr 1fr; gap: 48px; } }
+  .feature-in > div, .feature-in > aside { min-width: 0; }
+  .fhead { display: flex; align-items: center; gap: 16px; }
+  .fhead .ic { --s: 64px; }
+  .fhead h3 { font-family: var(--display); font-size: clamp(26px, 3.4vw, 36px); line-height: 1.05; letter-spacing: -0.03em; margin: 0; }
+  .badge { display: inline-block; margin-top: 6px; padding: 5px 11px; border-radius: 999px; font-size: 13px; font-weight: 650;
+    color: #04210c; background: var(--green); }
+  .price { display: flex; align-items: baseline; gap: 14px; margin-top: 22px; flex-wrap: wrap; }
+  .was { font: 500 24px/1 var(--mono); color: var(--soft); text-decoration: line-through; text-decoration-color: var(--pink); text-decoration-thickness: 2px; }
+  .now { font-family: var(--display); font-weight: 750; font-size: 44px; line-height: 1; letter-spacing: -0.035em; font-variant-numeric: tabular-nums; }
+  .ticks { list-style: none; padding: 0; margin: 24px 0 0; display: grid; gap: 10px; }
+  .ticks li { display: grid; grid-template-columns: 22px 1fr; gap: 12px; color: var(--soft); }
+  .ticks li::before { content: ""; width: 18px; height: 18px; margin-top: 3px; border-radius: 6px;
+    background: rgba(48,209,88,.16) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2330d158' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12.5l4.5 4.5L19 7.5'/%3E%3C/svg%3E") center/12px no-repeat; }
+  .missing { font: 500 13px/1 var(--mono); color: var(--ink); padding: 2px 8px; border: 1px dashed rgba(255,255,255,.5); border-radius: 6px; white-space: nowrap; }
+  .dl { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+  .gate { margin-top: 16px; padding: 16px 18px; border-radius: 16px; background: rgba(41,151,255,.10); border: 1px solid rgba(41,151,255,.4);
+    display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; }
+  .gate p { margin: 0; font-size: 15px; font-weight: 600; }
+  .status { min-height: 22px; margin: 12px 0 0; font-size: 14px; color: var(--soft); }
+  .status.ok { color: var(--green); }
+  .status.warn { color: var(--orange); }
+  .terms { margin: 16px 0 0; font-size: 13px; color: var(--soft); }
+  .install { background: rgba(255,255,255,0.04); border: 1px solid var(--line); border-radius: 20px; padding: 24px; align-self: start; }
+  .install h4 { margin: 0; font-size: 18px; letter-spacing: -0.01em; }
+  .install ol { list-style: none; counter-reset: s; padding: 0; margin: 16px 0 0; display: grid; gap: 14px; }
+  .install li { counter-increment: s; display: grid; grid-template-columns: 30px 1fr; gap: 12px; font-size: 15px; color: var(--soft); }
+  .install li::before { content: counter(s); width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center;
+    font: 600 13px/1 var(--mono); color: var(--ink); background: rgba(255,255,255,0.08); border: 1px solid var(--line-2); }
+  .install b { color: var(--ink); font-weight: 600; }
+  .install code { font: 500 13px/1.4 var(--mono); color: var(--ink); background: rgba(255,255,255,0.08); padding: 1px 6px; border-radius: 5px; }
+
+  /* packs carousel */
+  .head-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px 24px; }
+  .controls { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
+  .seg { display: inline-flex; padding: 4px; border-radius: 999px; background: rgba(255,255,255,0.07); border: 1px solid var(--line-2); }
+  .seg button { appearance: none; border: 0; background: transparent; color: var(--soft); font: 600 14px/1 var(--text);
+    padding: 10px 16px; border-radius: 999px; cursor: pointer; min-height: 38px; }
+  .seg button[aria-pressed="true"] { background: var(--ink); color: #000; }
+  .arrows { display: flex; gap: 8px; }
+  .arrow { width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--line-2); background: rgba(255,255,255,0.07); color: var(--ink);
+    display: grid; place-items: center; cursor: pointer; }
+  .arrow:hover { background: rgba(255,255,255,0.13); }
+  .arrow[disabled] { opacity: .35; cursor: default; }
+  .arrow svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+  .tabs { display: flex; gap: 8px; margin-top: 24px; overflow-x: auto; scrollbar-width: none; padding-bottom: 2px; }
+  .tabs::-webkit-scrollbar { display: none; }
+  .tab { --c: var(--blue); flex: none; display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px 8px 8px; border-radius: 999px;
+    border: 1px solid var(--line-2); background: rgba(255,255,255,0.05); color: var(--ink); font: 600 14px/1 var(--text); cursor: pointer; }
+  .tab .ic { --s: 26px; box-shadow: none; }
+  .tab[aria-selected="true"] { background: color-mix(in srgb, var(--c) 24%, #0e0e11); border-color: color-mix(in srgb, var(--c) 70%, transparent); }
+  .track { display: flex; gap: 20px; margin-top: 20px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth;
+    scrollbar-width: none; overscroll-behavior-x: contain; padding-bottom: 6px; }
+  .track::-webkit-scrollbar { display: none; }
+  @media (prefers-reduced-motion: reduce) { .track { scroll-behavior: auto; } }
+  .slide { --c: var(--blue); flex: 0 0 88%; scroll-snap-align: start; position: relative; overflow: hidden; min-width: 0;
+    display: grid; gap: 28px; padding: clamp(22px, 4vw, 44px); border-radius: 28px;
+    background: linear-gradient(160deg, color-mix(in srgb, var(--c) 14%, #121215), #0b0b0d 60%);
+    border: 1px solid color-mix(in srgb, var(--c) 45%, transparent); }
+  @media (min-width: 980px) { .slide { flex-basis: min(100%, 900px); grid-template-columns: .9fr 1.1fr; gap: 44px; } }
+  .slide::before { content: ""; position: absolute; right: -160px; top: -180px; width: 440px; height: 440px; border-radius: 50%; pointer-events: none;
+    background: radial-gradient(circle, color-mix(in srgb, var(--c) 30%, transparent), transparent 65%); }
+  .slide > * { position: relative; min-width: 0; }
+  .sl { display: flex; flex-direction: column; gap: 18px; }
+  .sl .ic { --s: 80px; }
+  .slide h3 { font-family: var(--display); font-size: clamp(30px, 4vw, 46px); line-height: 1.02; letter-spacing: -0.035em; margin: 0; }
+  .pain { margin: 0; font: 600 clamp(18px, 2vw, 21px)/1.35 var(--display); letter-spacing: -0.01em; color: var(--soft); }
+  .pprice { display: flex; align-items: baseline; flex-wrap: wrap; gap: 10px 12px; margin-top: auto; }
+  .pprice .was { font-size: 18px; }
+  .pprice .now { font-size: clamp(40px, 5vw, 52px); }
+  .save { font: 650 13px/1 var(--text); color: #04210c; background: var(--green); padding: 6px 10px; border-radius: 999px; }
+  .skills { list-style: none; margin: 0; padding: 0; display: grid; align-content: start; }
+  .skills li { display: grid; grid-template-columns: 44px 1fr auto; gap: 14px; align-items: start; padding-block: 14px; border-top: 1px solid var(--line); }
+  .skills li:last-child { border-bottom: 1px solid var(--line); }
+  .skills .ic { --s: 44px; }
+  .skills h4 { margin: 0; font-size: 17px; letter-spacing: -0.01em; line-height: 1.25; padding-top: 2px; }
+  .more { margin-top: 6px; }
+  .more summary { list-style: none; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; font: 600 13px/1.4 var(--text);
+    color: color-mix(in srgb, var(--c) 70%, #fff); }
+  .more summary::-webkit-details-marker { display: none; }
+  .more summary::after { content: "+"; font: 600 15px/1 var(--mono); }
+  .more[open] summary::after { content: "−"; }
+  .more p { margin: 8px 0 0; color: var(--soft); font-size: 14.5px; line-height: 1.5; }
+  .more a { display: inline-block; margin-top: 6px; font: 600 13px/1.4 var(--text); color: var(--ink); }
+  .sp { text-align: right; font: 500 14px/1.3 var(--mono); font-variant-numeric: tabular-nums; white-space: nowrap; padding-top: 4px; }
+  .sp s { display: block; color: var(--soft); text-decoration-color: var(--pink); font-size: 12px; }
+  .sp a { display: block; color: var(--green); font: 650 13px/1.4 var(--text); text-decoration: none; }
+  .sp a:hover { text-decoration: underline; }
+
+  /* about each skill */
+  .readall { margin-top: 28px; border: 1px solid var(--line-2); border-radius: 22px; background: rgba(255,255,255,0.03); }
+  .readall > summary { list-style: none; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 16px;
+    padding: 20px 24px; font: 650 18px/1.3 var(--text); }
+  .readall > summary::-webkit-details-marker { display: none; }
+  .readall > summary::after { content: "+"; width: 32px; height: 32px; border-radius: 50%; display: grid; place-items: center;
+    font: 600 18px/1 var(--mono); background: rgba(255,255,255,0.08); border: 1px solid var(--line-2); flex: none; }
+  .readall[open] > summary::after { content: "−"; }
+  .about { display: grid; gap: 16px; padding: 0 16px 16px; }
+  @media (min-width: 900px) { .about { grid-template-columns: 1fr 1fr; padding: 0 24px 24px; } }
+  .ab { --c: var(--blue); scroll-margin-top: 20px; padding: 22px; border-radius: 18px; background: var(--panel); border: 1px solid var(--line); min-width: 0; }
+  .ab:target { border-color: color-mix(in srgb, var(--c) 70%, transparent); box-shadow: 0 0 0 1px color-mix(in srgb, var(--c) 50%, transparent); }
+  .abh { display: flex; align-items: center; gap: 14px; }
+  .abh h3 { margin: 0; font-size: 19px; letter-spacing: -0.015em; line-height: 1.2; }
+  .abh small { display: block; margin-top: 2px; font: 600 12px/1.3 var(--mono); letter-spacing: .04em; text-transform: uppercase; color: color-mix(in srgb, var(--c) 70%, #fff); }
+  .ab dl { margin: 16px 0 0; display: grid; gap: 12px; }
+  .ab dt { font: 650 13px/1.3 var(--text); color: color-mix(in srgb, var(--c) 70%, #fff); }
+  .ab dd { margin: 3px 0 0; color: var(--soft); font-size: 15px; line-height: 1.5; }
+
+  /* full stack */
+  .bundle { display: grid; gap: 28px; padding: clamp(22px, 4vw, 44px); border-radius: 28px; position: relative; overflow: hidden;
+    background: linear-gradient(180deg, #131317, #0b0b0d); border: 1px solid var(--line-2); }
+  .bundle::before { content: ""; position: absolute; inset: -40% -10% auto auto; width: 560px; height: 560px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(191,90,242,.26), transparent 65%); pointer-events: none; }
+  @media (min-width: 900px) { .bundle { grid-template-columns: 1.2fr 1fr; align-items: center; } }
+  .bundle > div { position: relative; min-width: 0; }
+  .bprice { display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; }
+  .bprice .now { font-size: clamp(48px, 7vw, 72px); }
+  .icons { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
+  .icons .ic { --s: 40px; }
+
+
+  /* SPIN cards */
+  .spin { margin: 16px 0 0; display: grid; gap: 12px; }
+  .spin dt { font: 650 13px/1.3 var(--text); color: color-mix(in srgb, var(--c) 70%, #fff); }
+  .spin dd { margin: 3px 0 0; color: var(--soft); font-size: 15px; line-height: 1.5; }
+  .spin div:last-child dd { color: var(--ink); font-weight: 600; }
+  .hood { margin-top: 18px; padding: 16px 18px; border-radius: 14px; background: color-mix(in srgb, var(--c) 10%, #0c0c0f);
+    border: 1px solid color-mix(in srgb, var(--c) 35%, transparent); }
+  .hood h4 { margin: 0; font-size: 14px; letter-spacing: -0.005em; }
+  .hood ul { margin: 10px 0 0; padding-left: 18px; display: grid; gap: 6px; color: var(--soft); font-size: 14.5px; line-height: 1.45; }
+  .hood li::marker { color: color-mix(in srgb, var(--c) 70%, #fff); }
+  .stat { margin: 12px 0 0; font: 600 12.5px/1.4 var(--mono); color: var(--ink); }
+  .kstat { font: 600 12.5px/1.4 var(--mono) !important; color: var(--ink) !important; }
+
+  /* agree + legal */
+  .agree { display: flex; align-items: flex-start; gap: 10px; margin-top: 26px; font-size: 15px; cursor: pointer; }
+  .agree input { width: 20px; height: 20px; margin: 1px 0 0; accent-color: var(--blue); flex: none; cursor: pointer; }
+  .agree a { color: var(--ink); text-decoration-color: var(--blue); }
+  .agree.need { color: var(--orange); }
+  .dl { margin-top: 16px !important; }
+  .legal-meta { margin: 12px 0 0; color: var(--soft); font-size: 14px; }
+  .legal { margin-top: 24px; border: 1px solid var(--line-2); border-radius: 22px; overflow: hidden; }
+  .legal details { border-top: 1px solid var(--line); scroll-margin-top: 20px; }
+  .legal details:first-child { border-top: 0; }
+  .legal summary { list-style: none; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 16px;
+    padding: 18px 22px; font: 650 17px/1.3 var(--text); }
+  .legal summary::-webkit-details-marker { display: none; }
+  .legal summary::after { content: "+"; font: 600 18px/1 var(--mono); }
+  .legal details[open] summary::after { content: "−"; }
+  .lt { padding: 0 22px 20px; max-width: 72ch; display: grid; gap: 10px; }
+  .lt p { margin: 0; color: var(--soft); font-size: 14.5px; line-height: 1.6; }
+  .lt b { color: var(--ink); font-weight: 650; }
+  .flinks { display: flex; flex-wrap: wrap; gap: 8px 18px; margin-top: 16px; font-size: 14px; }
+  .flinks a { color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--line-2); }
+  .flinks a:hover { border-bottom-color: var(--ink); }
+
+  /* footer */
+  footer { padding-block: 56px 40px; margin-top: 24px; border-top: 1px solid var(--line); }
+  .foot { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 24px; }
+  .foot h2 { font-size: clamp(28px, 3.6vw, 40px); }
+  .credits { margin: 32px 0 0; font-size: 14px; color: var(--soft); max-width: 46em; }
+  .copy { margin: 10px 0 0; font-size: 13px; color: var(--soft); }
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="glow" aria-hidden="true"></div>
+  <div class="wrap">
+    <header class="top">
+      <a class="mark" href="#top" aria-label="AI UXR Stack, home">
+        <svg viewBox="0 0 40 40" aria-hidden="true">
+          <defs><linearGradient id="lg" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#2997ff"/><stop offset=".45" stop-color="#bf5af2"/><stop offset=".75" stop-color="#ff375f"/><stop offset="1" stop-color="#ff9f0a"/></linearGradient></defs>
+          <g fill="url(#lg)" opacity=".95">
+            <path d="M20 6c4 5 4 14 0 21c-4-7-4-16 0-21z"/>
+            <path d="M20 27c-2-7-7-13-13-14c1 7 6 13 13 14z" opacity=".85"/>
+            <path d="M20 27c2-7 7-13 13-14c-1 7-6 13-13 14z" opacity=".85"/>
+            <path d="M20 29c-5-3-11-4-16-1c5 4 11 4 16 1z" opacity=".7"/>
+            <path d="M20 29c5-3 11-4 16-1c-5 4-11 4-16 1z" opacity=".7"/>
+          </g>
+        </svg>
+        <span>AI UXR Stack <small>by Nithyn</small></span>
+      </a>
+      <a class="btn" href="https://www.linkedin.com/in/nithyn/" target="_blank" rel="noopener" data-follow>
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9.75h4v11H3zM9.5 9.75h3.8v1.5h.05c.53-1 1.83-2.05 3.77-2.05 4.03 0 4.78 2.65 4.78 6.1v5.45h-4v-4.83c0-1.15-.02-2.63-1.6-2.63-1.6 0-1.85 1.25-1.85 2.55v4.91h-4z"/></svg>
+        Follow on LinkedIn
+      </a>
+    </header>
+
+    <main id="top">
+      <div class="hero">
+        <div>
+          <h1>The AI <span class="g">UXR</span> Stack</h1>
+          <p class="lede">Twelve Claude skills for UX research, in five packs. Built by Nithyn.</p>
+          <div class="actions">
+            <a class="btn primary" href="#free" data-free-only>Get the Collator free</a>
+            <a class="btn" href="#packs">See the packs</a>
+          </div>
+        </div>
+        <figure class="stackfig">
+          <div class="stackviz" role="img" aria-label="Five stacked layers, one per pack: Scope, Collate, Analyse, Influence and Career, lighting up one after another from the bottom."><div class="iso" id="iso"></div></div>
+        </figure>
+      </div>
+
+      <section id="free" aria-labelledby="free-title" data-free-only>
+        <h2 id="free-title">The Collator is free until 11 December.</h2>
+        <div class="feature">
+          <div class="feature-in">
+            <div>
+              <div class="fhead">
+                <span id="collator-icon"></span>
+                <div>
+                  <h3>UXR Transcript Collator</h3>
+                  <span class="badge">Free until 11 Dec</span>
+                </div>
+              </div>
+              <div class="price">
+                <span class="was" data-price="single"></span>
+                <span class="now">Free</span>
+              </div>
+              <ul class="ticks">
+                <li><span>Asks for your plan, discussion guide or notesheet headers first. Transcripts alone also work.</span></li>
+                <li><span>Fills one notesheet mapped to your themes.</span></li>
+                <li><span>Keeps the verbatim quote and timestamp on every row, Hinglish included.</span></li>
+                <li><span>Writes <span class="missing">missing</span> when a quote isn't there.</span></li>
+              </ul>
+              <label class="agree"><input type="checkbox" id="agree"> <span>I agree to the <a href="#legal-licence" data-legal>Skill Licence Terms</a>.</span></label>
+              <div class="dl">
+                <button class="btn primary" type="button" data-skill="collator" data-kind="zip">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11"/><path d="M7 10l5 5 5-5"/><path d="M5 20h14"/></svg>
+                  Download for Claude (.zip)
+                </button>
+                <button class="btn" type="button" data-skill="collator" data-kind="md">Download .md</button>
+                <button class="btn" type="button" data-skill="collator" data-kind="copy" hidden>Copy skill text</button>
+              </div>
+              <div class="gate" id="gate-collator" hidden></div>
+              <p class="status" id="status-collator" role="status" aria-live="polite"></p>
+              <p class="terms">Licensed for use on your own research. Sharing, reselling or rebuilding it is not allowed.</p>
+            </div>
+            <aside class="install" aria-labelledby="install-title">
+              <h4 id="install-title">Install in Claude</h4>
+              <ol>
+                <li><span>Settings → Capabilities → turn on <b>Code execution and file creation</b>.</span></li>
+                <li><span>Customize → Skills → <b>+</b> → <b>Create skill</b> → <b>Upload a skill</b>, then pick the .zip.</span></li>
+                <li><span>Start a chat and type <code>collate my transcripts</code>.</span></li>
+              </ol>
+            </aside>
+          </div>
+        </div>
+      </section>
+
+      <section id="packs" aria-labelledby="packs-title">
+        <div class="head-row">
+          <h2 id="packs-title">Pick a pack.</h2>
+          <div class="controls">
+            <div class="seg" role="group" aria-label="Show prices for">
+              <button type="button" data-region="in" aria-pressed="false">India ₹</button>
+              <button type="button" data-region="intl" aria-pressed="true">International $</button>
+            </div>
+            <div class="arrows">
+              <button class="arrow" type="button" id="prev" aria-label="Previous pack"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
+              <button class="arrow" type="button" id="next" aria-label="Next pack"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button>
+            </div>
+          </div>
+        </div>
+        <div class="tabs" role="tablist" aria-label="Packs" id="tabs"></div>
+        <div class="track" id="track" aria-live="polite"></div>
+      </section>
+
+      <section id="bundle" aria-labelledby="bundle-title">
+        <div class="bundle">
+          <div>
+            <h2 id="bundle-title">Full stack: all twelve skills.</h2>
+            <div class="icons" id="allicons" aria-hidden="true"></div>
+          </div>
+          <div>
+            <div class="bprice">
+              <span class="was" data-price="stack-list"></span>
+              <span class="now" data-price="stack"></span>
+              <span class="save" data-price="stack-save"></span>
+            </div>
+            <div class="actions" style="margin-top:20px">
+              <a class="btn gradient" href="https://www.linkedin.com/in/nithyn/" target="_blank" rel="noopener" data-follow>Get notified on LinkedIn</a>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section id="about" aria-labelledby="about-title">
+        <h2 id="about-title">About each skill.</h2>
+        <details class="readall" id="readall">
+          <summary>Read more about all twelve skills</summary>
+          <div class="about" id="aboutlist"></div>
+        </details>
+      </section>
+      <section id="legal" aria-labelledby="legal-title">
+        <h2 id="legal-title">Terms and policies.</h2>
+        <p class="legal-meta">Last updated 30 October 2026. Plain-English terms; the bold headings are part of the terms.</p>
+        <div class="legal">
+          <details id="legal-licence">
+            <summary>Skill Licence Terms</summary>
+            <div class="lt">
+              <p><b>1. Who this agreement is between.</b> These terms are a contract between you and Nithyn C Joseph, an individual based in Bengaluru, Karnataka, India (“Nithyn”). You accept them when you tick “I agree” and download, install or use a skill. If you accept for an employer or client, you confirm you are authorised to bind them. This contract is formed electronically and is valid under the Indian Contract Act, 1872 and the Information Technology Act, 2000.</p>
+              <p><b>2. Ownership.</b> Each skill file, including its instructions, structure, examples and wording, is Nithyn's original work, protected by the Copyright Act, 1957 and international copyright treaties. You receive a licence to use it. You do not receive ownership of it.</p>
+              <p><b>3. What you may do.</b> You may install and run a skill in your own AI account to do research work for yourself, your employer or your clients. One licence covers one person. Team licences are available on request.</p>
+              <p><b>4. What you may not do.</b> You may not share, upload, publish, sell, sublicense, lend or give away a skill file or any part of it. You may not edit, translate or adapt it to make another skill, prompt, custom GPT, Gem or agent, including one that does the same job. You may not remove or change the credit line or the terms inside the file. You may not extract a skill's instructions, through an AI model or by any other means, to rebuild it. You may not use a skill file to train or fine-tune an AI model.</p>
+              <p><b>5. Your work stays yours.</b> Notesheets, reports, prototypes and other outputs you make with a skill belong to you or your employer, and you may share them freely.</p>
+              <p><b>6. Your data and your participants.</b> Skills run inside your own AI account. Nithyn never receives your transcripts, files or outputs. You are responsible for having consent to process your participants' personal data, for following the Digital Personal Data Protection Act, 2023 and any other law that applies to you, for following your employer's policies, and for removing personal details where needed.</p>
+              <p><b>7. AI output.</b> A skill guides an AI model; it does not control or guarantee what the model produces. Check the output before you rely on it or share it.</p>
+              <p><b>8. No warranty.</b> To the extent the law allows, skills are provided as they are, without any warranty that they will be error-free or suit a particular purpose.</p>
+              <p><b>9. Limit of liability.</b> To the extent the law allows, Nithyn is not liable for indirect or consequential loss, lost profits or lost data. Nithyn's total liability for any claim about a skill is limited to the amount you paid for that skill. For a free download, that amount is zero. Nothing in these terms limits liability that cannot be limited by law.</p>
+              <p><b>10. Free launch.</b> The UXR Transcript Collator is free to download until 11:59 pm on 11 December 2026, India time. Copies downloaded free during that period stay licensed to you under these terms after that date.</p>
+              <p><b>11. Updates.</b> Nithyn may update, replace or retire any skill. Any update you receive is covered by these terms.</p>
+              <p><b>12. Ending the licence.</b> Your licence ends automatically if you break these terms. When it ends, you must delete every copy of the skill you hold.</p>
+              <p><b>13. Changes to these terms.</b> Nithyn may change these terms. The version shown on this page on the day you download a skill applies to that download.</p>
+              <p><b>14. Law and disputes.</b> These terms are governed by the laws of India. The courts at Bengaluru, Karnataka have exclusive jurisdiction, without affecting any consumer rights you have where you live.</p>
+            </div>
+          </details>
+          <details id="legal-site">
+            <summary>Website Terms</summary>
+            <div class="lt">
+              <p>This website describes the AI UXR Stack. Its text, design and icons are © 2026 Nithyn and may not be copied without permission. Skill descriptions summarise what each skill does and may change as the skills are updated. Links to LinkedIn and other websites go to services Nithyn does not control, and their own terms apply there. Using this website means you accept these Website Terms, and downloading a skill means you accept the Skill Licence Terms.</p>
+            </div>
+          </details>
+          <details id="legal-refunds">
+            <summary>Payments, Refunds and Cancellation</summary>
+            <div class="lt">
+              <p><b>Paid skills are not on sale yet.</b> The “Get notified” buttons only open LinkedIn. No payment is taken on this website.</p>
+              <p><b>Prices.</b> Prices are shown in Indian rupees for buyers in India and in US dollars elsewhere. The full price, including any tax and charges, will be shown before you pay. Your bank or card issuer may add currency conversion fees.</p>
+              <p><b>Delivery.</b> Skills are digital files, delivered right after payment.</p>
+              <p><b>Refunds.</b> Because a skill is delivered instantly and cannot be returned, a purchase is final once the file is downloaded. If a file is faulty, will not install, or does not match its description, contact Nithyn within 7 days of purchase for a fix, a replacement or a full refund. Approved refunds go back to the original payment method within 14 days.</p>
+              <p><b>Cancellation.</b> No cancellation charge applies to any order.</p>
+            </div>
+          </details>
+          <details id="legal-privacy">
+            <summary>Privacy</summary>
+            <div class="lt">
+              <p>This website does not ask for your name, email address or payment details. It saves two settings in your own browser: your price region, and whether you clicked Follow. They never leave your device, and you can clear them in your browser settings.</p>
+              <p>The website is hosted on GitHub Pages, and GitHub's privacy statement covers hosting and access logs. Fonts load from Google Fonts and the zip helper loads from cdnjs, so those services receive your IP address. When you click a LinkedIn link, LinkedIn's privacy policy applies. Downloads are built in your own browser, and Nithyn does not receive a list of who downloaded a skill.</p>
+            </div>
+          </details>
+          <details id="legal-marks">
+            <summary>Trademarks and Credits</summary>
+            <div class="lt">
+              <p>Claude is a product of Anthropic. Figma, FigJam and Miro are trademarks of their owners. The AI UXR Stack is independent and is not affiliated with, sponsored by or endorsed by Anthropic or any other company named on this website.</p>
+              <p>Question Zero builds on James Chudley's knowledge-mapping workshop and importance and confidence matrix. The thanks to The Goal by Eliyahu M. Goldratt and to Constantine Papas, PhD, are personal acknowledgements and do not mean they endorse these skills.</p>
+            </div>
+          </details>
+          <details id="legal-contact">
+            <summary>Contact and Grievances</summary>
+            <div class="lt">
+              <p><b>Seller.</b> Nithyn C Joseph, [postal address], Bengaluru, Karnataka, India.</p>
+              <p><b>Email.</b> [contact email]</p>
+              <p><b>Grievance officer.</b> Nithyn C Joseph, at the email above. Complaints are acknowledged within 48 hours and resolved within one month of receipt, in line with the Consumer Protection (E-Commerce) Rules, 2020.</p>
+            </div>
+          </details>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="foot">
+        <h2>More skills coming.</h2>
+        <a class="btn primary" href="https://www.linkedin.com/in/nithyn/" target="_blank" rel="noopener" data-follow>Follow on LinkedIn</a>
+      </div>
+      <p class="credits">Thanks to The Goal by Eliyahu M. Goldratt and to Constantine Papas, PhD.</p>
+      <nav class="flinks" aria-label="Legal">
+        <a href="#legal-licence" data-legal>Licence</a><a href="#legal-site" data-legal>Website terms</a><a href="#legal-refunds" data-legal>Refunds</a><a href="#legal-privacy" data-legal>Privacy</a><a href="#legal-contact" data-legal>Contact</a>
+      </nav>
+      <p class="copy">© 2026 Nithyn. All rights reserved.</p>
+    </footer>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script>
+(() => {
+  const LINKEDIN = "https://www.linkedin.com/in/nithyn/";
+  // The Collator stays free through 11 Dec 2026 (India time), then shows its price like every other skill.
+  const FREE_UNTIL = new Date("2026-12-11T23:59:59+05:30");
+  const freeActive = Date.now() <= FREE_UNTIL.getTime();
+
+  // ---- prices: edit here ----
+  const PRICES = {
+    in:   { single: 2005, packs: { scope: 4005, collate: 5005, analysis: 3505, influence: 4005, career: 2005 }, stack: 12005,
+            fmt: (n) => "₹" + n.toLocaleString("en-IN") },
+    intl: { single: 39, packs: { scope: 79, collate: 99, analysis: 69, influence: 79, career: 39 }, stack: 249,
+            fmt: (n) => "$" + n },
+  };
+
+  // ---- icons (24px line glyphs) ----
+  const IC = {
+    compass: '<circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/>',
+    rows: '<rect x="4" y="5" width="16" height="3.5" rx="1"/><rect x="4" y="10.25" width="16" height="3.5" rx="1"/><rect x="4" y="15.5" width="10" height="3.5" rx="1"/>',
+    chart: '<path d="M4 20h16"/><rect x="6" y="11" width="3" height="7" rx=".8"/><rect x="11" y="6" width="3" height="12" rx=".8"/><rect x="16" y="13" width="3" height="5" rx=".8"/>',
+    megaphone: '<path d="M4 10v4a1 1 0 0 0 1 1h2l5 4V5L7 9H5a1 1 0 0 0-1 1z"/><path d="M16 9a4 4 0 0 1 0 6"/><path d="M18.5 6.5a7.5 7.5 0 0 1 0 11"/>',
+    briefcase: '<rect x="3.5" y="7.5" width="17" height="12" rx="2"/><path d="M9 7.5V6a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v1.5"/><path d="M3.5 12.5h17"/>',
+    question: '<circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .8-1 1.5V14"/><path d="M12 17.2v.1"/>',
+    funnel: '<path d="M4 5h16l-6 7.5V19l-4-2v-4.5z"/>',
+    clipboard: '<rect x="5" y="4.5" width="14" height="16" rx="2"/><path d="M9 4.5h6v2.5H9z"/><path d="M8.5 11.5l1.5 1.5 3-3"/><path d="M8.5 16.5h7"/>',
+    chat: '<path d="M4 5h16v11H9l-5 4z"/><path d="M8 9h8M8 12h5"/>',
+    bulb: '<path d="M9 18h6"/><path d="M10 21h4"/><path d="M12 3a6 6 0 0 0-3.5 10.9c.6.4 1 1.1 1 1.9V16h5v-.2c0-.8.4-1.5 1-1.9A6 6 0 0 0 12 3z"/>',
+    sort: '<path d="M7 4v16"/><path d="M4 7l3-3 3 3"/><path d="M17 20V4"/><path d="M14 17l3 3 3-3"/>',
+    trend: '<path d="M4 19h16"/><path d="M5 15l4-4 3 3 6-6"/><path d="M15 8h3v3"/>',
+    report: '<rect x="3.5" y="4.5" width="17" height="12" rx="1.5"/><path d="M8 20h8"/><path d="M12 16.5V20"/><path d="M7.5 13v-3M11 13V8.5M14.5 13v-2"/>',
+    phone: '<rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M10 6h4"/><rect x="9.5" y="9" width="5" height="4" rx=".8"/><path d="M9.5 16h5"/>',
+    people: '<circle cx="9" cy="8.5" r="3"/><path d="M3.5 19a5.5 5.5 0 0 1 11 0"/><circle cx="17" cy="9.5" r="2.4"/><path d="M15.5 14.2A4.5 4.5 0 0 1 20.5 19"/>',
+    pen: '<path d="M4 20l4.5-1 10-10a2.1 2.1 0 0 0-3-3l-10 10z"/><path d="M14 7l3 3"/>',
+    folder: '<path d="M3.5 7a1.5 1.5 0 0 1 1.5-1.5h4l2 2h8a1.5 1.5 0 0 1 1.5 1.5v8.5A1.5 1.5 0 0 1 19 19H5a1.5 1.5 0 0 1-1.5-1.5z"/><path d="M12 10.5l1 2 2.2.3-1.6 1.5.4 2.2-2-1-2 1 .4-2.2-1.6-1.5 2.2-.3z"/>',
+  };
+  const tile = (name, c) => `<span class="ic" style="--c:${c}" aria-hidden="true"><svg viewBox="0 0 24 24">${IC[name]}</svg></span>`;
+
+  // ---- packs, each named for the problem it solves ----
+  // Each skill: short "more" line, SPIN copy (situation, problem, implication, need-payoff), and "hood": what the description doesn't show.
+  const PACKS = [
+    { key: "scope", short: "Scope", name: "Scope pack", icon: "compass", c: "var(--blue)", pain: "“Don't tell us what we already know.”",
+      skills: [
+        { id: "question-zero", name: "Question Zero", icon: "question",
+          more: "Maps what your team already knows, and how it knows it, then turns the gaps into ranked research questions.",
+          stat: "About 5,000 words of tested instructions · 4 modes",
+          s: "A new study is about to start, and the team says it already knows a lot.",
+          p: "Nobody has written down what the team knows, or how it knows it.",
+          i: "The study rediscovers old findings, and “don't tell us what we already know” lands on you at the readout.",
+          n: "You start from the team's knowledge, test only what's unproven, and show at the end exactly what the research added.",
+          hood: ["Four modes, from workshop prep to the final readout.", "Every claim is tagged by its source and challenged in the room.", "Unproven beliefs are scored and ranked before a single question is written.", "Builds on James Chudley's knowledge-mapping workshop.", "Knows all 12 skills in the stack and points you to the right next one.", "Guards its own instructions: it won't recite or help rebuild itself."] },
+        { id: "diagnostic-partner", name: "Diagnostic Partner", icon: "funnel",
+          more: "Works through a solution-shaped brief and funnel data with the PM, and turns it into a research-ready problem.",
+          stat: "About 6,800 words across 5 files",
+          s: "A PM brings a brief that already names the answer: “test a shorter form.”",
+          p: "The brief is a solution, so the study would only test that one idea.",
+          i: "Weeks go into research that confirms or kills one idea while the real cause of the drop-off goes unexamined.",
+          n: "You and the PM find where the problem sits in the funnel, rule out causes with data, and scope research only for what's left.",
+          hood: ["Separates where the most users drop from where the rate is worst.", "Writes a test that could disprove every hypothesis.", "Runs a pre-mortem before anything is scoped.", "Hands its output straight to Research Plan Creator.", "Knows all 12 skills in the stack and points you to the right next one.", "Guards its own instructions: it won't recite or help rebuild itself."] },
+        { id: "research-plan-creator", name: "Research Plan Creator", icon: "clipboard",
+          more: "Turns kickoff calls, briefs and ad hoc asks into a stakeholder-ready research plan.",
+          stat: "About 22,600 words across 13 files, the deepest skill in the stack",
+          s: "You have a kickoff transcript, a brief and three new asks in chat.",
+          p: "Turning that into a plan stakeholders sign off takes days, and the plan changes mid-study.",
+          i: "Scope creeps, the plan drifts, and nobody can point to what was agreed.",
+          n: "A stakeholder-ready plan from the raw notes, versioned every time scope or stakeholders change.",
+          hood: ["Tests every objective against SMART criteria before the plan is written.", "Ranks hypotheses and lays method options side by side.", "Adds a pre-mortem, a recall-bias register and a phased timeline with debrief slots.", "Knows all 12 skills in the stack and points you to the right next one.", "Guards its own instructions: it won't recite or help rebuild itself."] },
+      ] },
+    { key: "collate", short: "Collate", name: "Transcript Collator pack", icon: "rows", c: "var(--purple)", pain: "“Fieldwork's done. Now a week of retyping.”",
+      skills: [
+        { id: "transcript-collator", name: "Transcript Collator", icon: "chat", free: true,
+          more: "Turns raw transcripts into one theme-tagged notesheet, with a verbatim quote and timestamp on every row.",
+          stat: "About 8,400 words · 13 stages · over a year of work on real studies",
+          s: "Fieldwork is done: ten interviews, ten long transcripts.",
+          p: "Getting them into one structured notesheet takes most of a day per session.",
+          i: "Synthesis starts late, the second half of long sessions gets skimmed, and quotes get tidied or invented under deadline.",
+          n: "One notesheet mapped to your themes, with a verbatim quote and timestamp on every row, ready for synthesis the same day.",
+          hood: ["Five starting paths, depending on what you already have.", "Builds your notesheet headers by checking the guide against real transcripts.", "Audits every chunk of transcript for coverage and depth.", "Flags points outside your themes instead of forcing them in.", "Never invents a quote or a timestamp.", "Knows all 12 skills in the stack and points you to the right next one.", "Guards its own instructions: it won't recite or help rebuild itself."] },
+        { id: "collated-synth", name: "Collated Synth", icon: "bulb",
+          more: "Reads each participant's notes start to finish for beliefs, contradictions and tensions, as cited leads you judge.",
+          stat: "About 3,700 words · up to 7 lenses",
+          s: "Your notesheet is ready and sorted by theme.",
+          p: "Themes show what people said. They hide what people believe and where they contradict themselves.",
+          i: "The insight that explains the behaviour never reaches the deck.",
+          n: "Cited leads on beliefs, contradictions and tensions, each with evidence for and against, for you to judge.",
+          hood: ["Reads each person across the whole session before comparing people.", "Four of its lenses are built for AI and self-serve products.", "Asks how many sessions you've read yourself before it starts.", "Never writes the insight for you."] },
+        { id: "collation-sorter", name: "Collation Sorter", icon: "sort",
+          more: "Sorts the collated sheet by theme and by participant in two new tabs, leaving the original untouched.",
+          stat: "Small by design",
+          s: "Your collation sheet has hundreds of rows in transcript order.",
+          p: "Reading it theme by theme, or person by person, means sorting by hand.",
+          i: "Manual sorting breaks the original order and risks losing rows.",
+          n: "Two new tabs, one by theme and one by participant, with the original left as it was.",
+          hood: ["Follows your notesheet's own theme order, not A to Z.", "Never edits the source tab."] },
+      ] },
+    { key: "analysis", short: "Analyse", name: "Analysis pack", icon: "chart", c: "var(--cyan)", pain: "“Fifty crosstabs and no story.”",
+      skills: [
+        { id: "quant-analyst", name: "Quant Analyst", icon: "trend",
+          more: "Runs survey, usability and behaviour data against your research objectives instead of every possible crosstab.",
+          stat: "About 2,800 words · 33 explicit don'ts",
+          s: "A survey export lands with 40 questions and six segments.",
+          p: "Every crosstab is possible, so every crosstab gets run.",
+          i: "The deck fills with numbers nobody asked for, and the answer to the research question gets lost.",
+          n: "Analysis locked to your plan's objectives, with stakeholders agreeing the cuts before any number is run.",
+          hood: ["Two passes, with a hard stop for stakeholder sign-off between them.", "Maps every metric to an objective first.", "Checks significance, and cross-checks with interview transcripts when you have them."] },
+        { id: "report-builder", name: "Report Builder", icon: "report",
+          more: "Builds a report, deck or topline from your real research data, ready for stakeholder review.",
+          stat: "About 6,700 words · 53 explicit don'ts",
+          s: "Findings are ready and the readout is on Thursday.",
+          p: "Turning a notesheet or survey into a report people read takes longer than the analysis did.",
+          i: "Leadership skims, stops at slide five, and the finding never reaches the decision.",
+          n: "A report that leads with the answer, in the format your audience reads, with every claim traceable to data.",
+          hood: ["Editorial standards studied from published industry research reports.", "Orders the report for a reader who stops early.", "Refuses to build a report without real data.", "Outputs PowerPoint, HTML, a topline brief or a social carousel."] },
+      ] },
+    { key: "influence", short: "Influence", name: "Influence pack", icon: "megaphone", c: "var(--pink)", pain: "“Great findings. Nothing changed.”",
+      skills: [
+        { id: "research-driven-prototype", name: "Research-Driven Prototype", icon: "phone",
+          more: "Turns findings into an HTML prototype where every design change links back to a cited insight.",
+          stat: "About 4,000 words · 8 stages",
+          s: "The research says what's wrong with the product.",
+          p: "Stakeholders can't picture what that means on screen.",
+          i: "Designers fill the gap with guesses, and the research gets credit for none of it.",
+          n: "A clickable prototype where every change sits next to the quote that justifies it.",
+          hood: ["Marks direct fixes and speculative additions differently.", "Links each screen element to its quote card, both ways.", "Nothing appears without a source.", "Can hand the finished prototype to Figma."] },
+        { id: "stakeholder-panel", name: "Stakeholder Panel", icon: "people",
+          more: "Reviews any research artefact through six stakeholder voices, from the CEO to the data scientist.",
+          stat: "About 2,300 words across 2 files · 6 personas",
+          s: "Your plan, guide or deck is about to go to real stakeholders.",
+          p: "You can't hear their objections until the meeting.",
+          i: "The meeting turns into a defence, and the work gets sent back.",
+          n: "Six stakeholder voices raise their objections first, so you fix the gaps before you present.",
+          hood: ["Each persona argues from its own way of thinking, from CEO to data scientist.", "Weighting changes with the artefact and the audience.", "Works on any research artefact, from screener to topline."] },
+        { id: "stop-ai-slop", name: "Stop AI Slop", icon: "pen",
+          more: "A final editing pass that strips AI-writing tells from anything you're about to send.",
+          stat: "About 1,400 words · built into every output skill",
+          s: "You drafted a report, email or post with AI.",
+          p: "It reads like AI: filler openers, “not X but Y” lines, em dashes.",
+          i: "Readers notice, trust drops, and the finding gets dismissed along with the prose.",
+          n: "Text that reads like you wrote it, with quotes and numbers untouched.",
+          hood: ["A seven-step pass in a fixed order.", "Scores the result on five dimensions and runs again below the bar.", "Runs as the last step inside every other output skill in the stack."] },
+      ] },
+    { key: "career", short: "Career", name: "Career", icon: "briefcase", c: "var(--orange)", pain: "“The work was strong. The portfolio isn't.”", single: true,
+      skills: [
+        { id: "case-study-builder", name: "Case Study Builder", icon: "folder",
+          more: "Turns project documents into portfolio case studies built the way hiring managers read them.",
+          stat: "About 7,500 words across 4 files",
+          s: "You have finished projects and an interview coming up.",
+          p: "Your case studies describe methods. Hiring managers look for framing and impact.",
+          i: "Strong work reads as average, and the panel moves on.",
+          n: "Case studies built the way hiring managers read them, tuned to the team you're meeting.",
+          hood: ["Works out what the specific team rewards before drafting.", "Probes impact at four levels, from insight to business.", "Plans how you'll walk the panel through it."] },
+      ] },
+  ];
+  const ALL = PACKS.flatMap((p) => p.skills.map((s) => ({ ...s, c: p.c, pack: p.name })));
+
+  // ---- hero layers (click a layer to open that pack) ----
+  const iso = document.getElementById("iso");
+  PACKS.forEach((p, i) => {
+    const layer = document.createElement("div");
+    layer.className = "layer";
+    layer.style.setProperty("--c", p.c);
+    layer.style.setProperty("--k", String(i * 0.13));
+    layer.style.setProperty("--i", String(i));
+    layer.style.cursor = "pointer";
+    layer.innerHTML = `<div class="lrow"><div class="ln">${p.short}</div><div class="lc">${p.skills.map((s) => tile(s.icon, p.c)).join("")}</div></div>`;
+    layer.addEventListener("click", () => { document.getElementById("packs").scrollIntoView({ behavior: "smooth" }); goTo(i); });
+    iso.appendChild(layer);
+  });
+  document.getElementById("collator-icon").outerHTML = tile("chat", "var(--purple)");
+
+  // ---- pack carousel ----
+  const track = document.getElementById("track");
+  const tabs = document.getElementById("tabs");
+  PACKS.forEach((p, i) => {
+    const slide = document.createElement("article");
+    slide.className = "slide";
+    slide.id = "pack-" + p.key;
+    slide.style.setProperty("--c", p.c);
+    slide.setAttribute("aria-label", `${p.name}, ${i + 1} of ${PACKS.length}`);
+    slide.innerHTML = `
+      <div class="sl">
+        ${tile(p.icon, p.c)}
+        <h3>${p.name}</h3>
+        <p class="pain">${p.pain}</p>
+        <div class="pprice">
+          ${p.single ? "" : `<span class="was" data-price="pack-list" data-pack="${p.key}"></span>`}
+          <span class="now" data-price="pack" data-pack="${p.key}"></span>
+          ${p.single ? "" : `<span class="save" data-price="pack-save" data-pack="${p.key}"></span>`}
+        </div>
+        <div><a class="btn" href="${LINKEDIN}" target="_blank" rel="noopener" data-follow>Get notified</a></div>
+      </div>
+      <ul class="skills">${p.skills.map((s) => `
+        <li>${tile(s.icon, p.c)}
+          <div>
+            <h4>${s.name}</h4>
+            <details class="more"><summary>Know more</summary><p>${s.more}</p><p class="kstat">${s.stat}</p><a href="#about-${s.id}" data-about>Why it's hard to copy ↓</a></details>
+          </div>
+          <div class="sp">${s.free && freeActive
+            ? `<s data-price="single"></s><a href="#free">Free ↓</a>`
+            : `<span data-price="single"></span>`}</div>
+        </li>`).join("")}
+      </ul>`;
+    track.appendChild(slide);
+
+    const tab = document.createElement("button");
+    tab.type = "button";
+    tab.className = "tab";
+    tab.setAttribute("role", "tab");
+    tab.setAttribute("aria-controls", slide.id);
+    tab.style.setProperty("--c", p.c);
+    tab.innerHTML = `${tile(p.icon, p.c)}${p.short}`;
+    tab.addEventListener("click", () => goTo(i));
+    tabs.appendChild(tab);
+  });
+  const slides = [...track.children];
+  const tabEls = [...tabs.children];
+  const prevBtn = document.getElementById("prev");
+  const nextBtn = document.getElementById("next");
+  let current = 0;
+  function goTo(i) {
+    i = Math.max(0, Math.min(slides.length - 1, i));
+    track.scrollTo({ left: slides[i].offsetLeft - track.offsetLeft });
+    setCurrent(i);
+  }
+  function setCurrent(i) {
+    current = i;
+    tabEls.forEach((t, k) => t.setAttribute("aria-selected", String(k === i)));
+    prevBtn.disabled = i === 0;
+    nextBtn.disabled = i === slides.length - 1;
+  }
+  let raf = 0;
+  track.addEventListener("scroll", () => {
+    cancelAnimationFrame(raf);
+    raf = requestAnimationFrame(() => {
+      const x = track.scrollLeft;
+      let best = 0, bestD = Infinity;
+      slides.forEach((sl, k) => { const d = Math.abs(sl.offsetLeft - track.offsetLeft - x); if (d < bestD) { bestD = d; best = k; } });
+      if (best !== current) setCurrent(best);
+    });
+  });
+  prevBtn.addEventListener("click", () => goTo(current - 1));
+  nextBtn.addEventListener("click", () => goTo(current + 1));
+  track.addEventListener("keydown", (e) => {
+    if (e.key === "ArrowRight") { e.preventDefault(); goTo(current + 1); }
+    if (e.key === "ArrowLeft") { e.preventDefault(); goTo(current - 1); }
+  });
+  track.tabIndex = 0;
+  setCurrent(0);
+
+  document.getElementById("allicons").innerHTML = ALL.map((s) => tile(s.icon, s.c)).join("");
+
+  // ---- about each skill ----
+  document.getElementById("aboutlist").innerHTML = ALL.map((s) => `
+    <article class="ab" id="about-${s.id}" style="--c:${s.c}">
+      <div class="abh">${tile(s.icon, s.c)}<div><h3>${s.name}</h3><small>${s.pack}</small></div></div>
+      <dl class="spin">
+        <div><dt>Where you are</dt><dd>${s.s}</dd></div>
+        <div><dt>The problem</dt><dd>${s.p}</dd></div>
+        <div><dt>What it costs you</dt><dd>${s.i}</dd></div>
+        <div><dt>With this skill</dt><dd>${s.n}</dd></div>
+      </dl>
+      <div class="hood">
+        <h4>What this description doesn't show</h4>
+        <ul>${s.hood.map((h) => `<li>${h}</li>`).join("")}</ul>
+        <p class="stat">${s.stat}</p>
+      </div>
+    </article>`).join("");
+  const readall = document.getElementById("readall");
+  function openAbout(id) {
+    readall.open = true;
+    const el = document.getElementById(id);
+    if (el) requestAnimationFrame(() => el.scrollIntoView({ behavior: "smooth", block: "start" }));
+  }
+  document.addEventListener("click", (e) => {
+    const a = e.target.closest("a[data-about]");
+    if (!a) return;
+    e.preventDefault();
+    const id = a.getAttribute("href").slice(1);
+    try { history.replaceState(null, "", "#" + id); } catch (err) {}
+    openAbout(id);
+  });
+  if (location.hash.startsWith("#about-")) openAbout(location.hash.slice(1));
+
+  // ---- free period ----
+  if (!freeActive) document.querySelectorAll("[data-free-only]").forEach((el) => { el.hidden = true; });
+
+  // ---- region + prices ----
+  const store = {
+    get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } },
+    set(k, v) { try { localStorage.setItem(k, v); } catch (e) {} },
+  };
+  function guessRegion() {
+    try {
+      const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || "";
+      if (tz === "Asia/Kolkata" || tz === "Asia/Calcutta") return "in";
+    } catch (e) {}
+    return "intl";
+  }
+  const pct = (price, listPrice) => Math.round((1 - price / listPrice) * 100);
+  function applyPrices(region) {
+    const P = PRICES[region];
+    document.querySelectorAll('[data-price="single"]').forEach((el) => { el.textContent = P.fmt(P.single); });
+    PACKS.forEach((p) => {
+      const listPrice = P.single * p.skills.length;
+      const price = P.packs[p.key];
+      const q = (k) => document.querySelector(`[data-price="${k}"][data-pack="${p.key}"]`);
+      q("pack").textContent = P.fmt(price);
+      if (!p.single) {
+        q("pack-list").textContent = P.fmt(listPrice);
+        q("pack-save").textContent = "Save " + pct(price, listPrice) + "%";
+      }
+    });
+    const stackList = P.single * ALL.length;
+    document.querySelector('[data-price="stack-list"]').textContent = P.fmt(stackList);
+    document.querySelector('[data-price="stack"]').textContent = P.fmt(P.stack);
+    document.querySelector('[data-price="stack-save"]').textContent = "Save " + pct(P.stack, stackList) + "%";
+    document.querySelectorAll(".seg button").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.region === region)));
+  }
+  let region = store.get("region") || guessRegion();
+  if (!PRICES[region]) region = "intl";
+  applyPrices(region);
+  document.querySelectorAll(".seg button").forEach((b) => b.addEventListener("click", () => {
+    region = b.dataset.region; store.set("region", region); applyPrices(region);
+  }));
+
+  // ---- follow on LinkedIn before the first download ----
+  let followed = store.get("followed") === "1";
+  const pendingKind = {};
+  const LI_ICON = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9.75h4v11H3zM9.5 9.75h3.8v1.5h.05c.53-1 1.83-2.05 3.77-2.05 4.03 0 4.78 2.65 4.78 6.1v5.45h-4v-4.83c0-1.15-.02-2.63-1.6-2.63-1.6 0-1.85 1.25-1.85 2.55v4.91h-4z"/></svg>';
+  function showGate(skill) {
+    const g = document.getElementById("gate-" + skill);
+    g.innerHTML = `<p>Follow Nithyn on LinkedIn to download.</p>
+      <a class="btn gradient" href="${LINKEDIN}" target="_blank" rel="noopener" data-follow>${LI_ICON} Follow on LinkedIn</a>`;
+    g.hidden = false;
+  }
+  function showReady(skill) {
+    const g = document.getElementById("gate-" + skill);
+    g.innerHTML = `<p>Thanks for following.</p>
+      <button class="btn primary" type="button" data-skill="${skill}" data-kind="${pendingKind[skill] || "zip"}">Download now</button>`;
+    g.hidden = false;
+  }
+  function markFollowed() {
+    if (followed) return;
+    followed = true;
+    store.set("followed", "1");
+    Object.keys(pendingKind).forEach(showReady);
+  }
+
+  // ---- free download ----
+  const FREE = {
+    collator: {
+      folder: "uxr-transcript-collator",
+      files: { "SKILL.md": "skills/uxr-transcript-collator.md" },
+      md: { path: "skills/uxr-transcript-collator.md", filename: "uxr-transcript-collator-public-access.md" },
+    },
+  };
+  function saveBlob(blob, filename) {
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = filename;
+    a.rel = "noopener";
+    a.style.display = "none";
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 10000);
+  }
+
+  const texts = {};
+  const pending = {};
+  function getText(path) {
+    if (!pending[path]) {
+      pending[path] = fetch(path)
+        .then((r) => { if (!r.ok) throw new Error("fetch"); return r.text(); })
+        .then((t) => { texts[path] = t; return t; });
+      pending[path].catch(() => { delete pending[path]; });
+    }
+    return pending[path];
+  }
+  if (freeActive) Object.values(FREE).forEach((s) => Object.values(s.files).forEach((p) => getText(p).catch(() => {})));
+
+  const say = (skill, msg, kind) => {
+    const el = document.getElementById("status-" + skill);
+    el.textContent = msg;
+    el.className = "status" + (kind ? " " + kind : "");
+  };
+
+  // Claude installs skills from a ZIP holding a folder with SKILL.md inside, so build that here.
+  async function buildZip(s) {
+    if (typeof JSZip === "undefined") throw new Error("zip");
+    const zip = new JSZip();
+    const dir = zip.folder(s.folder);
+    for (const [name, path] of Object.entries(s.files)) dir.file(name, await getText(path));
+    return zip.generateAsync({ type: "blob", compression: "DEFLATE" });
+  }
+  async function buildMd(s) {
+    return new Blob([await getText(s.md.path)], { type: "text/markdown" });
+  }
+  function showCopy(skill, reason) {
+    document.querySelector(`.dl [data-skill="${skill}"][data-kind="copy"]`).hidden = false;
+    say(skill, reason + " Copy the skill text instead and save it as SKILL.md.", "warn");
+  }
+
+  async function offer(btn, skill, kind) {
+    const s = FREE[skill];
+    const filename = kind === "zip" ? s.folder + "-public-access.zip" : s.md.filename;
+    btn.disabled = true;
+    say(skill, "Preparing the file…");
+    try {
+      const blob = kind === "zip" ? await buildZip(s) : await buildMd(s);
+      saveBlob(blob, filename);
+      say(skill, "Downloaded " + filename + ". Check your Downloads folder.", "ok");
+      document.getElementById("gate-" + skill).hidden = true;
+    } catch (err) {
+      if (kind === "zip" && err && err.message === "zip") say(skill, `The zip tool didn't load. Download the .md, save it as SKILL.md in a folder named ${s.folder}, and zip the folder.`, "warn");
+      else showCopy(skill, "That download didn't go through.");
+    } finally {
+      btn.disabled = false;
+    }
+  }
+
+  function copyText(skill) {
+    const s = FREE[skill];
+    const text = texts[s.files["SKILL.md"]];
+    if (!text) { say(skill, "Still loading. Try again in a moment.", "warn"); return; }
+    const fail = () => say(skill, "Copying is blocked in this browser. Use the .md download instead.", "warn");
+    try {
+      navigator.clipboard.writeText(text).then(
+        () => say(skill, `Copied. Save it as SKILL.md in a folder named ${s.folder}, then zip the folder.`, "ok"),
+        fail
+      );
+    } catch (e) { fail(); }
+  }
+
+  // ---- legal links open their section ----
+  function openLegal(id) {
+    const d = document.getElementById(id);
+    if (!d) return;
+    d.open = true;
+    requestAnimationFrame(() => d.scrollIntoView({ behavior: "smooth", block: "start" }));
+  }
+  if (location.hash.startsWith("#legal-")) openLegal(location.hash.slice(1));
+
+  // Downloads need the licence accepted (click-to-agree), then the LinkedIn follow step.
+  const agree = document.getElementById("agree");
+  const agreeLabel = agree ? agree.closest(".agree") : null;
+  if (agree) agree.addEventListener("change", () => { if (agree.checked) { agreeLabel.classList.remove("need"); say("collator", ""); } });
+
+  document.addEventListener("click", (e) => {
+    const legal = e.target.closest("a[data-legal]");
+    if (legal) {
+      e.preventDefault();
+      const id = legal.getAttribute("href").slice(1);
+      try { history.replaceState(null, "", "#" + id); } catch (err) {}
+      openLegal(id);
+      return;
+    }
+    if (e.target.closest("[data-follow]")) { markFollowed(); return; }
+    const btn = e.target.closest("button[data-skill]");
+    if (!btn || !freeActive) return;
+    const { skill, kind } = btn.dataset;
+    if (kind === "copy") { copyText(skill); return; }
+    if (agree && !agree.checked) {
+      agreeLabel.classList.add("need");
+      say(skill, "Tick the box to accept the Skill Licence Terms first.", "warn");
+      agree.focus();
+      return;
+    }
+    if (!followed) { pendingKind[skill] = kind; showGate(skill); return; }
+    offer(btn, skill, kind);
+  });
+})();
+</script>
+</body>
+</html>
