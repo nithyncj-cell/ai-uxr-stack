@@ -43,7 +43,7 @@ Turns kickoff calls, briefs and ad hoc asks into a stakeholder-ready research pl
 
 *“Fieldwork's done. Now a week of retyping.”*
 
-### Transcript Collator (free until 24 November 2026)
+### Transcript Collator (free)
 
 Turns raw transcripts into one theme-tagged notesheet, with a verbatim quote and timestamp on every row.
 
@@ -65,7 +65,7 @@ Reads each participant's notes start to finish for beliefs, contradictions and t
 - **What it needs from you:** Collated rows (from the Transcript Collator or the same 11-column format) and the study objective.
 - **Folder:** `uxr-collated-synth`
 
-### Collation Sorter
+### Collation Sorter (free)
 
 Sorts the collated sheet by theme and by participant in two new tabs, leaving the original untouched.
 
@@ -128,7 +128,7 @@ Reviews any research artefact through six stakeholder voices, from the CEO to th
 - **What it needs from you:** Any research artefact: a plan, guide, screener, analysis sheet, report or deck.
 - **Folder:** `stakeholder-panel`
 
-### Stop AI Slop
+### Stop AI Slop (free)
 
 A final editing pass that strips AI-writing tells from anything you're about to send.
 

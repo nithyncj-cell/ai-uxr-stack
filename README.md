@@ -23,9 +23,9 @@ Each skill takes one slow part of the research cycle and does it the way a senio
 
 > **This repo is the public listing for the stack.** It doesn't contain the paid skill files. The website is served from the `gh-pages` branch, and skills are downloaded from the [website](https://nithyncj-cell.github.io/ai-uxr-stack/) under the Skill Licence Terms.
 
-## Free until 24 November 2026: Transcript Collator
+## Free for good: Transcript Collator, Collation Sorter, Stop AI Slop
 
-The Transcript Collator turns raw interview transcripts into one theme-tagged notesheet, with a verbatim quote and timestamp on every row. It's free to download from the [website](https://nithyncj-cell.github.io/ai-uxr-stack/#free) until 11:59 pm on 24 November 2026, India time. Follow on LinkedIn, tick the licence box, and download the zip.
+The Transcript Collator turns raw interview transcripts into one theme-tagged notesheet, with a verbatim quote and timestamp on every row. It's free to download from the [website](https://nithyncj-cell.github.io/ai-uxr-stack/#free), along with Collation Sorter and Stop AI Slop. Tick the licence box, enter your email once, and download the zips.
 
 ## The five packs
 
@@ -35,15 +35,15 @@ The Transcript Collator turns raw interview transcripts into one theme-tagged no
 
 | Pack | The problem it solves | Skills | India | International |
 |---|---|---|---|---|
-| **Scope** | "Don't tell us what we already know." | Question Zero, Diagnostic Partner, Research Plan Creator | ₹2,205 | $79 |
-| **Transcript Collator** | "Fieldwork's done. Now a week of retyping." | Transcript Collator, Collated Synth, Collation Sorter | ₹1,905 | $69 |
-| **Analysis** | "Fifty crosstabs and no story." | Quant Analyst, Report Builder | ₹1,705 | $59 |
-| **Influence** | "Great findings. Nothing changed." | Research-Driven Prototype, Stakeholder Panel, Stop AI Slop | ₹1,305 | $49 |
-| **Career** | "The work was strong. The portfolio isn't." | Case Study Builder | ₹1,005 | $35 |
-| **Starter** | The four skills most studies need | Research Plan Creator, Transcript Collator, Report Builder, Stop AI Slop | ₹2,905 | $99 |
-| **Full stack** | All 12 skills | Everything above | ₹6,505 | $249 |
+| **Scope** | "Don't tell us what we already know." | Question Zero, Diagnostic Partner, Research Plan Creator | ₹2,499 | $49 |
+| **Transcript Collator** | "Fieldwork's done. Now a week of retyping." | Transcript Collator (free), Collated Synth, Collation Sorter (free) | ₹999 | $19 |
+| **Analysis** | "Fifty crosstabs and no story." | Quant Analyst, Report Builder | ₹1,999 | $39 |
+| **Influence** | "Great findings. Nothing changed." | Research-Driven Prototype, Stakeholder Panel, Stop AI Slop (free) | ₹1,299 | $25 |
+| **Career** | "The work was strong. The portfolio isn't." | Case Study Builder | ₹999 | $19 |
+| **Starter** | The paid skills most studies need | Research Plan Creator, Collated Synth, Report Builder | ₹2,299 | $45 |
+| **Full stack** | All 12 skills | Everything above | ₹4,999 founding, then ₹7,999 | $99 founding, then $149 |
 
-Each skill is priced by the work it does, from ₹305 to ₹1,505 in India and $12 to $49 elsewhere. Buy any pack and you get every future update to the library, plus every new skill Nithyn publishes, at no extra cost. Paid packs open soon; [follow on LinkedIn](https://www.linkedin.com/in/nithyn/) to hear first. Prices on the website are the current ones.
+Paid skills are priced by the work they do, from ₹699 / $12 to ₹1,299 / $25. The founding full-stack price is for the first 100 buyers or the first 30 days. Every pack includes 12 months of updates and every new skill Nithyn publishes in that time. Team licences are available on request. Paid packs open soon; [follow on LinkedIn](https://www.linkedin.com/in/nithyn/) to hear first. Prices on the website are the current ones.
 
 ## The 12 skills
 

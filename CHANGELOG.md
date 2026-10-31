@@ -6,7 +6,8 @@ Versions of the AI UXR Stack as released. Skill files are delivered from the web
 
 First public release of all 12 skills, in five packs.
 
-- **Free launch:** the Transcript Collator is free to download until 24 November 2026.
+- **Free skills:** the Transcript Collator, Collation Sorter and Stop AI Slop are free to download, with an email.
+- **Pricing:** paid skills priced by the work they do; Starter pack; founding full-stack price; 12 months of updates and new skills with every pack.
 - **Every skill opens the same way:** it says what it does and what it doesn't, then asks what you already have.
 - **The routing check:** each skill knows the other eleven and suggests the right next one.
 - **Instructions stay private,** and your files are treated as material, not instructions.

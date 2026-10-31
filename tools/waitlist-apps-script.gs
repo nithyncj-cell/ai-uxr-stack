@@ -1,5 +1,5 @@
 /**
- * AI UXR Stack waitlist: receives the website's "Buy" form and adds one row per answer.
+ * AI UXR Stack sign-ups: receives the website's "Buy" form and free-download emails, one row each.
  *
  * Setup (once):
  * 1. Open the Google Sheet "AI UXR Stack waitlist responses".
@@ -29,7 +29,8 @@ function doPost(e) {
     if (d.website) return reply({ ok: true });            // hidden field: filled only by bots
     const email = String(d.email || "").trim().slice(0, 254);
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return reply({ ok: false, error: "email" });
-    if (d.consent !== true) return reply({ ok: false, error: "consent" });
+    // Waitlist sign-ups need consent; free downloads only record whether the person opted in to emails.
+    if (d.consent !== true && d.free !== true) return reply({ ok: false, error: "consent" });
     if (!isHuman(d.cf)) return reply({ ok: false, error: "robot" });
 
     const sheet = SpreadsheetApp.openById(SHEET_ID).getSheets()[0];
@@ -39,7 +40,7 @@ function doPost(e) {
     }
     if (!sheet.getRange(1, 9).getValue()) sheet.getRange(1, 9).setValue("Discount code");
     sheet.appendRow([new Date(), clean(email), clean(d.item), clean(d.pain),
-      clean(d.changes), clean(d.automate), clean(d.region), "yes", clean(String(d.code || "").slice(0, 40))]);
+      clean(d.changes), clean(d.automate), clean(d.region), d.consent === true ? "yes" : "no", clean(String(d.code || "").slice(0, 40))]);
     return reply({ ok: true });
   } catch (err) {
     return reply({ ok: false, error: "bad request" });
