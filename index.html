@@ -274,6 +274,7 @@
   .credits { margin-top: var(--s4); font-size: 13px; line-height: 20px; color: var(--gray-700); max-width: 70ch; }
   .credits a { color: var(--gray-900); }
 
+  .robot { margin-top: var(--s4); min-height: 65px; }
   /* waitlist pop-up */
   .modal { width: min(520px, calc(100vw - 32px)); max-height: calc(100dvh - 32px); overflow: auto; padding: var(--s8); margin: auto;
     border: 1px solid var(--border-strong); border-radius: var(--r-lg); background: var(--bg); color: var(--gray-1000);
@@ -393,6 +394,7 @@
             <li><span>Writes <span class="missing">missing</span> instead of guessing.</span></li>
           </ul>
           <label class="agree"><input type="checkbox" id="agree"> <span>I agree to the <a class="link" href="#legal-licence" data-legal>Skill Licence Terms</a>.</span></label>
+          <div class="robot" id="robot-dl" hidden></div>
           <div class="dl">
             <button class="btn brand" type="button" data-skill="collator" data-kind="zip">
               <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 2.5v8"/><path d="M4.5 7L8 10.5 11.5 7"/><path d="M3 13.5h10"/></svg>
@@ -504,7 +506,7 @@
             <div class="lt">
               <p><b>Waitlist.</b> If you click a Buy button, a short form asks for your email address and, if you choose to answer, three questions about your research work and a discount code. Nithyn uses them only to email you when paid skills open and to decide what to build next. They are stored in a Google Sheet that only Nithyn can open, so Google's privacy policy covers that storage. They are not sold or shared. To see, correct or delete your answers, message Nithyn on LinkedIn or write to the email under Contact and Grievances.</p>
               <p>The website never asks for payment details. It saves two settings in your own browser: your price region, and whether you clicked Follow. They never leave your device, and you can clear them in your browser settings.</p>
-              <p>The website is hosted on GitHub Pages, and GitHub's privacy statement covers hosting and access logs. Fonts load from Google Fonts, and the zip and animation scripts load from cdnjs, so those services receive your IP address. When you click a LinkedIn link, LinkedIn's privacy policy applies. Downloads are built in your own browser, and Nithyn does not receive a list of who downloaded a skill.</p>
+              <p>The website is hosted on GitHub Pages, and GitHub's privacy statement covers hosting and access logs. Fonts load from Google Fonts, and the zip and animation scripts load from cdnjs, so those services receive your IP address. The robot check on the download and the waitlist form is run by Cloudflare Turnstile, which receives your IP address and basic browser details; Cloudflare's privacy policy covers that. When you click a LinkedIn link, LinkedIn's privacy policy applies. Downloads are built in your own browser, and Nithyn does not receive a list of who downloaded a skill.</p>
             </div>
           </details>
           <details id="legal-marks">
@@ -538,6 +540,7 @@
     <label class="field"><span>Which manual research task would you hand off first?</span><textarea name="automate" rows="2" maxlength="2000"></textarea></label>
     <label class="field"><span>Discount code <span class="opt">(optional)</span></span><input type="text" name="code" autocomplete="off" autocapitalize="characters" spellcheck="false" maxlength="40" placeholder="If you have one"></label>
     <input class="hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+    <div class="robot" id="robot-wl" hidden></div>
     <label class="agree"><input type="checkbox" name="consent" required> <span>Email me when it opens. I've read the <a class="link" href="#legal-privacy" data-legal data-close>privacy note</a>.</span></label>
     <p class="status" id="wl-status" role="status" aria-live="polite"></p>
     <div class="modal-actions">
@@ -878,6 +881,36 @@
   window.addEventListener("resize", placeNodes);
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(placeNodes);
 
+  // ---- robot check (Cloudflare Turnstile) on the waitlist form and the free download ----
+  // Paste the Turnstile site key here. While it's empty, no check is shown.
+  const TURNSTILE_SITEKEY = "";
+  const human = { dl: "", wl: "" };
+  const robotEl = { dl: document.getElementById("robot-dl"), wl: document.getElementById("robot-wl") };
+  const widget = {};
+  let tsLoading = null;
+  function loadTurnstile() {
+    if (!TURNSTILE_SITEKEY) return Promise.resolve(null);
+    if (!tsLoading) tsLoading = new Promise((resolve) => {
+      window.onTurnstileLoad = () => resolve(window.turnstile || null);
+      const sc = document.createElement("script");
+      sc.src = "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit&onload=onTurnstileLoad";
+      sc.async = true; sc.defer = true; sc.onerror = () => resolve(null);
+      document.head.appendChild(sc);
+    });
+    return tsLoading;
+  }
+  async function mountCheck(key) {
+    const ts = await loadTurnstile();
+    if (!ts || widget[key] !== undefined) return;
+    robotEl[key].hidden = false;
+    widget[key] = ts.render(robotEl[key], { sitekey: TURNSTILE_SITEKEY, theme: "dark", size: "flexible", action: key === "dl" ? "download" : "waitlist",
+      callback: (t) => { human[key] = t; if (key === "dl") say("collator", ""); else wlStatus.textContent = ""; },
+      "expired-callback": () => { human[key] = ""; },
+      "error-callback": () => { human[key] = ""; } });
+  }
+  function resetCheck(key) { human[key] = ""; if (window.turnstile && widget[key] !== undefined) window.turnstile.reset(widget[key]); }
+  const needsCheck = (key) => !!TURNSTILE_SITEKEY && !!window.turnstile && !human[key];
+
   // ---- waitlist pop-up on every Buy button ----
   // Paste the Google Apps Script web app URL here. If it is ever emptied, Buy buttons fall back to opening LinkedIn.
   const WAITLIST_ENDPOINT = "https://script.google.com/macros/s/AKfycbzGlUblM7VqHf6TyUNmoOktGWsK0ngoxOFt0_UBw3jNJ95jMTNq35ReYYOULS8g7jnnug/exec";
@@ -892,6 +925,7 @@
     wlForm.hidden = false; wlDone.hidden = true; wlStatus.textContent = ""; wlStatus.className = "status";
     if (typeof dlg.showModal === "function") dlg.showModal(); else dlg.setAttribute("open", "");
     setTimeout(() => wlForm.email.focus(), 30);
+    mountCheck("wl");
   }
   function closeWaitlist() { if (dlg.open) { if (typeof dlg.close === "function") dlg.close(); else dlg.removeAttribute("open"); } }
   document.addEventListener("click", (e) => {
@@ -907,14 +941,15 @@
     f.email.closest(".field").classList.toggle("bad", !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email));
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { wlStatus.textContent = "Add a valid email address."; wlStatus.className = "status warn"; f.email.focus(); return; }
     if (!f.consent.checked) { wlStatus.textContent = "Tick the box so Nithyn can email you."; wlStatus.className = "status warn"; return; }
+    if (needsCheck("wl")) { wlStatus.textContent = "Finish the robot check above first."; wlStatus.className = "status warn"; return; }
     const btn = f.querySelector('button[type="submit"]');
     btn.disabled = true; wlStatus.textContent = "Sending…"; wlStatus.className = "status";
-    const data = { email, item: wlItem, pain: f.pain.value.trim(), changes: f.changes.value.trim(), automate: f.automate.value.trim(), code: f.code.value.trim().toUpperCase(),
+    const data = { email, item: wlItem, pain: f.pain.value.trim(), changes: f.changes.value.trim(), automate: f.automate.value.trim(), code: f.code.value.trim().toUpperCase(), cf: human.wl,
       region, consent: true, website: f.website.value };
     try {
       // text/plain keeps this a simple request, which Google Apps Script accepts from any site.
       await fetch(WAITLIST_ENDPOINT, { method: "POST", mode: "no-cors", headers: { "Content-Type": "text/plain;charset=utf-8" }, body: JSON.stringify(data) });
-      f.reset(); f.hidden = true; wlDone.hidden = false;
+      f.reset(); f.hidden = true; wlDone.hidden = false; resetCheck("wl");
     } catch (err) {
       wlStatus.textContent = "That didn't go through. Check your connection and try again."; wlStatus.className = "status warn";
     } finally { btn.disabled = false; }
@@ -1030,7 +1065,7 @@
   // Downloads need the licence accepted (click-to-agree), then the LinkedIn follow step.
   const agree = document.getElementById("agree");
   const agreeLabel = agree ? agree.closest(".agree") : null;
-  if (agree) agree.addEventListener("change", () => { if (agree.checked) { agreeLabel.classList.remove("need"); say("collator", ""); } });
+  if (agree) agree.addEventListener("change", () => { if (agree.checked) { agreeLabel.classList.remove("need"); say("collator", ""); mountCheck("dl"); } });
 
   document.addEventListener("click", (e) => {
     const legal = e.target.closest("a[data-legal]");
@@ -1051,6 +1086,7 @@
       agree.focus();
       return;
     }
+    if (needsCheck("dl")) { mountCheck("dl"); say(skill, "Finish the robot check first.", "warn"); return; }
     if (!followed) { pendingKind[skill] = kind; showGate(skill); return; }
     offer(btn, skill, kind);
   });
