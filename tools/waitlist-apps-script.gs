@@ -11,6 +11,9 @@
  * Columns: Time, Email, Interested in, Slowest part of research,
  *          Changes or additions wanted, Manual task to hand off, Region, Consent, Discount code
  *
+ * Robot check: in Apps Script, Project Settings -> Script properties -> add TURNSTILE_SECRET
+ * with your Cloudflare Turnstile secret key. Keep the secret out of this file (the repo is public).
+ *
  * After changing this code: Deploy -> Manage deployments -> pencil -> Version: New version -> Deploy.
  * The web app URL stays the same.
  */
@@ -27,6 +30,7 @@ function doPost(e) {
     const email = String(d.email || "").trim().slice(0, 254);
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return reply({ ok: false, error: "email" });
     if (d.consent !== true) return reply({ ok: false, error: "consent" });
+    if (!isHuman(d.cf)) return reply({ ok: false, error: "robot" });
 
     const sheet = SpreadsheetApp.openById(SHEET_ID).getSheets()[0];
     if (sheet.getLastRow() === 0) {
@@ -42,6 +46,16 @@ function doPost(e) {
   } finally {
     lock.releaseLock();
   }
+}
+
+// Checks the Cloudflare Turnstile token. Skipped until TURNSTILE_SECRET is set.
+function isHuman(token) {
+  const secret = PropertiesService.getScriptProperties().getProperty("TURNSTILE_SECRET");
+  if (!secret) return true;
+  if (!token) return false;
+  const res = UrlFetchApp.fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
+    method: "post", payload: { secret: secret, response: String(token) }, muteHttpExceptions: true });
+  try { return JSON.parse(res.getContentText()).success === true; } catch (e) { return false; }
 }
 
 // Stops a typed answer from running as a spreadsheet formula, and caps its length.
