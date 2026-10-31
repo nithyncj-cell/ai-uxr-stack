@@ -35,14 +35,15 @@ The Transcript Collator turns raw interview transcripts into one theme-tagged no
 
 | Pack | The problem it solves | Skills | India | International |
 |---|---|---|---|---|
-| **Scope** | "Don't tell us what we already know." | Question Zero, Diagnostic Partner, Research Plan Creator | ₹4,005 | $79 |
-| **Transcript Collator** | "Fieldwork's done. Now a week of retyping." | Transcript Collator, Collated Synth, Collation Sorter | ₹5,005 | $99 |
-| **Analysis** | "Fifty crosstabs and no story." | Quant Analyst, Report Builder | ₹3,505 | $69 |
-| **Influence** | "Great findings. Nothing changed." | Research-Driven Prototype, Stakeholder Panel, Stop AI Slop | ₹4,005 | $79 |
-| **Career** | "The work was strong. The portfolio isn't." | Case Study Builder | ₹2,005 | $39 |
-| **Full stack** | All 12 skills | Everything above | ₹12,005 | $249 |
+| **Scope** | "Don't tell us what we already know." | Question Zero, Diagnostic Partner, Research Plan Creator | ₹2,205 | $79 |
+| **Transcript Collator** | "Fieldwork's done. Now a week of retyping." | Transcript Collator, Collated Synth, Collation Sorter | ₹1,905 | $69 |
+| **Analysis** | "Fifty crosstabs and no story." | Quant Analyst, Report Builder | ₹1,705 | $59 |
+| **Influence** | "Great findings. Nothing changed." | Research-Driven Prototype, Stakeholder Panel, Stop AI Slop | ₹1,305 | $49 |
+| **Career** | "The work was strong. The portfolio isn't." | Case Study Builder | ₹1,005 | $35 |
+| **Starter** | The four skills most studies need | Research Plan Creator, Transcript Collator, Report Builder, Stop AI Slop | ₹2,905 | $99 |
+| **Full stack** | All 12 skills | Everything above | ₹6,505 | $249 |
 
-Single skills are ₹2,005 or $39. Buy any pack and you get every future update to the library, plus every new skill Nithyn publishes, at no extra cost. Paid packs open soon; [follow on LinkedIn](https://www.linkedin.com/in/nithyn/) to hear first. Prices on the website are the current ones.
+Each skill is priced by the work it does, from ₹305 to ₹1,505 in India and $12 to $49 elsewhere. Buy any pack and you get every future update to the library, plus every new skill Nithyn publishes, at no extra cost. Paid packs open soon; [follow on LinkedIn](https://www.linkedin.com/in/nithyn/) to hear first. Prices on the website are the current ones.
 
 ## The 12 skills
 
