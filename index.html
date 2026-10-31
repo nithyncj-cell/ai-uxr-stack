@@ -236,6 +236,10 @@
   .main-price .big { display: flex; align-items: baseline; flex-wrap: wrap; gap: var(--s3); margin-top: var(--s4); }
   .main-price .now { font: 600 56px/56px var(--sans); letter-spacing: -0.06em; }
   .main-price .save { margin-top: var(--s2); font-size: 14px; color: var(--brand-hover); }
+  .main-price .founding { margin-top: var(--s1); }
+  .cur2 { margin-left: var(--s2); color: var(--gray-900); font-weight: 400; }
+  .main-price .now .cur2 { font-size: 24px; letter-spacing: -0.02em; }
+  .was .cur2 { margin-left: var(--s1); color: inherit; }
   .main-price .ticks { margin-top: var(--s6); }
   .main-price .btn { width: 100%; margin-top: var(--s8); }
   .main-price .note { margin-top: var(--s3); font-size: 13px; line-height: 16px; color: var(--gray-700); text-align: center; }
@@ -275,6 +279,15 @@
   .credits a { color: var(--gray-900); }
 
   .robot { margin-top: var(--s4); min-height: 65px; }
+  .also { list-style: none; margin: var(--s6) 0 0; padding: 0; }
+  .also > li { display: grid; grid-template-columns: 1fr auto; gap: var(--s1) var(--s4); align-items: center; padding-block: var(--s4); }
+  .also > li + li { border-top: 1px solid var(--border); }
+  .also > li:last-child { padding-bottom: 0; }
+  .also > li > .status { grid-column: 1 / -1; margin-top: 0; min-height: 0; }
+  .also > li > .status:empty { display: none; }
+  .also { border-top: 1px solid var(--border); }
+  .gate-email { margin-top: var(--s6); }
+  .gate-email .field:first-child { margin-top: 0; }
   /* waitlist pop-up */
   .modal { width: min(520px, calc(100vw - 32px)); max-height: calc(100dvh - 32px); overflow: auto; padding: var(--s8); margin: auto;
     border: 1px solid var(--border-strong); border-radius: var(--r-lg); background: var(--bg); color: var(--gray-1000);
@@ -334,7 +347,7 @@
     <nav class="nav" aria-label="Sections">
       <a href="#skills">Skills</a>
       <a href="#pricing">Pricing</a>
-      <a href="#free" data-free-only>Free Collator</a>
+      <a href="#free" data-free-only>Free skills</a>
     </nav>
     <a class="btn brand sm" href="#free" data-free-only>Get the Collator free</a>
   </div>
@@ -355,7 +368,7 @@
         <a class="btn brand lg" href="#free" data-free-only>Get the Collator free</a>
         <a class="btn lg" href="#pricing">See pricing for all skills</a>
       </div>
-      <p class="soon copy-14 muted">Free until 24 November. One of 12 skills in the AI UXR Stack; paid packs are coming soon.</p>
+      <p class="soon copy-14 muted">Free forever, along with Collation Sorter and Stop AI Slop. Paid packs are coming soon.</p>
     </div>
     <figure class="stackfig"><div class="stackviz" role="img" aria-label="Five stacked cards, one per pack: Scope, Collate, Analyse, Influence and Career."><div class="iso" id="iso"></div></div></figure>
   </div>
@@ -378,8 +391,8 @@
   <section id="free" aria-labelledby="free-title" data-free-only>
     <div class="wrap">
       <div class="sh">
-        <h2 class="h-40" id="free-title">Get the Collator. Free until 24 November.</h2>
-        <p class="copy-18 muted">Download it, add it to Claude, and collate your next study today.</p>
+        <h2 class="h-40" id="free-title">Get the Collator free, for good.</h2>
+        <p class="copy-18 muted">Enter your email once and download. Collation Sorter and Stop AI Slop are free too.</p>
       </div>
       <div class="offer">
         <div>
@@ -387,7 +400,7 @@
             <img src="assets/icons/hd/pack-collate.webp" alt="" width="64" height="64">
             <h3 class="h-24">UXR Transcript Collator</h3>
           </div>
-          <div class="price-line"><span class="now">Free</span><span class="was" data-price="skill" data-skill="transcript-collator"></span></div>
+          <div class="price-line"><span class="now">Free</span></div>
           <ul class="ticks">
             <li>Maps every transcript to your themes in one notesheet.</li>
             <li>Keeps the verbatim quote and timestamp on every row.</li>
@@ -402,9 +415,21 @@
             </button>
             <button class="btn" type="button" data-skill="collator" data-kind="md">Download .md</button>
           </div>
-          <div class="gate" id="gate-collator" hidden></div>
+          <div class="gate-email" id="gate-free" hidden>
+            <label class="field"><span>Your email</span><input type="email" id="free-email" autocomplete="email" maxlength="254" placeholder="you@company.com"></label>
+            <label class="agree"><input type="checkbox" id="free-optin"> <span>Also email me when skills are updated or new ones come out.</span></label>
+            <div class="dl"><button class="btn brand" type="button" id="free-go">Continue to download</button></div>
+          </div>
           <p class="status" id="status-collator" role="status" aria-live="polite"></p>
-          <p class="terms">Licensed for your own research. Sharing, reselling or rebuilding it is not allowed.</p>
+          <ul class="also">
+            <li><div><h4 class="h-16">Collation Sorter</h4><p class="copy-14 muted">Sorts your collated sheet by theme and by participant in two new tabs.</p></div>
+              <button class="btn sm" type="button" data-skill="sorter" data-kind="zip">Download (.zip)</button>
+              <p class="status" id="status-sorter" role="status" aria-live="polite"></p></li>
+            <li><div><h4 class="h-16">Stop AI Slop</h4><p class="copy-14 muted">A final editing pass that strips AI-writing tells from anything you send.</p></div>
+              <button class="btn sm" type="button" data-skill="slop" data-kind="zip">Download (.zip)</button>
+              <p class="status" id="status-slop" role="status" aria-live="polite"></p></li>
+          </ul>
+          <p class="terms">Licensed for your own research. Sharing, reselling or rebuilding them is not allowed.</p>
         </div>
         <div>
           <h3 class="h-16">Install in three steps</h3>
@@ -435,22 +460,19 @@
       <div class="ph">
         <div class="sh">
           <h2 class="h-40" id="pricing-title">Pricing</h2>
-          <p class="copy-18 muted">Buy any pack and you get every future update to the library, plus every new skill Nithyn publishes, at no extra cost.</p>
-        </div>
-        <div class="seg" role="group" aria-label="Show prices for">
-          <button type="button" data-region="in" aria-pressed="false">India ₹</button>
-          <button type="button" data-region="intl" aria-pressed="true">International $</button>
+          <p class="copy-18 muted">Prices in rupees and dollars. Every pack includes 12 months of updates and every new skill Nithyn publishes in that time.</p>
         </div>
       </div>
       <div class="pricing">
         <div class="main-price">
           <h3 class="h-20">Full stack</h3>
           <p class="copy-14 muted">All 12 skills across the five packs.</p>
-          <div class="big"><span class="now" data-price="stack"></span><span class="was" data-price="stack-list"></span></div>
+          <div class="big"><span class="now" data-price="stack"></span><span class="was" data-price="stack-regular"></span></div>
           <p class="save" data-price="stack-save"></p>
+          <p class="copy-14 muted founding" data-price="stack-note"></p>
           <ul class="ticks">
             <li>Each skill hands its output to the next.</li>
-            <li>Every future update and new skill included.</li>
+            <li>12 months of updates and new skills.</li>
             <li>One licence covers one person.</li>
           </ul>
           <a class="btn brand lg" href="https://www.linkedin.com/in/nithyn/" target="_blank" rel="noopener" data-buy="Full stack">Buy the full stack · coming soon</a>
@@ -464,7 +486,7 @@
   <section id="legal" aria-labelledby="legal-title">
     <div class="wrap">
       <h2 class="h-24" id="legal-title">Terms and policies</h2>
-      <p class="copy-14 muted" style="margin-top:var(--s2)">Last updated 30 October 2026. Plain-English terms; the bold headings are part of the terms.</p>
+      <p class="copy-14 muted" style="margin-top:var(--s2)">Last updated 31 October 2026. Plain-English terms; the bold headings are part of the terms.</p>
 <div class="legal">
           <details id="legal-licence">
             <summary>Skill Licence Terms</summary>
@@ -478,8 +500,8 @@
               <p><b>7. AI output.</b> A skill guides an AI model; it does not control or guarantee what the model produces. Check the output before you rely on it or share it.</p>
               <p><b>8. No warranty.</b> To the extent the law allows, skills are provided as they are, without any warranty that they will be error-free or suit a particular purpose.</p>
               <p><b>9. Limit of liability.</b> To the extent the law allows, Nithyn is not liable for indirect or consequential loss, lost profits or lost data. Nithyn's total liability for any claim about a skill is limited to the amount you paid for that skill. For a free download, that amount is zero. Nothing in these terms limits liability that cannot be limited by law.</p>
-              <p><b>10. Free launch.</b> The UXR Transcript Collator is free to download until 11:59 pm on 24 November 2026, India time. Copies downloaded free during that period stay licensed to you under these terms after that date.</p>
-              <p><b>11. Updates and new skills.</b> If you buy a pack or the full stack, you get every future update to the skills in the AI UXR Stack and every new skill Nithyn adds to it, at no extra cost, for as long as Nithyn offers the stack. If you buy a single skill, you get every future update to that skill. Nithyn may update, replace or retire any skill. Every update and new skill you receive is covered by these terms.</p>
+              <p><b>10. Free skills.</b> The UXR Transcript Collator, Collation Sorter and Stop AI Slop are free to download after you give your email address. These terms apply to them in full. If Nithyn ever starts charging for a free skill, copies you already downloaded stay licensed to you.</p>
+              <p><b>11. Updates and new skills.</b> If you buy a pack or the full stack, for 12 months from your purchase you get every update to the skills you bought and every new skill Nithyn adds to the AI UXR Stack, at no extra cost. If you buy a single skill, you get updates to that skill for 12 months. After 12 months you keep the versions you have; later updates and new skills may be sold separately or through an optional yearly renewal. Nithyn may update, replace or retire any skill. Every update and new skill you receive is covered by these terms.</p>
               <p><b>12. Ending the licence.</b> Your licence ends automatically if you break these terms. When it ends, you must delete every copy of the skill you hold.</p>
               <p><b>13. Changes to these terms.</b> Nithyn may change these terms. The version shown on this page on the day you download a skill applies to that download.</p>
               <p><b>14. Law and disputes.</b> These terms are governed by the laws of India. The courts at Bengaluru, Karnataka have exclusive jurisdiction, without affecting any consumer rights you have where you live.</p>
@@ -504,8 +526,9 @@
           <details id="legal-privacy">
             <summary>Privacy</summary>
             <div class="lt">
+              <p><b>Free downloads.</b> Before your first free download, the site asks for your email address. Nithyn uses it to know who uses the free skills and, only if you tick the box, to email you about updates and new skills. It is stored in the same Google Sheet described below.</p>
               <p><b>Waitlist.</b> If you click a Buy button, a short form asks for your email address and, if you choose to answer, three questions about your research work and a discount code. Nithyn uses them only to email you when paid skills open and to decide what to build next. They are stored in a Google Sheet that only Nithyn can open, so Google's privacy policy covers that storage. They are not sold or shared. To see, correct or delete your answers, message Nithyn on LinkedIn or write to the email under Contact and Grievances.</p>
-              <p>The website never asks for payment details. It saves two settings in your own browser: your price region, and whether you clicked Follow. They never leave your device, and you can clear them in your browser settings.</p>
+              <p>The website never asks for payment details. It saves one setting in your own browser: whether you have already given your email for free downloads. It never leaves your device, and you can clear it in your browser settings.</p>
               <p>The website is hosted on GitHub Pages, and GitHub's privacy statement covers hosting and access logs. Fonts load from Google Fonts, and the zip and animation scripts load from cdnjs, so those services receive your IP address. The robot check on the download and the waitlist form is run by Cloudflare Turnstile, which receives your IP address and basic browser details; Cloudflare's privacy policy covers that. When you click a LinkedIn link, LinkedIn's privacy policy applies. Downloads are built in your own browser, and Nithyn does not receive a list of who downloaded a skill.</p>
             </div>
           </details>
@@ -574,26 +597,21 @@
 <script>
 (() => {
   const LINKEDIN = "https://www.linkedin.com/in/nithyn/";
-  // The Collator stays free through 24 Nov 2026 (India time), then shows its price like every other skill.
-  const FREE_UNTIL = new Date("2026-11-24T23:59:59+05:30");
-  const freeActive = Date.now() <= FREE_UNTIL.getTime();
+  const freeActive = true;   // Collator, Collation Sorter and Stop AI Slop are free to download
 
   // ---- prices: edit here ----
-  // Each skill is priced by the work it takes off your plate. Packs and the full stack are cheaper than buying skills one by one.
+  // Prices as [rupees, dollars]. Free skills have no price. Each paid skill is priced by the work it does.
+  const FREE_IDS = ["transcript-collator", "collation-sorter", "stop-ai-slop"];
   const PRICES = {
-    in: { skills: { "transcript-collator": 1505, "research-plan-creator": 1305, "report-builder": 1305,
-                    "quant-analyst": 1005, "diagnostic-partner": 1005, "research-driven-prototype": 1005, "case-study-builder": 1005,
-                    "question-zero": 805, "collated-synth": 805, "stakeholder-panel": 505, "stop-ai-slop": 305, "collation-sorter": 305 },
-          packs: { starter: 2905, scope: 2205, collate: 1905, analysis: 1705, influence: 1305, career: 1005 }, stack: 6505,
-          fmt: (n) => "₹" + n.toLocaleString("en-IN") },
-    intl: { skills: { "transcript-collator": 49, "research-plan-creator": 45, "report-builder": 45,
-                    "quant-analyst": 35, "diagnostic-partner": 35, "research-driven-prototype": 35, "case-study-builder": 35,
-                    "question-zero": 29, "collated-synth": 29, "stakeholder-panel": 19, "stop-ai-slop": 12, "collation-sorter": 12 },
-          packs: { starter: 99, scope: 79, collate: 69, analysis: 59, influence: 49, career: 35 }, stack: 249,
-          fmt: (n) => "$" + n },
+    skills: { "research-plan-creator": [1299, 25], "report-builder": [1299, 25],
+              "quant-analyst": [999, 19], "diagnostic-partner": [999, 19], "research-driven-prototype": [999, 19], "case-study-builder": [999, 19],
+              "question-zero": [999, 19], "collated-synth": [999, 19], "stakeholder-panel": [699, 12] },
+    packs: { starter: [2299, 45], scope: [2499, 49], collate: [999, 19], analysis: [1999, 39], influence: [1299, 25], career: [999, 19] },
+    stack: { founding: [4999, 99], regular: [7999, 149] },
   };
   // The starter pack: the four skills most studies need, from plan to report.
-  const STARTER = { key: "starter", name: "Starter pack", ids: ["research-plan-creator", "transcript-collator", "report-builder", "stop-ai-slop"] };
+  // The starter pack: the paid skills most studies need, on top of the three free ones.
+  const STARTER = { key: "starter", name: "Starter pack", ids: ["research-plan-creator", "collated-synth", "report-builder"] };
 
 
   const PACKS = [
@@ -733,11 +751,11 @@
               </details>
             </div>
           </div>
-          <div class="sp">${s.free && freeActive ? `<s data-price="skill" data-skill="${s.id}"></s><a class="link" href="#free">Free</a>` : `<span data-price="skill" data-skill="${s.id}"></span>`}</div>
+          <div class="sp">${FREE_IDS.includes(s.id) ? `<a class="link" href="#free">Free</a>` : `<span data-price="skill" data-skill="${s.id}"></span>`}</div>
         </li>`).join("")}
       </ul>
       <div class="pack-foot">
-        <div><div class="pack-buy"><span class="pp" data-price="pack" data-pack="${p.key}"></span>${p.single ? "" : `<s class="was" data-price="pack-list" data-pack="${p.key}"></s>`}</div><p class="copy-14 muted">Includes all future updates and new skills.</p></div>
+        <div><div class="pack-buy"><span class="pp" data-price="pack" data-pack="${p.key}"></span>${p.single ? "" : `<s class="was" data-price="pack-list" data-pack="${p.key}"></s>`}</div><p class="copy-14 muted">Includes 12 months of updates and new skills.</p></div>
         <div class="pack-actions">
           <button class="btn sm toggle" type="button" aria-expanded="false" aria-controls="pack-${p.key}">Show details</button>
           <a class="btn sm brand" href="${LINKEDIN}" target="_blank" rel="noopener" data-buy="${p.name}">Buy pack · coming soon</a>
@@ -755,7 +773,7 @@
   const byId = Object.fromEntries(PACKS.flatMap((p) => p.skills).map((s) => [s.id, s]));
   document.getElementById("plist").innerHTML = `
     <li>
-      <div><h3 class="h-16">${STARTER.name}</h3><p class="copy-14 muted">The four skills most studies need: ${STARTER.ids.map((id) => byId[id].name).join(", ")}.</p></div>
+      <div><h3 class="h-16">${STARTER.name}</h3><p class="copy-14 muted">The paid skills most studies need: ${STARTER.ids.map((id) => byId[id].name).join(", ")}. Use them with the three free skills.</p></div>
       <div><p class="pp" data-price="pack" data-pack="starter"></p><p class="ps"><s data-price="pack-list" data-pack="starter"></s> <span data-price="pack-save" data-pack="starter"></span></p>
         <a class="btn sm" href="${LINKEDIN}" target="_blank" rel="noopener" data-buy="Starter pack">Buy pack · coming soon</a></div>
     </li>` + PACKS.map((p) => `
@@ -764,7 +782,8 @@
       <div><p class="pp" data-price="pack" data-pack="${p.key}"></p>${p.single ? "" : `<p class="ps"><s data-price="pack-list" data-pack="${p.key}"></s> <span data-price="pack-save" data-pack="${p.key}"></span></p>`}
         <a class="btn sm" href="${LINKEDIN}" target="_blank" rel="noopener" data-buy="${p.name}">Buy pack · coming soon</a></div>
     </li>`).join("") + `
-    <li><div><h3 class="h-16">Single skill</h3><p class="copy-14 muted">Any one skill on its own, priced by what it does.</p></div><div><p class="pp" data-price="range"></p><a class="btn sm" href="${LINKEDIN}" target="_blank" rel="noopener" data-buy="Single skill">Buy a skill · coming soon</a></div></li>`;
+    <li><div><h3 class="h-16">Team licence</h3><p class="copy-14 muted">For research teams that want every member covered.</p></div><div><p class="pp">On request</p><a class="btn sm" href="${LINKEDIN}" target="_blank" rel="noopener">Ask on LinkedIn</a></div></li>
+    <li><div><h3 class="h-16">Single skill</h3><p class="copy-14 muted">Any one paid skill on its own, priced by what it does.</p></div><div><p class="pp" data-price="range"></p><a class="btn sm" href="${LINKEDIN}" target="_blank" rel="noopener" data-buy="Single skill">Buy a skill · coming soon</a></div></li>`;
 
   // ---- free period ----
   if (!freeActive) document.querySelectorAll("[data-free-only]").forEach((el) => { el.hidden = true; });
@@ -782,34 +801,36 @@
     return "intl";
   }
   const pct = (price, listPrice) => Math.round((1 - price / listPrice) * 100);
-  function applyPrices(region) {
-    const P = PRICES[region];
-    const sum = (ids) => ids.reduce((a, id) => a + P.skills[id], 0);
-    document.querySelectorAll('[data-price="skill"]').forEach((el) => { el.textContent = P.fmt(P.skills[el.dataset.skill]); });
-    const all = Object.values(P.skills);
-    document.querySelectorAll('[data-price="range"]').forEach((el) => { el.textContent = P.fmt(Math.min(...all)) + " to " + P.fmt(Math.max(...all)); });
-    [...PACKS.map((p) => ({ key: p.key, ids: p.skills.map((s) => s.id), single: p.single })), STARTER].forEach((p) => {
-      const listPrice = sum(p.ids);
-      const price = P.packs[p.key];
-      const set = (k, v) => document.querySelectorAll(`[data-price="${k}"][data-pack="${p.key}"]`).forEach((el) => { el.textContent = v; });
-      set("pack", P.fmt(price));
-      if (!p.single) {
-        set("pack-list", P.fmt(listPrice));
-        set("pack-save", "save " + pct(price, listPrice) + "%");
-      }
+  const INDIA = guessRegion() === "in";
+  const inr = (n) => "₹" + n.toLocaleString("en-IN");
+  const usd = (n) => "$" + n;
+  const both = ([r, d]) => INDIA ? `${inr(r)}<span class="cur2">${usd(d)}</span>` : `${usd(d)}<span class="cur2">${inr(r)}</span>`;
+  const bothPlain = ([r, d]) => INDIA ? `${inr(r)} / ${usd(d)}` : `${usd(d)} / ${inr(r)}`;
+  function applyPrices() {
+    const P = PRICES;
+    const sum = (ids) => ids.filter((id) => !FREE_IDS.includes(id)).reduce((a, id) => [a[0] + P.skills[id][0], a[1] + P.skills[id][1]], [0, 0]);
+    const save = (price, list) => Math.round((1 - (INDIA ? price[0] / list[0] : price[1] / list[1])) * 100);
+    document.querySelectorAll('[data-price="skill"]').forEach((el) => { el.innerHTML = both(P.skills[el.dataset.skill]); });
+    const vals = Object.values(P.skills);
+    document.querySelectorAll('[data-price="range"]').forEach((el) => {
+      const lo = vals.reduce((a, v) => (v[0] < a[0] ? v : a)), hi = vals.reduce((a, v) => (v[0] > a[0] ? v : a));
+      el.innerHTML = `${bothPlain(lo)}<br>to ${bothPlain(hi)}`;
     });
-    const stackList = sum(Object.keys(P.skills));
-    document.querySelector('[data-price="stack-list"]').textContent = P.fmt(stackList);
-    document.querySelector('[data-price="stack"]').textContent = P.fmt(P.stack);
-    document.querySelector('[data-price="stack-save"]').textContent = "You save " + pct(P.stack, stackList) + "% against single skills.";
-    document.querySelectorAll(".seg button").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.region === region)));
+    [...PACKS.map((p) => ({ key: p.key, ids: p.skills.map((s) => s.id) })), STARTER].forEach((p) => {
+      const list = sum(p.ids), price = P.packs[p.key];
+      const set = (k, v) => document.querySelectorAll(`[data-price="${k}"][data-pack="${p.key}"]`).forEach((el) => { el.innerHTML = v; });
+      set("pack", both(price));
+      const saves = list[0] > price[0];
+      set("pack-list", saves ? bothPlain(list) : "");
+      set("pack-save", saves ? "save " + save(price, list) + "%" : "");
+    });
+    const all = sum(Object.keys(P.skills));
+    document.querySelector('[data-price="stack"]').innerHTML = both(P.stack.founding);
+    document.querySelector('[data-price="stack-regular"]').innerHTML = bothPlain(P.stack.regular);
+    document.querySelector('[data-price="stack-save"]').textContent = "You save " + save(P.stack.founding, all) + "% against buying each skill.";
+    document.querySelector('[data-price="stack-note"]').textContent = `Founding price for the first 100 buyers or the first 30 days. Then ${bothPlain(P.stack.regular)}.`;
   }
-  let region = store.get("region") || guessRegion();
-  if (!PRICES[region]) region = "intl";
-  applyPrices(region);
-  document.querySelectorAll(".seg button").forEach((b) => b.addEventListener("click", () => {
-    region = b.dataset.region; store.set("region", region); applyPrices(region);
-  }));
+  applyPrices();
 
   // ---- sticky header gets a hairline once the page scrolls ----
   const hdr = document.getElementById("hdr");
@@ -922,7 +943,7 @@
     if (!ts || widget[key] !== undefined) return;
     robotEl[key].hidden = false;
     widget[key] = ts.render(robotEl[key], { sitekey: TURNSTILE_SITEKEY, theme: "dark", size: "flexible", action: key === "dl" ? "download" : "waitlist",
-      callback: (t) => { human[key] = t; if (key === "dl") say("collator", ""); else wlStatus.textContent = ""; },
+      callback: (t) => { human[key] = t; if (key === "dl") Object.keys(FREE).forEach((k) => say(k, "")); else wlStatus.textContent = ""; },
       "expired-callback": () => { human[key] = ""; },
       "error-callback": () => { human[key] = ""; } });
   }
@@ -963,7 +984,7 @@
     const btn = f.querySelector('button[type="submit"]');
     btn.disabled = true; wlStatus.textContent = "Sending…"; wlStatus.className = "status";
     const data = { email, item: wlItem, pain: f.pain.value.trim(), changes: f.changes.value.trim(), automate: f.automate.value.trim(), code: f.code.value.trim().toUpperCase(), cf: human.wl,
-      region, consent: true, website: f.website.value };
+      region: INDIA ? "in" : "intl", consent: true, website: f.website.value };
     try {
       // text/plain keeps this a simple request, which Google Apps Script accepts from any site.
       await fetch(WAITLIST_ENDPOINT, { method: "POST", mode: "no-cors", headers: { "Content-Type": "text/plain;charset=utf-8" }, body: JSON.stringify(data) });
@@ -974,36 +995,30 @@
   });
   window.addEventListener("load", () => { initStack(); initMotion(); });
 
-  // ---- follow on LinkedIn before the first download ----
-  let followed = store.get("followed") === "1";
-  const pendingKind = {};
-  const LI_ICON = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9.75h4v11H3zM9.5 9.75h3.8v1.5h.05c.53-1 1.83-2.05 3.77-2.05 4.03 0 4.78 2.65 4.78 6.1v5.45h-4v-4.83c0-1.15-.02-2.63-1.6-2.63-1.6 0-1.85 1.25-1.85 2.55v4.91h-4z"/></svg>';
-  function showGate(skill) {
-    const g = document.getElementById("gate-" + skill);
-    g.innerHTML = `<p>Follow Nithyn on LinkedIn to download.</p>
-      <a class="btn brand sm" href="${LINKEDIN}" target="_blank" rel="noopener" data-follow>${LI_ICON} Follow on LinkedIn</a>`;
-    g.hidden = false;
-  }
-  function showReady(skill) {
-    const g = document.getElementById("gate-" + skill);
-    g.innerHTML = `<p>Thanks for following.</p>
-      <button class="btn primary" type="button" data-skill="${skill}" data-kind="${pendingKind[skill] || "zip"}">Download now</button>`;
-    g.hidden = false;
-  }
-  function markFollowed() {
-    if (followed) return;
-    followed = true;
-    store.set("followed", "1");
-    Object.keys(pendingKind).forEach(showReady);
+  // ---- email once before the first free download ----
+  let emailGiven = store.get("free-email") === "1";
+  let pendingDl = null;
+  const gateFree = document.getElementById("gate-free");
+  function showEmailGate(skill, kind) {
+    pendingDl = { skill, kind };
+    gateFree.hidden = false;
+    say(skill, "Enter your email to start the download.");
+    setTimeout(() => document.getElementById("free-email").focus(), 30);
   }
 
-  // ---- free download ----
+  // ---- free downloads ----
   const FREE = {
-    collator: {
-      folder: "uxr-transcript-collator",
+    collator: { name: "Transcript Collator", folder: "uxr-transcript-collator",
       files: { "SKILL.md": "skills/uxr-transcript-collator.md" },
-      md: { path: "skills/uxr-transcript-collator.md", filename: "uxr-transcript-collator-public-access.md" },
-    },
+      md: { path: "skills/uxr-transcript-collator.md", filename: "uxr-transcript-collator-public-access.md" } },
+    sorter: { name: "Collation Sorter", folder: "run-uxr-collation-sheet-sort-by-theme",
+      files: { "SKILL.md": "skills/collation-sorter/SKILL.md" },
+      md: { path: "skills/collation-sorter/SKILL.md", filename: "collation-sorter-public-access.md" } },
+    slop: { name: "Stop AI Slop", folder: "stop-ai-slop",
+      files: { "SKILL.md": "skills/stop-ai-slop/SKILL.md", "THIRD_PARTY_NOTICES.md": "skills/stop-ai-slop/THIRD_PARTY_NOTICES.md",
+        "references/tells.md": "skills/stop-ai-slop/references/tells.md", "references/wikipedia_signs.md": "skills/stop-ai-slop/references/wikipedia_signs.md",
+        "references/examples.md": "skills/stop-ai-slop/references/examples.md" },
+      md: { path: "skills/stop-ai-slop/SKILL.md", filename: "stop-ai-slop-public-access.md" } },
   };
   function saveBlob(blob, filename) {
     const url = URL.createObjectURL(blob);
@@ -1062,7 +1077,6 @@
       const blob = kind === "zip" ? await buildZip(s) : await buildMd(s);
       saveBlob(blob, filename);
       say(skill, "Downloaded " + filename + ". Check your Downloads folder.", "ok");
-      document.getElementById("gate-" + skill).hidden = true;
     } catch (err) {
       if (kind === "zip" && err && err.message === "zip") say(skill, `The zip tool didn't load. Download the .md, save it as SKILL.md in a folder named ${s.folder}, and zip the folder.`, "warn");
       else showFail(skill, kind);
@@ -1083,7 +1097,23 @@
   // Downloads need the licence accepted (click-to-agree), then the LinkedIn follow step.
   const agree = document.getElementById("agree");
   const agreeLabel = agree ? agree.closest(".agree") : null;
-  if (agree) agree.addEventListener("change", () => { if (agree.checked) { agreeLabel.classList.remove("need"); say("collator", ""); mountCheck("dl"); } });
+  if (agree) agree.addEventListener("change", () => { if (agree.checked) { agreeLabel.classList.remove("need"); Object.keys(FREE).forEach((k) => say(k, "")); mountCheck("dl"); } });
+  document.getElementById("free-go").addEventListener("click", () => {
+    const input = document.getElementById("free-email");
+    const email = input.value.trim();
+    const ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    input.closest(".field").classList.toggle("bad", !ok);
+    if (!pendingDl) return;
+    if (!ok) { say(pendingDl.skill, "Add a valid email address.", "warn"); input.focus(); return; }
+    if (WAITLIST_ENDPOINT) {
+      const data = { email, item: "Free download: " + FREE[pendingDl.skill].name, pain: "", changes: "", automate: "", code: "",
+        region: INDIA ? "in" : "intl", consent: document.getElementById("free-optin").checked, free: true, cf: human.dl, website: "" };
+      fetch(WAITLIST_ENDPOINT, { method: "POST", mode: "no-cors", headers: { "Content-Type": "text/plain;charset=utf-8" }, body: JSON.stringify(data) }).catch(() => {});
+    }
+    emailGiven = true; store.set("free-email", "1"); gateFree.hidden = true;
+    const btn = document.querySelector(`.offer button[data-skill="${pendingDl.skill}"][data-kind="${pendingDl.kind}"]`);
+    offer(btn, pendingDl.skill, pendingDl.kind); pendingDl = null;
+  });
 
   document.addEventListener("click", (e) => {
     const legal = e.target.closest("a[data-legal]");
@@ -1094,7 +1124,6 @@
       openLegal(id);
       return;
     }
-    if (e.target.closest("[data-follow]")) { markFollowed(); return; }
     const btn = e.target.closest("button[data-skill]");
     if (!btn || !freeActive) return;
     const { skill, kind } = btn.dataset;
@@ -1105,7 +1134,7 @@
       return;
     }
     if (needsCheck("dl")) { mountCheck("dl"); say(skill, "Finish the robot check first.", "warn"); return; }
-    if (!followed) { pendingKind[skill] = kind; showGate(skill); return; }
+    if (!emailGiven && WAITLIST_ENDPOINT) { showEmailGate(skill, kind); return; }
     offer(btn, skill, kind);
   });
 
