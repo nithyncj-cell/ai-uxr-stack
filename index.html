@@ -387,7 +387,7 @@
             <img src="assets/icons/hd/pack-collate.webp" alt="" width="64" height="64">
             <h3 class="h-24">UXR Transcript Collator</h3>
           </div>
-          <div class="price-line"><span class="now">Free</span><span class="was" data-price="single"></span></div>
+          <div class="price-line"><span class="now">Free</span><span class="was" data-price="skill" data-skill="transcript-collator"></span></div>
           <ul class="ticks">
             <li>Maps every transcript to your themes in one notesheet.</li>
             <li>Keeps the verbatim quote and timestamp on every row.</li>
@@ -579,12 +579,21 @@
   const freeActive = Date.now() <= FREE_UNTIL.getTime();
 
   // ---- prices: edit here ----
+  // Each skill is priced by the work it takes off your plate. Packs and the full stack are cheaper than buying skills one by one.
   const PRICES = {
-    in:   { single: 2005, packs: { scope: 4005, collate: 5005, analysis: 3505, influence: 4005, career: 2005 }, stack: 12005,
-            fmt: (n) => "₹" + n.toLocaleString("en-IN") },
-    intl: { single: 39, packs: { scope: 79, collate: 99, analysis: 69, influence: 79, career: 39 }, stack: 249,
-            fmt: (n) => "$" + n },
+    in: { skills: { "transcript-collator": 1505, "research-plan-creator": 1305, "report-builder": 1305,
+                    "quant-analyst": 1005, "diagnostic-partner": 1005, "research-driven-prototype": 1005, "case-study-builder": 1005,
+                    "question-zero": 805, "collated-synth": 805, "stakeholder-panel": 505, "stop-ai-slop": 305, "collation-sorter": 305 },
+          packs: { starter: 2905, scope: 2205, collate: 1905, analysis: 1705, influence: 1305, career: 1005 }, stack: 6505,
+          fmt: (n) => "₹" + n.toLocaleString("en-IN") },
+    intl: { skills: { "transcript-collator": 49, "research-plan-creator": 45, "report-builder": 45,
+                    "quant-analyst": 35, "diagnostic-partner": 35, "research-driven-prototype": 35, "case-study-builder": 35,
+                    "question-zero": 29, "collated-synth": 29, "stakeholder-panel": 19, "stop-ai-slop": 12, "collation-sorter": 12 },
+          packs: { starter: 99, scope: 79, collate: 69, analysis: 59, influence: 49, career: 35 }, stack: 249,
+          fmt: (n) => "$" + n },
   };
+  // The starter pack: the four skills most studies need, from plan to report.
+  const STARTER = { key: "starter", name: "Starter pack", ids: ["research-plan-creator", "transcript-collator", "report-builder", "stop-ai-slop"] };
 
 
   const PACKS = [
@@ -724,7 +733,7 @@
               </details>
             </div>
           </div>
-          <div class="sp">${s.free && freeActive ? `<s data-price="single"></s><a class="link" href="#free">Free</a>` : `<span data-price="single"></span>`}</div>
+          <div class="sp">${s.free && freeActive ? `<s data-price="skill" data-skill="${s.id}"></s><a class="link" href="#free">Free</a>` : `<span data-price="skill" data-skill="${s.id}"></span>`}</div>
         </li>`).join("")}
       </ul>
       <div class="pack-foot">
@@ -743,13 +752,19 @@
   }));
 
   // ---- pack price list ----
-  document.getElementById("plist").innerHTML = PACKS.map((p) => `
+  const byId = Object.fromEntries(PACKS.flatMap((p) => p.skills).map((s) => [s.id, s]));
+  document.getElementById("plist").innerHTML = `
+    <li>
+      <div><h3 class="h-16">${STARTER.name}</h3><p class="copy-14 muted">The four skills most studies need: ${STARTER.ids.map((id) => byId[id].name).join(", ")}.</p></div>
+      <div><p class="pp" data-price="pack" data-pack="starter"></p><p class="ps"><s data-price="pack-list" data-pack="starter"></s> <span data-price="pack-save" data-pack="starter"></span></p>
+        <a class="btn sm" href="${LINKEDIN}" target="_blank" rel="noopener" data-buy="Starter pack">Buy pack · coming soon</a></div>
+    </li>` + PACKS.map((p) => `
     <li>
       <div><h3 class="h-16">${p.name}</h3><p class="copy-14 muted">${p.skills.map((s) => s.name).join(", ")}</p></div>
       <div><p class="pp" data-price="pack" data-pack="${p.key}"></p>${p.single ? "" : `<p class="ps"><s data-price="pack-list" data-pack="${p.key}"></s> <span data-price="pack-save" data-pack="${p.key}"></span></p>`}
         <a class="btn sm" href="${LINKEDIN}" target="_blank" rel="noopener" data-buy="${p.name}">Buy pack · coming soon</a></div>
     </li>`).join("") + `
-    <li><div><h3 class="h-16">Single skill</h3><p class="copy-14 muted">Any one skill on its own.</p></div><div><p class="pp" data-price="single"></p><a class="btn sm" href="${LINKEDIN}" target="_blank" rel="noopener" data-buy="Single skill">Buy a skill · coming soon</a></div></li>`;
+    <li><div><h3 class="h-16">Single skill</h3><p class="copy-14 muted">Any one skill on its own, priced by what it does.</p></div><div><p class="pp" data-price="range"></p><a class="btn sm" href="${LINKEDIN}" target="_blank" rel="noopener" data-buy="Single skill">Buy a skill · coming soon</a></div></li>`;
 
   // ---- free period ----
   if (!freeActive) document.querySelectorAll("[data-free-only]").forEach((el) => { el.hidden = true; });
@@ -769,9 +784,12 @@
   const pct = (price, listPrice) => Math.round((1 - price / listPrice) * 100);
   function applyPrices(region) {
     const P = PRICES[region];
-    document.querySelectorAll('[data-price="single"]').forEach((el) => { el.textContent = P.fmt(P.single); });
-    PACKS.forEach((p) => {
-      const listPrice = P.single * p.skills.length;
+    const sum = (ids) => ids.reduce((a, id) => a + P.skills[id], 0);
+    document.querySelectorAll('[data-price="skill"]').forEach((el) => { el.textContent = P.fmt(P.skills[el.dataset.skill]); });
+    const all = Object.values(P.skills);
+    document.querySelectorAll('[data-price="range"]').forEach((el) => { el.textContent = P.fmt(Math.min(...all)) + " to " + P.fmt(Math.max(...all)); });
+    [...PACKS.map((p) => ({ key: p.key, ids: p.skills.map((s) => s.id), single: p.single })), STARTER].forEach((p) => {
+      const listPrice = sum(p.ids);
       const price = P.packs[p.key];
       const set = (k, v) => document.querySelectorAll(`[data-price="${k}"][data-pack="${p.key}"]`).forEach((el) => { el.textContent = v; });
       set("pack", P.fmt(price));
@@ -780,7 +798,7 @@
         set("pack-save", "save " + pct(price, listPrice) + "%");
       }
     });
-    const stackList = P.single * ALL.length;
+    const stackList = sum(Object.keys(P.skills));
     document.querySelector('[data-price="stack-list"]').textContent = P.fmt(stackList);
     document.querySelector('[data-price="stack"]').textContent = P.fmt(P.stack);
     document.querySelector('[data-price="stack-save"]').textContent = "You save " + pct(P.stack, stackList) + "% against single skills.";
