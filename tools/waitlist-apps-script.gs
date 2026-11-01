@@ -4,6 +4,8 @@
  * Setup (once):
  * 1. Open the Google Sheet "AI UXR Stack waitlist responses".
  * 2. Extensions -> Apps Script. Delete what is there and paste this whole file. Save.
+ * 2b. In the function menu next to Run, pick "authorize", click Run, and allow access.
+ *     (Never pick doPost or myFunction: doPost only runs when the website sends data.)
  * 3. Deploy -> New deployment -> type "Web app".
  *    Execute as: Me. Who has access: Anyone. Deploy, allow access, copy the Web app URL.
  * 4. Send that URL to be added to the website.
@@ -67,4 +69,14 @@ function clean(v) {
 
 function reply(obj) {
   return ContentService.createTextOutput(JSON.stringify(obj)).setMimeType(ContentService.MimeType.JSON);
+}
+
+// Run once from the editor to grant permissions and add the header row. Safe to run again.
+function authorize() {
+  const sheet = SpreadsheetApp.openById(SHEET_ID).getSheets()[0];
+  const header = ["Time", "Email", "Interested in", "Slowest part of research",
+    "Changes or additions wanted", "Manual task to hand off", "Region", "Consent", "Discount code"];
+  sheet.getRange(1, 1, 1, header.length).setValues([header]);
+  UrlFetchApp.fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", { method: "post", payload: {}, muteHttpExceptions: true });
+  Logger.log("Ready: sheet '" + sheet.getName() + "' has its header row, and outside requests are allowed.");
 }
