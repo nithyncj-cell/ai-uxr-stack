@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>AI UXR Stack</title>
-<meta name="description" content="Twelve Claude skills for UX research, in five packs. Built by Nithyn.">
+<meta name="description" content="Thirteen Claude skills for UX research, in five packs. Built by Nithyn.">
 <link rel="canonical" href="https://nithyncj-cell.github.io/ai-uxr-stack/">
 <meta name="theme-color" content="#0a0a0a">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
@@ -13,15 +13,15 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="AI UXR Stack">
 <meta property="og:title" content="The AI UXR Stack">
-<meta property="og:description" content="Twelve Claude skills for UX research, in five packs. Built by Nithyn.">
+<meta property="og:description" content="Thirteen Claude skills for UX research, in five packs. Built by Nithyn.">
 <meta property="og:url" content="https://nithyncj-cell.github.io/ai-uxr-stack/">
 <meta property="og:image" content="https://nithyncj-cell.github.io/ai-uxr-stack/assets/social-preview.jpg">
 <meta property="og:image:width" content="1280">
 <meta property="og:image:height" content="640">
-<meta property="og:image:alt" content="The AI UXR Stack: twelve Claude skills for UX research, in five packs. Built by Nithyn.">
+<meta property="og:image:alt" content="The AI UXR Stack: thirteen Claude skills for UX research, in five packs. Built by Nithyn.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="The AI UXR Stack">
-<meta name="twitter:description" content="Twelve Claude skills for UX research, in five packs. Built by Nithyn.">
+<meta name="twitter:description" content="Thirteen Claude skills for UX research, in five packs. Built by Nithyn.">
 <meta name="twitter:image" content="https://nithyncj-cell.github.io/ai-uxr-stack/assets/social-preview.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -466,7 +466,7 @@
       <div class="pricing">
         <div class="main-price">
           <h3 class="h-20">Full stack</h3>
-          <p class="copy-14 muted">All 12 skills across the five packs.</p>
+          <p class="copy-14 muted">All 13 skills across the five packs.</p>
           <div class="big"><span class="now" data-price="stack"></span><span class="was" data-price="stack-regular"></span></div>
           <p class="save" data-price="stack-save"></p>
           <p class="copy-14 muted founding" data-price="stack-note"></p>
@@ -604,9 +604,9 @@
   const FREE_IDS = ["transcript-collator", "collation-sorter", "stop-ai-slop"];
   const PRICES = {
     skills: { "research-plan-creator": [1299, 25], "report-builder": [1299, 25],
-              "quant-analyst": [999, 19], "diagnostic-partner": [999, 19], "research-driven-prototype": [999, 19], "case-study-builder": [999, 19],
+              "quant-analyst": [999, 19], "diagnostic-partner": [999, 19], "research-driven-prototype": [999, 19], "case-study-builder": [999, 19], "portfolio-site-builder": [999, 19],
               "question-zero": [999, 19], "collated-synth": [999, 19], "stakeholder-panel": [699, 12] },
-    packs: { starter: [2299, 45], scope: [2499, 49], collate: [999, 19], analysis: [1999, 39], influence: [1299, 25], career: [999, 19] },
+    packs: { starter: [2299, 45], scope: [2499, 49], collate: [999, 19], analysis: [1999, 39], influence: [1299, 25], career: [1499, 29] },
     stack: { founding: [4999, 99], regular: [7999, 149] },
   };
   // The starter pack: the four skills most studies need, from plan to report.
@@ -715,7 +715,7 @@
           n: "Text that reads like you wrote it, with quotes and numbers untouched.",
           hood: ["A seven-step pass in a fixed order.", "Scores the result on five dimensions and runs again below the bar.", "Runs as the last step inside every other output skill in the stack."] },
       ] },
-    { key: "career", short: "Career", name: "Career pack", icon: "briefcase", c: "var(--orange)", pain: "“The work was strong. The portfolio isn't.”", single: true,
+    { key: "career", short: "Career", name: "Career pack", icon: "briefcase", c: "var(--orange)", pain: "“The work was strong. The portfolio isn't.”",
       skills: [
         { id: "case-study-builder", name: "Case Study Builder", icon: "folder",
           more: "Turns project documents into portfolio case studies built the way hiring managers read them.",
@@ -725,6 +725,14 @@
           i: "Strong work reads as average, and the panel moves on.",
           n: "Case studies built the way hiring managers read them, tuned to the team you're meeting.",
           hood: ["Works out what the specific team rewards before drafting.", "Probes impact at four levels, from insight to business.", "Plans how you'll walk the panel through it."] },
+        { id: "portfolio-site-builder", name: "Portfolio Site Builder", icon: "folder",
+          more: "Builds or tidies your portfolio site so it reads in seconds, with calm spacing, short copy and no AI-looking design.",
+          stat: "7 steps, from page structure to an automated check at desktop and phone widths",
+          s: "Your case studies are ready, but your portfolio site is crowded or looks template-made.",
+          p: "Long copy, glow gradients, boxes inside boxes and AI-sounding lines hide strong work.",
+          i: "Hiring managers skim for seconds and leave before they reach the work.",
+          n: "A portfolio that passes a 3-second read, with set spacing, short copy and checks before you share it.",
+          hood: ["Sets page and case study structure that reads down the left edge.", "Applies a 4px spacing grid and a fixed type scale.", "Removes AI-looking design and copy, then checks the page at desktop and phone widths."] },
       ] },
   ];
 
