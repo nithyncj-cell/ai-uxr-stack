@@ -4,8 +4,7 @@ Versions of the AI UXR Stack as released. Skill files are delivered from the web
 
 ## v1.1: 2 November 2026
 
-- **New skill:** Portfolio Site Builder joins the Career pack. It builds or tidies a portfolio site with set spacing, short copy and no AI-looking design, and checks the page before you share it.
-- **Career pack** now holds two skills: Case Study Builder and Portfolio Site Builder.
+- **Bonus skill:** Portfolio Site Builder now comes free with the Career pack and the full stack. It builds or tidies a portfolio site with set spacing, short copy and no AI-looking design, and checks the page before you share it.
 
 ## v1.0: 30 October 2026
 
