@@ -278,6 +278,9 @@
   .flinks { display: flex; flex-wrap: wrap; gap: var(--s2) var(--s5); margin-top: var(--s8); font-size: 14px; }
   .flinks a { color: var(--gray-900); text-decoration: none; }
   .flinks a:hover { color: var(--gray-1000); }
+  .shout { display: flex; flex-direction: column; align-items: flex-start; gap: var(--s6); }
+  .shout p { margin-top: var(--s3); max-width: 60ch; }
+  @media (min-width: 760px) { .shout { flex-direction: row; align-items: center; justify-content: space-between; gap: var(--s12); } .shout .btn { flex: none; } }
   .credits { margin-top: var(--s4); font-size: 13px; line-height: 20px; color: var(--gray-700); max-width: 70ch; }
   .credits a { color: var(--gray-900); }
 
@@ -486,6 +489,18 @@
     </div>
   </section>
 
+  <section id="shoutout" aria-labelledby="shoutout-title">
+    <div class="wrap">
+      <div class="shout">
+        <div>
+          <h2 class="h-24" id="shoutout-title">Shoutout to Nikki Anderson</h2>
+          <p class="copy-18 muted">Nikki, The User Research Strategist, builds AI tools for researchers too. Her UXR AI Bundle has 76 Claude skills, a nine-plugin agent suite and 109 prompts. If you want a wider library, start&nbsp;there.</p>
+        </div>
+        <a class="btn" href="https://uxrstrategist.com/aibundle/" target="_blank" rel="noopener">See the UXR AI Bundle</a>
+      </div>
+    </div>
+  </section>
+
   <section id="legal" aria-labelledby="legal-title">
     <div class="wrap">
       <h2 class="h-24" id="legal-title">Terms and policies</h2>
@@ -540,6 +555,7 @@
             <div class="lt">
               <p>Claude is a product of Anthropic. Figma, FigJam and Miro are trademarks of their owners. The AI UXR Stack is independent and is not affiliated with, sponsored by or endorsed by Anthropic or any other company named on this website.</p>
               <p>Question Zero builds on James Chudley's knowledge-mapping workshop and importance and confidence matrix. The thanks to The Goal by Eliyahu M. Goldratt and to Constantine Papas, PhD, are personal acknowledgements and do not mean they endorse these skills.</p>
+              <p>The shoutout to Nikki Anderson and her UXR AI Bundle is a personal recommendation. Nikki and The User Research Strategist are not connected to these skills and do not endorse them.</p>
               <p>The skill icons are 3D renders from <a href="https://huggingface.co/datasets/nvidia/simready-assets" target="_blank" rel="noopener">NVIDIA SimReady Assets</a>, used under the <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a> licence. They were cropped and resized for this website. NVIDIA does not endorse the AI UXR Stack.</p>
             </div>
           </details>
