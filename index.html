@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>AI UXR Stack</title>
-<meta name="description" content="Thirteen Claude skills for UX research, in five packs. Built by Nithyn.">
+<meta name="description" content="Twelve Claude skills for UX research, in five packs. Built by Nithyn.">
 <link rel="canonical" href="https://nithyncj-cell.github.io/ai-uxr-stack/">
 <meta name="theme-color" content="#0a0a0a">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
@@ -13,15 +13,15 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="AI UXR Stack">
 <meta property="og:title" content="The AI UXR Stack">
-<meta property="og:description" content="Thirteen Claude skills for UX research, in five packs. Built by Nithyn.">
+<meta property="og:description" content="Twelve Claude skills for UX research, in five packs. Built by Nithyn.">
 <meta property="og:url" content="https://nithyncj-cell.github.io/ai-uxr-stack/">
 <meta property="og:image" content="https://nithyncj-cell.github.io/ai-uxr-stack/assets/social-preview.jpg">
 <meta property="og:image:width" content="1280">
 <meta property="og:image:height" content="640">
-<meta property="og:image:alt" content="The AI UXR Stack: thirteen Claude skills for UX research, in five packs. Built by Nithyn.">
+<meta property="og:image:alt" content="The AI UXR Stack: twelve Claude skills for UX research, in five packs. Built by Nithyn.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="The AI UXR Stack">
-<meta name="twitter:description" content="Thirteen Claude skills for UX research, in five packs. Built by Nithyn.">
+<meta name="twitter:description" content="Twelve Claude skills for UX research, in five packs. Built by Nithyn.">
 <meta name="twitter:image" content="https://nithyncj-cell.github.io/ai-uxr-stack/assets/social-preview.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -203,6 +203,9 @@
   .sk .sp { font: 500 14px/24px var(--mono); white-space: nowrap; text-align: right; }
   .sk .sp s { color: var(--gray-700); margin-right: var(--s2); }
   .sk-desc { display: none; }
+  .sk > li.bonus { grid-template-columns: 40px 1fr auto; }
+  .bonus-icon { width: 40px; height: 40px; margin-top: -8px; will-change: transform; }
+  .bonus-tag { font: 500 13px/24px var(--sans); color: var(--gray-1000); white-space: normal; }
   .pack.open .sk-desc { display: block; margin-top: var(--s1); }
   .pack-foot { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--s3); }
   .pack-buy { display: flex; align-items: baseline; gap: var(--s2); }
@@ -466,7 +469,7 @@
       <div class="pricing">
         <div class="main-price">
           <h3 class="h-20">Full stack</h3>
-          <p class="copy-14 muted">All 13 skills across the five packs.</p>
+          <p class="copy-14 muted">All 12 skills across the five packs, plus the bonus Portfolio Site Builder.</p>
           <div class="big"><span class="now" data-price="stack"></span><span class="was" data-price="stack-regular"></span></div>
           <p class="save" data-price="stack-save"></p>
           <p class="copy-14 muted founding" data-price="stack-note"></p>
@@ -604,9 +607,9 @@
   const FREE_IDS = ["transcript-collator", "collation-sorter", "stop-ai-slop"];
   const PRICES = {
     skills: { "research-plan-creator": [1299, 25], "report-builder": [1299, 25],
-              "quant-analyst": [999, 19], "diagnostic-partner": [999, 19], "research-driven-prototype": [999, 19], "case-study-builder": [999, 19], "portfolio-site-builder": [999, 19],
+              "quant-analyst": [999, 19], "diagnostic-partner": [999, 19], "research-driven-prototype": [999, 19], "case-study-builder": [999, 19],
               "question-zero": [999, 19], "collated-synth": [999, 19], "stakeholder-panel": [699, 12] },
-    packs: { starter: [2299, 45], scope: [2499, 49], collate: [999, 19], analysis: [1999, 39], influence: [1299, 25], career: [1499, 29] },
+    packs: { starter: [2299, 45], scope: [2499, 49], collate: [999, 19], analysis: [1999, 39], influence: [1299, 25], career: [999, 19] },
     stack: { founding: [4999, 99], regular: [7999, 149] },
   };
   // The starter pack: the four skills most studies need, from plan to report.
@@ -725,7 +728,7 @@
           i: "Strong work reads as average, and the panel moves on.",
           n: "Case studies built the way hiring managers read them, tuned to the team you're meeting.",
           hood: ["Works out what the specific team rewards before drafting.", "Probes impact at four levels, from insight to business.", "Plans how you'll walk the panel through it."] },
-        { id: "portfolio-site-builder", name: "Portfolio Site Builder", icon: "folder",
+        { id: "portfolio-site-builder", name: "Portfolio Site Builder", icon: "folder", bonus: true,
           more: "Builds or tidies your portfolio site so it reads in seconds, with calm spacing, short copy and no AI-looking design.",
           stat: "7 steps, from page structure to an automated check at desktop and phone widths",
           s: "Your case studies are ready, but your portfolio site is crowded or looks template-made.",
@@ -749,7 +752,7 @@
         <img class="pack-icon" src="${packIcon(p.key)}" alt="" width="96" height="96" loading="lazy" decoding="async">
       </div>
       <ul class="sk">${p.skills.map((s) => `
-        <li id="skill-${s.id}"><span class="blob" aria-hidden="true"></span>
+        <li id="skill-${s.id}"${s.bonus ? ' class="bonus"' : ""}>${s.bonus ? `<img class="bonus-icon" src="assets/icons/hd/bonus.webp" alt="" width="40" height="40" loading="lazy">` : `<span class="blob" aria-hidden="true"></span>`}
           <div>
             <h4 class="h-16">${s.name}</h4>
             <div class="sk-desc">
@@ -759,7 +762,7 @@
               </details>
             </div>
           </div>
-          <div class="sp">${FREE_IDS.includes(s.id) ? `<a class="link" href="#free">Free</a>` : `<span data-price="skill" data-skill="${s.id}"></span>`}</div>
+          <div class="sp">${s.bonus ? `<span class="bonus-tag">Bonus, free with this pack</span>` : FREE_IDS.includes(s.id) ? `<a class="link" href="#free">Free</a>` : `<span data-price="skill" data-skill="${s.id}"></span>`}</div>
         </li>`).join("")}
       </ul>
       <div class="pack-foot">
@@ -786,7 +789,7 @@
         <a class="btn sm" href="${LINKEDIN}" target="_blank" rel="noopener" data-buy="Starter pack">Buy pack · coming soon</a></div>
     </li>` + PACKS.map((p) => `
     <li>
-      <div><h3 class="h-16">${p.name}</h3><p class="copy-14 muted">${p.skills.map((s) => s.name).join(", ")}</p></div>
+      <div><h3 class="h-16">${p.name}</h3><p class="copy-14 muted">${p.skills.filter((s) => !s.bonus).map((s) => s.name).join(", ")}${p.skills.some((s) => s.bonus) ? ", plus " + p.skills.filter((s) => s.bonus).map((s) => s.name).join(", ") + " free as a bonus" : ""}</p></div>
       <div><p class="pp" data-price="pack" data-pack="${p.key}"></p>${p.single ? "" : `<p class="ps"><s data-price="pack-list" data-pack="${p.key}"></s> <span data-price="pack-save" data-pack="${p.key}"></span></p>`}
         <a class="btn sm" href="${LINKEDIN}" target="_blank" rel="noopener" data-buy="${p.name}">Buy pack · coming soon</a></div>
     </li>`).join("") + `
@@ -816,7 +819,7 @@
   const bothPlain = ([r, d]) => INDIA ? `${inr(r)} / ${usd(d)}` : `${usd(d)} / ${inr(r)}`;
   function applyPrices() {
     const P = PRICES;
-    const sum = (ids) => ids.filter((id) => !FREE_IDS.includes(id)).reduce((a, id) => [a[0] + P.skills[id][0], a[1] + P.skills[id][1]], [0, 0]);
+    const sum = (ids) => ids.filter((id) => P.skills[id]).reduce((a, id) => [a[0] + P.skills[id][0], a[1] + P.skills[id][1]], [0, 0]);
     const save = (price, list) => Math.round((1 - (INDIA ? price[0] / list[0] : price[1] / list[1])) * 100);
     document.querySelectorAll('[data-price="skill"]').forEach((el) => { el.innerHTML = both(P.skills[el.dataset.skill]); });
     const vals = Object.values(P.skills);
@@ -890,6 +893,11 @@
     document.querySelectorAll(".pack").forEach((row) => {
       const img = row.querySelector(".pack-icon");
       row.addEventListener("pointerenter", () => G.to(img, { y: -6, rotation: -8, scale: 1.1, duration: 0.4, ease: "back.out(2.5)" }));
+      row.addEventListener("pointerleave", () => G.to(img, { y: 0, rotation: 0, scale: 1, duration: 0.4, ease: "power3.out" }));
+    });
+    document.querySelectorAll(".sk > li.bonus").forEach((row) => {
+      const img = row.querySelector(".bonus-icon");
+      row.addEventListener("pointerenter", () => G.to(img, { y: -6, rotation: 8, scale: 1.15, duration: 0.4, ease: "back.out(3)" }));
       row.addEventListener("pointerleave", () => G.to(img, { y: 0, rotation: 0, scale: 1, duration: 0.4, ease: "power3.out" }));
     });
     if (window.ScrollTrigger) {
