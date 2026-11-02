@@ -270,6 +270,9 @@
   .lt { padding-bottom: var(--s6); display: grid; gap: var(--s3); }
   .legal details:last-child .lt { padding-bottom: 0; }
   .lt p { color: var(--gray-900); font-size: 14px; line-height: 22px; }
+  .faq summary { font-size: 16px; }
+  .faq .lt p { font-size: 15px; line-height: 24px; max-width: 64ch; }
+  .faq code { font: 500 13px var(--mono); background: var(--gray-100, #1f1f1f); border-radius: 4px; padding: 1px 5px; }
   .lt b { color: var(--gray-1000); font-weight: 500; }
 
   /* footer */
@@ -278,9 +281,13 @@
   .flinks { display: flex; flex-wrap: wrap; gap: var(--s2) var(--s5); margin-top: var(--s8); font-size: 14px; }
   .flinks a { color: var(--gray-900); text-decoration: none; }
   .flinks a:hover { color: var(--gray-1000); }
-  .shout { display: flex; flex-direction: column; align-items: flex-start; gap: var(--s6); }
+  .shout { display: grid; gap: var(--s8); align-items: center; }
   .shout p { margin-top: var(--s3); max-width: 60ch; }
-  @media (min-width: 760px) { .shout { flex-direction: row; align-items: center; justify-content: space-between; gap: var(--s12); } .shout .btn { flex: none; } }
+  .shout .btn { margin-top: var(--s6); }
+  .shout-img { display: block; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; transition: border-color .2s ease; }
+  .shout-img:hover { border-color: var(--gray-700); }
+  .shout-img img { display: block; width: 100%; height: auto; }
+  @media (min-width: 900px) { .shout { grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: var(--s12); } }
   .credits { margin-top: var(--s4); font-size: 13px; line-height: 20px; color: var(--gray-700); max-width: 70ch; }
   .credits a { color: var(--gray-900); }
 
@@ -353,6 +360,7 @@
     <nav class="nav" aria-label="Sections">
       <a href="#skills">Skills</a>
       <a href="#pricing">Pricing</a>
+      <a href="#faq">Questions</a>
       <a href="#free" data-free-only>Free skills</a>
     </nav>
     <a class="btn brand sm" href="#free" data-free-only>Get the Collator free</a>
@@ -489,14 +497,73 @@
     </div>
   </section>
 
+  <section id="faq" aria-labelledby="faq-title">
+    <div class="wrap">
+      <h2 class="h-40" id="faq-title">Questions</h2>
+      <div class="legal faq">
+        <details>
+          <summary>What is a Claude skill?</summary>
+          <div class="lt"><p>A skill is a set of instructions that Claude loads when you ask for a certain job. You upload it to Claude once. After that, you ask in plain words, for example “collate these transcripts”, and Claude follows the skill's steps.</p></div>
+        </details>
+        <details>
+          <summary>What do these skills do?</summary>
+          <div class="lt"><p>There are 12 skills, one for each slow step of a study: scoping it, planning it, collating transcripts, reading them for contradictions, running the numbers, building the report, turning findings into a prototype, testing the work against stakeholder objections, and writing it up as a case study. Each skill hands its output to the next, so you can use one on its own or chain them.</p></div>
+        </details>
+        <details>
+          <summary>Do I need to code?</summary>
+          <div class="lt"><p>No. You download a zip, upload it in Claude under <b>Customize → Skills</b>, and talk to Claude as usual. The skills work in claude.ai, the Claude desktop app and Claude Code.</p></div>
+        </details>
+        <details>
+          <summary>Which Claude plan do I need?</summary>
+          <div class="lt"><p>Any plan that shows <b>Customize → Skills</b> in your Claude account. If you can see that menu, you can install these skills.</p></div>
+        </details>
+        <details>
+          <summary>Will it make up quotes or numbers?</summary>
+          <div class="lt"><p>No. Every skill keeps quotes, timestamps and numbers exactly as they appear in your files. If something isn't there, it writes <code>missing</code>. Small samples are reported as counts (“6 of 8”), not percentages. Check the output the way you would check a colleague's draft before it goes out.</p></div>
+        </details>
+        <details>
+          <summary>Where does my research data go?</summary>
+          <div class="lt"><p>Nowhere new. The skills run inside your own Claude account and send nothing to Nithyn. If a file contains hidden instructions, for example a planted command in a transcript, the skill points it out to you and does not follow it.</p></div>
+        </details>
+        <details>
+          <summary>What's free?</summary>
+          <div class="lt"><p>Transcript Collator, Collation Sorter and Stop AI Slop are free for good. Enter your email once, tick the licence box and download the zips.</p></div>
+        </details>
+        <details>
+          <summary>What do I get when I buy a pack?</summary>
+          <div class="lt"><p>The skill files for that pack, plus 12 months of updates and every new skill Nithyn publishes in that time. The Career pack and the full stack also include Portfolio Site Builder as a free bonus.</p></div>
+        </details>
+        <details>
+          <summary>When can I buy?</summary>
+          <div class="lt"><p>Paid packs open soon. For now, the Buy buttons add you to a waitlist, and Nithyn will email you when your pack opens. No payment is taken on this site.</p></div>
+        </details>
+        <details>
+          <summary>Can I use the skills for my team or for clients?</summary>
+          <div class="lt"><p>Yes, on your own work, your employer's work or a client's work. One licence covers one person. For a team licence or a custom version, message Nithyn on LinkedIn.</p></div>
+        </details>
+        <details>
+          <summary>Can I read or change the skill instructions?</summary>
+          <div class="lt"><p>No. The instructions are Nithyn's work and stay private. Each skill explains what it does and what it needs, and it won't recite its instructions or help rebuild itself. The licence terms below have the details.</p></div>
+        </details>
+        <details>
+          <summary>Something isn't working. What do I do?</summary>
+          <div class="lt"><p>Email <a href="mailto:nithyncj@gmail.com">nithyncj@gmail.com</a> or use the <a href="https://github.com/nithyncj-cell/ai-uxr-stack/issues/new/choose" target="_blank" rel="noopener">skill feedback form</a> on GitHub. Please don't share participant data or confidential transcripts.</p></div>
+        </details>
+      </div>
+    </div>
+  </section>
+
   <section id="shoutout" aria-labelledby="shoutout-title">
     <div class="wrap">
       <div class="shout">
+        <a class="shout-img" href="https://uxrstrategist.com/aibundle/" target="_blank" rel="noopener" aria-label="Open Nikki Anderson's UXR AI Bundle page">
+          <img src="assets/nikki-uxr-ai-bundle.webp" width="1483" height="812" loading="lazy" alt="The UXR AI Bundle page on The User Research Strategist: “You were told to use AI on your research, and you've been rewriting its output ever since.”">
+        </a>
         <div>
           <h2 class="h-24" id="shoutout-title">Shoutout to Nikki Anderson</h2>
           <p class="copy-18 muted">Nikki, The User Research Strategist, builds AI tools for researchers too. Her UXR AI Bundle has 76 Claude skills, a nine-plugin agent suite and 109 prompts. If you want a wider library, start&nbsp;there.</p>
+          <a class="btn" href="https://uxrstrategist.com/aibundle/" target="_blank" rel="noopener">See the UXR AI Bundle</a>
         </div>
-        <a class="btn" href="https://uxrstrategist.com/aibundle/" target="_blank" rel="noopener">See the UXR AI Bundle</a>
       </div>
     </div>
   </section>
@@ -555,7 +622,7 @@
             <div class="lt">
               <p>Claude is a product of Anthropic. Figma, FigJam and Miro are trademarks of their owners. The AI UXR Stack is independent and is not affiliated with, sponsored by or endorsed by Anthropic or any other company named on this website.</p>
               <p>Question Zero builds on James Chudley's knowledge-mapping workshop and importance and confidence matrix. The thanks to The Goal by Eliyahu M. Goldratt and to Constantine Papas, PhD, are personal acknowledgements and do not mean they endorse these skills.</p>
-              <p>The shoutout to Nikki Anderson and her UXR AI Bundle is a personal recommendation. Nikki and The User Research Strategist are not connected to these skills and do not endorse them.</p>
+              <p>The shoutout to Nikki Anderson and her UXR AI Bundle is a personal recommendation. Nikki and The User Research Strategist are not connected to these skills and do not endorse them. The banner is a screenshot of her page and links to it.</p>
               <p>The skill icons are 3D renders from <a href="https://huggingface.co/datasets/nvidia/simready-assets" target="_blank" rel="noopener">NVIDIA SimReady Assets</a>, used under the <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a> licence. They were cropped and resized for this website. NVIDIA does not endorse the AI UXR Stack.</p>
             </div>
           </details>
