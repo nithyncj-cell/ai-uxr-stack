@@ -1,23 +1,23 @@
 <p align="center">
-  <img src="assets/banner.png" alt="The AI UXR Stack: twelve Claude skills for UX research, in five packs. Built by Nithyn." width="100%">
+  <img src="assets/banner.png" alt="The AI UXR Stack: thirteen Claude skills for UX research, in five packs. Built by Nithyn." width="100%">
 </p>
 
 <p align="center">
   <a href="https://nithyncj-cell.github.io/ai-uxr-stack/"><b>Website</b></a> ·
-  <a href="docs/skills.md"><b>The 12 skills</b></a> ·
+  <a href="docs/skills.md"><b>The 13 skills</b></a> ·
   <a href="docs/install.md"><b>Install</b></a> ·
   <a href="https://www.linkedin.com/in/nithyn/"><b>Follow on LinkedIn</b></a>
 </p>
 
 <p align="center">
   <img alt="Claude skills" src="https://img.shields.io/badge/Claude-skills-D97757">
-  <img alt="12 skills in 5 packs" src="https://img.shields.io/badge/skills-12%20in%205%20packs-5B6CFF">
+  <img alt="13 skills in 5 packs" src="https://img.shields.io/badge/skills-13%20in%205%20packs-5B6CFF">
   <img alt="Licence: proprietary" src="https://img.shields.io/badge/licence-proprietary-555555">
 </p>
 
 # The AI UXR Stack
 
-Twelve Claude skills for UX research, in five packs. Built by Nithyn.
+Thirteen Claude skills for UX research, in five packs. Built by Nithyn.
 
 Each skill takes one slow part of the research cycle and does it the way a senior researcher would: scoping a study, planning it, collating transcripts, reading them for contradictions, running the numbers, building the report, turning findings into a prototype, pressure-testing the work before it goes out, and writing it up as a portfolio case study. They run inside Claude (claude.ai, the desktop app and Claude Code), and each one hands its output to the next.
 
@@ -39,13 +39,13 @@ The Transcript Collator turns raw interview transcripts into one theme-tagged no
 | **Transcript Collator** | "Fieldwork's done. Now a week of retyping." | Transcript Collator (free), Collated Synth, Collation Sorter (free) | ₹999 | $19 |
 | **Analysis** | "Fifty crosstabs and no story." | Quant Analyst, Report Builder | ₹1,999 | $39 |
 | **Influence** | "Great findings. Nothing changed." | Research-Driven Prototype, Stakeholder Panel, Stop AI Slop (free) | ₹1,299 | $25 |
-| **Career** | "The work was strong. The portfolio isn't." | Case Study Builder | ₹999 | $19 |
+| **Career** | "The work was strong. The portfolio isn't." | Case Study Builder, Portfolio Site Builder | ₹1,499 | $29 |
 | **Starter** | The paid skills most studies need | Research Plan Creator, Collated Synth, Report Builder | ₹2,299 | $45 |
-| **Full stack** | All 12 skills | Everything above | ₹4,999 founding, then ₹7,999 | $99 founding, then $149 |
+| **Full stack** | All 13 skills | Everything above | ₹4,999 founding, then ₹7,999 | $99 founding, then $149 |
 
 Paid skills are priced by the work they do, from ₹699 / $12 to ₹1,299 / $25. The founding full-stack price is for the first 100 buyers or the first 30 days. Every pack includes 12 months of updates and every new skill Nithyn publishes in that time. Team licences are available on request. Paid packs open soon; [follow on LinkedIn](https://www.linkedin.com/in/nithyn/) to hear first. Prices on the website are the current ones.
 
-## The 12 skills
+## The 13 skills
 
 | Skill | What it does |
 |---|---|
@@ -61,6 +61,7 @@ Paid skills are priced by the work they do, from ₹699 / $12 to ₹1,299 / $25.
 | **Stakeholder Panel** | Reviews any research artefact through six stakeholder voices, from the CEO to the data scientist. |
 | **Stop AI Slop** | A final editing pass that strips AI-writing tells from anything you're about to send. |
 | **Case Study Builder** | Turns project documents into portfolio case studies built the way hiring managers read them. |
+| **Portfolio Site Builder** | Builds or tidies your portfolio site so it reads in seconds, with calm spacing, short copy and no AI-looking design. |
 
 More on each skill, including the situation it's built for, is in [docs/skills.md](docs/skills.md).
 
@@ -78,11 +79,12 @@ flowchart LR
   QA --> RB
   RB --> RDP[Research-Driven Prototype]
   RB --> CSB[Case Study Builder]
+  CSB --> PSB[Portfolio Site Builder]
   SP[Stakeholder Panel] -.-> RB
   SLOP[Stop AI Slop] -.-> RB
 ```
 
-Stakeholder Panel and Stop AI Slop work at any stage. Every skill knows the other eleven and points you to the right next one.
+Stakeholder Panel and Stop AI Slop work at any stage. Each skill points you to the right next one.
 
 ## What every skill does the same way
 

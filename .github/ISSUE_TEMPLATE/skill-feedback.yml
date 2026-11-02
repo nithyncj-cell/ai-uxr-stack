@@ -23,6 +23,7 @@ body:
         - Stakeholder Panel
         - Stop AI Slop
         - Case Study Builder
+        - Portfolio Site Builder
     validations:
       required: true
   - type: dropdown

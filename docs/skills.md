@@ -1,4 +1,4 @@
-# The 12 skills
+# The 13 skills
 
 Each skill below lists the situation it's built for, what goes wrong without it, and what you get. The `folder` is the skill's name once installed in Claude.
 
@@ -153,6 +153,17 @@ Turns project documents into portfolio case studies built the way hiring manager
 - **What you get:** Case studies built the way hiring managers read them, tuned to the team you're meeting.
 - **What it needs from you:** The role or team you're targeting, and whatever project documents you have.
 - **Folder:** `uxr-case-study-builder`
+
+### Portfolio Site Builder
+
+Builds or tidies your portfolio site so it reads in seconds, with calm spacing, short copy and no AI-looking design.
+
+- **The situation:** Your case studies are ready, but your portfolio site is crowded or looks template-made.
+- **The problem:** Long copy, glow gradients, boxes inside boxes and AI-sounding lines hide strong work.
+- **What it costs you:** Hiring managers skim for seconds and leave before they reach the work.
+- **What you get:** A portfolio that passes a 3-second read, with set spacing, short copy and checks before you share it.
+- **What it needs from you:** Your current site or your case study content, and the colours you want.
+- **Folder:** `clean-portfolio-site`
 
 ---
 
