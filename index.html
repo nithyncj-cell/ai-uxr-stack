@@ -291,51 +291,92 @@
   .seg button { appearance: none; border: 0; background: transparent; color: var(--gray-900); font: 500 14px/20px var(--sans);
     height: 32px; padding: 0 var(--s3); border-radius: var(--r-full); cursor: pointer; }
   .seg button[aria-pressed="true"] { background: var(--gray-1000); color: var(--bg); }
-  .pricing { margin-top: var(--s12); display: grid; gap: var(--s6); align-items: start; }
-  @media (min-width: 1000px) { .pricing { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
-  .pcol { border: 1px solid var(--border-strong); border-radius: var(--r-lg); padding: var(--s6); }
-  @media (min-width: 1000px) { .pcol { padding: var(--s8); min-height: 100%; } }
-  .pstep { font: 500 13px/20px var(--mono); color: var(--gray-700); margin-bottom: var(--s3); }
-  .pcol > .copy-14 { margin-top: var(--s1); }
-  .main-price { border: 1px solid transparent; background: linear-gradient(var(--bg), var(--bg)) padding-box, var(--grad) border-box;
+  .vh { position: absolute; opacity: 0; width: 1px; height: 1px; margin: 0; pointer-events: none; }
+  .pr-top { margin-top: var(--s12); display: grid; gap: var(--s4); align-items: stretch; }
+  @media (min-width: 1000px) { .pr-top { grid-template-columns: minmax(0, 1.75fr) minmax(0, 1fr); } }
+  .pcol { border: 1px solid var(--border-strong); border-radius: var(--r-lg); padding: var(--s6); display: flex; flex-direction: column; }
+  @media (min-width: 1000px) { .pcol { padding: var(--s8); } }
+  .pstep { font: 500 13px/20px var(--mono); color: var(--gray-700); margin-bottom: var(--s2); }
+  .pcol > .copy-14, .pr-build-head .copy-14 { margin-top: var(--s1); }
+  /* full stack: the one card with colour */
+  .main-price { border: 1px solid transparent; background:
+      radial-gradient(120% 60% at 100% 0%, rgba(191,90,242,.14), transparent 60%) padding-box,
+      radial-gradient(100% 50% at 0% 100%, rgba(41,151,255,.12), transparent 60%) padding-box,
+      linear-gradient(var(--bg), var(--bg)) padding-box, var(--grad) border-box;
     box-shadow: 0 24px 64px -32px rgba(191,90,242,.55); }
-  .main-price .big { display: flex; align-items: baseline; flex-wrap: wrap; gap: var(--s3); margin-top: var(--s4); }
-  .main-price .now { font: 600 48px/52px var(--sans); letter-spacing: -0.06em; }
-  .main-price .save { margin-top: var(--s2); font-size: 14px; color: var(--brand-hover); }
+  .main-price .pstep { color: var(--brand-hover); }
+  .main-price .big { display: flex; align-items: baseline; flex-wrap: wrap; gap: var(--s2) var(--s3); margin-top: var(--s5); }
+  .main-price .now { font: 600 56px/56px var(--sans); letter-spacing: -0.06em; font-variant-numeric: tabular-nums; }
+  .main-price .save { margin-top: var(--s3); font-size: 14px; color: var(--brand-hover); }
   .main-price .founding { margin-top: var(--s1); }
   .cur2 { margin-left: var(--s2); color: var(--gray-900); font-weight: 400; }
   .main-price .now .cur2 { font-size: 22px; letter-spacing: -0.02em; }
   .was .cur2 { margin-left: var(--s1); color: inherit; }
   .main-price .ticks { margin-top: var(--s6); }
-  .main-price .btn { width: 100%; margin-top: var(--s8); }
-  .pick, .singles { list-style: none; margin: var(--s5) 0 0; padding: 0; }
-  .pick li + li, .singles li + li { border-top: 1px solid var(--border); }
-  .pick label { display: grid; grid-template-columns: 18px 1fr auto; gap: var(--s3); align-items: start; padding-block: var(--s3); cursor: pointer; }
-  .pick input { width: 16px; height: 16px; margin: 3px 0 0; accent-color: var(--brand); cursor: pointer; }
-  .pick b, .singles b { display: block; font-weight: 500; font-size: 15px; line-height: 22px; }
-  .pick-in { display: block; font-size: 13px; line-height: 18px; color: var(--gray-900); }
-  .pick-in em { font-style: normal; color: var(--gray-700); }
-  .pick .pp, .singles .pp { font: 500 13px/22px var(--mono); text-align: right; white-space: nowrap; }
-  .pick .pp .cur2, .singles .pp .cur2 { display: block; margin-left: 0; }
-  .pick li:has(input:checked) b { color: var(--brand-hover); }
-  #pick-price, #one-price { white-space: nowrap; }
-  .pick-total { margin-top: var(--s4); padding-top: var(--s4); border-top: 1px solid var(--border-strong); }
+  .main-price .btn { width: 100%; margin-top: auto; }
+  .main-price .ticks { margin-bottom: var(--s8); }
+  /* pack tiles */
+  .ptiles { margin-top: var(--s5); display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s3); }
+  @media (min-width: 640px) { .ptiles { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  .ptile { position: relative; display: grid; grid-template-rows: auto auto 1fr auto; gap: var(--s1); padding: var(--s4); cursor: pointer;
+    border: 1px solid var(--border-strong); border-radius: var(--r-md); touch-action: manipulation;
+    transition: border-color .2s ease, background-color .2s ease, transform .25s cubic-bezier(.2,.8,.2,1), box-shadow .25s ease; }
+  .ptile:hover { border-color: color-mix(in srgb, var(--c) 55%, transparent); transform: translateY(-2px); }
+  .ptile img { width: 44px; height: 44px; margin-bottom: var(--s2); transition: transform .35s cubic-bezier(.2,.8,.2,1); }
+  .pt-name { font: 600 16px/22px var(--sans); letter-spacing: -0.02em; }
+  .pt-in { font-size: 12px; line-height: 17px; color: var(--gray-900); }
+  .pt-in em { font-style: normal; color: var(--gray-700); }
+  .pt-price { margin-top: var(--s3); display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 var(--s2); font: 500 13px/20px var(--mono); }
+  .pt-price .cur2 { margin-left: var(--s1); }
+  .pt-save { font: 500 12px/20px var(--sans); color: var(--ok, #3fb950); }
+  .pt-check { position: absolute; top: var(--s3); right: var(--s3); width: 20px; height: 20px; border-radius: 50%; border: 1px solid var(--border-strong); transition: all .2s ease; }
+  .ptile:has(input:checked) { border-color: var(--c); background: color-mix(in srgb, var(--c) 9%, transparent); box-shadow: 0 0 0 1px var(--c), 0 16px 40px -24px var(--c); }
+  .ptile:has(input:checked) img { transform: translateY(-3px) rotate(-6deg) scale(1.06); }
+  .ptile:has(input:checked) .pt-check { border-color: var(--c); background: var(--c) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' fill='none' stroke='%23fff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M2.5 6.5l2.2 2.2L9.5 3.5'/%3E%3C/svg%3E") center/11px no-repeat; }
+  .ptile:has(input:focus-visible), .chip:has(input:focus-visible) { outline: 2px solid var(--brand); outline-offset: 2px; }
+  /* summary bars */
+  .pr-bar { margin-top: var(--s5); padding-top: var(--s5); border-top: 1px solid var(--border); display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--s3) var(--s6); }
+  .pr-packs .pr-bar { margin-top: auto; }
+  .pr-packs .ptiles { margin-bottom: var(--s5); }
+  .pr-bar .btn { flex: none; min-width: 168px; }
   .sum { display: flex; align-items: baseline; flex-wrap: wrap; gap: var(--s1) var(--s3); }
   .sum[hidden] { display: none; }
-  #one-price { font: 600 26px/32px var(--sans); letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
-  #one-price .cur2, #pick-price .cur2 { font-size: 16px; }
-  #one-note { font: 400 13px/20px var(--mono); color: var(--gray-700); }
-  #one-buy { width: 100%; margin-top: var(--s4); }
-  #one-buy[aria-disabled="true"] { opacity: .55; }
-  #pick-price { font: 600 24px/32px var(--mono); }
-  #pick-price .cur2 { font-size: 16px; }
-  #pick-note { font: 400 13px/20px var(--mono); color: var(--gray-700); }
-  .pick-tip { margin-top: var(--s2); font-size: 13px; line-height: 20px; color: var(--warn, #f5a524); }
-  #pick-buy { width: 100%; margin-top: var(--s4); }
-  #pick-buy[aria-disabled="true"] { opacity: .55; }
-  .singles li { display: grid; grid-template-columns: 1fr auto auto; gap: var(--s3); align-items: center; padding-block: var(--s3); }
-  .singles li:last-child, .pick li:last-child label { padding-bottom: 0; }
-  .team { margin-top: var(--s8); }
+  #pick-price, #one-price { font: 600 26px/32px var(--sans); letter-spacing: -0.03em; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  #pick-price .cur2, #one-price .cur2 { font-size: 16px; }
+  .ps { font: 400 13px/20px var(--mono); color: var(--gray-700); }
+  s.ps { text-decoration: line-through; }
+  .pick-tip { margin-top: var(--s1); font-size: 13px; line-height: 20px; color: var(--warn, #f5a524); }
+  .pick-tip.up { color: var(--brand-hover); }
+  .pr-bar .btn[aria-disabled="true"] { opacity: .55; }
+  /* build your own */
+  .pr-build { margin-top: var(--s4); }
+  .pr-build-head { display: grid; gap: var(--s5); align-items: end; }
+  @media (min-width: 900px) { .pr-build-head { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--s12); } }
+  .meter { padding-bottom: var(--s1); }
+  .meter-track { position: relative; height: 8px; border-radius: 99px; background: var(--gray-200); margin-top: var(--s6); }
+  .meter-fill { position: absolute; inset: 0; border-radius: inherit; background: var(--grad); transform-origin: left; transform: scaleX(0); transition: transform .5s cubic-bezier(.2,.8,.2,1); }
+  .meter-mark { position: absolute; left: var(--at); bottom: 14px; transform: translateX(-50%); font-size: 12px; line-height: 16px; color: var(--gray-700); white-space: nowrap; }
+  .meter-mark b { font: 500 12px/16px var(--mono); color: var(--gray-1000); margin-right: var(--s1); }
+  .meter-mark::after { content: ""; position: absolute; left: 50%; top: 18px; width: 2px; height: 12px; background: var(--bg); transform: translateX(-50%); }
+  .meter-msg { margin-top: var(--s3); font-size: 14px; line-height: 20px; color: var(--gray-900); transition: color .2s ease; }
+  .meter-msg.on { color: var(--ok, #3fb950); }
+  .chips { margin-top: var(--s6); display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s2); }
+  @media (max-width: 479px) { .chips { grid-template-columns: 1fr; } .ch-price .cur2 { display: inline; } }
+  @media (min-width: 640px) { .chips { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  @media (min-width: 1000px) { .chips { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+  .chip { position: relative; display: grid; grid-template-columns: 12px 1fr auto; gap: var(--s2); align-items: center; min-height: 48px; padding: var(--s2) var(--s3);
+    border: 1px solid var(--border-strong); border-radius: var(--r-full); cursor: pointer; text-decoration: none; color: inherit; touch-action: manipulation;
+    transition: border-color .2s ease, background-color .2s ease, transform .2s cubic-bezier(.2,.8,.2,1); }
+  .chip:hover { border-color: color-mix(in srgb, var(--c) 55%, transparent); }
+  .chip:active { transform: scale(.97); }
+  .ch-name { font-size: 14px; line-height: 18px; font-weight: 500; }
+  .ch-price { font: 500 12px/18px var(--mono); color: var(--gray-900); white-space: nowrap; text-align: right; }
+  .ch-price .cur2 { display: none; }
+  .chip:has(input:checked) { border-color: var(--c); background: color-mix(in srgb, var(--c) 12%, transparent); }
+  .chip:has(input:checked) .ch-price { color: var(--gray-1000); }
+  .chip.free { border-style: dashed; color: var(--gray-900); cursor: pointer; }
+  .chip.free .ch-price { color: var(--ok, #3fb950); }
+  .team { margin-top: var(--s4); }
 
   /* terms */
   .legal { margin-top: var(--s8); max-width: 760px; }
@@ -738,15 +779,29 @@
 
   <section id="pricing" aria-labelledby="pricing-title">
     <div class="wrap">
-      <div class="ph">
-        <div class="sh">
-          <h2 class="h-40" id="pricing-title">Pricing</h2>
-          <p class="copy-18 muted">Buy the whole stack, one or more packs, or single skills. Every purchase includes 12 months of updates. Founding full-stack buyers get lifetime updates.</p>
-        </div>
+      <div class="sh">
+        <h2 class="h-40" id="pricing-title">Pricing</h2>
+        <p class="copy-18 muted">Pick the packs you need, take the whole stack, or build your own set of skills. Every purchase includes 12 months of updates. Founding full-stack buyers get lifetime updates.</p>
       </div>
-      <div class="pricing">
+
+      <div class="pr-top">
+        <div class="pcol pr-packs">
+          <p class="pstep">Packs</p>
+          <h3 class="h-20">Pick one or more packs</h3>
+          <p class="copy-14 muted">Each pack covers one stage of a study. Tap to add it.</p>
+          <div class="ptiles" id="pick"></div>
+          <div class="pick-total pr-bar">
+            <div>
+              <p class="copy-14 muted" id="pick-none">Nothing picked yet.</p>
+              <div class="sum" id="pick-sum" hidden><span class="pp" id="pick-price"></span><span class="ps" id="pick-note"></span></div>
+              <p class="pick-tip" id="pick-tip" hidden></p>
+            </div>
+            <a class="btn" id="pick-buy" href="https://www.linkedin.com/in/nithyn/" target="_blank" rel="noopener" data-buy="Packs" aria-disabled="true">Buy packs · soon</a>
+          </div>
+        </div>
+
         <div class="pcol main-price">
-          <p class="pstep">1 · Everything</p>
+          <p class="pstep">Best value</p>
           <h3 class="h-20">Full stack</h3>
           <p class="copy-14 muted">All 12 skills in the five packs, plus the bonus Portfolio Site Builder.</p>
           <div class="big"><span class="now" data-price="stack"></span><span class="was" data-price="stack-regular"></span></div>
@@ -759,31 +814,34 @@
           </ul>
           <a class="btn brand lg" href="https://www.linkedin.com/in/nithyn/" target="_blank" rel="noopener" data-buy="Full stack">Buy the full stack · coming soon</a>
         </div>
-        <div class="pcol">
-          <p class="pstep">2 · One or more packs</p>
-          <h3 class="h-20">Pick packs</h3>
-          <p class="copy-14 muted">Tick the stages you need. Your total updates as you go.</p>
-          <ul class="pick" id="pick"></ul>
-          <div class="pick-total" id="pick-total">
-            <p class="copy-14 muted" id="pick-none">Tick a pack to see your total.</p>
-            <div class="sum" id="pick-sum" hidden><span class="pp" id="pick-price"></span><span class="ps" id="pick-note"></span></div>
-            <p class="pick-tip" id="pick-tip" hidden></p>
-            <a class="btn" id="pick-buy" href="https://www.linkedin.com/in/nithyn/" target="_blank" rel="noopener" data-buy="Packs" aria-disabled="true">Buy selected packs · coming soon</a>
+      </div>
+
+      <div class="pcol pr-build">
+        <div class="pr-build-head">
+          <div>
+            <p class="pstep">Single skills</p>
+            <h3 class="h-20">Build your own set</h3>
+            <p class="copy-14 muted">Pick any skills. 4 or more get 15% off. 7 or more get 30% off.</p>
+          </div>
+          <div class="meter" id="meter" role="img" aria-label="Skills picked">
+            <div class="meter-track"><div class="meter-fill" id="meter-fill"></div>
+              <span class="meter-mark" style="--at:calc(4 / 9 * 100%)"><b>4</b>15% off</span>
+              <span class="meter-mark" style="--at:calc(7 / 9 * 100%)"><b>7</b>30% off</span>
+            </div>
+            <p class="meter-msg" id="meter-msg" aria-live="polite">Pick 4 skills for 15% off.</p>
           </div>
         </div>
-        <div class="pcol">
-          <p class="pstep">3 · Single skills</p>
-          <h3 class="h-20">Buy one skill</h3>
-          <p class="copy-14 muted">Priced by the work each skill does. Three skills are free.</p>
-          <ul class="pick" id="singles"></ul>
-          <div class="pick-total">
-            <p class="copy-14 muted" id="one-none">Tick a skill to see your total.</p>
-            <div class="sum" id="one-sum" hidden><span class="pp" id="one-price"></span><span class="ps" id="one-note"></span></div>
+        <div class="chips" id="singles"></div>
+        <div class="pick-total pr-bar">
+          <div>
+            <p class="copy-14 muted" id="one-none">Nothing picked yet.</p>
+            <div class="sum" id="one-sum" hidden><span class="pp" id="one-price"></span><s class="ps" id="one-was"></s><span class="ps" id="one-note"></span></div>
             <p class="pick-tip" id="one-tip" hidden></p>
-            <a class="btn" id="one-buy" href="https://www.linkedin.com/in/nithyn/" target="_blank" rel="noopener" data-buy="Single skills" aria-disabled="true">Buy selected skills · coming soon</a>
           </div>
+          <a class="btn" id="one-buy" href="https://www.linkedin.com/in/nithyn/" target="_blank" rel="noopener" data-buy="Single skills" aria-disabled="true">Buy skills · soon</a>
         </div>
       </div>
+
       <div class="team"><p class="copy-14 muted"><b>Team licence.</b> The full stack for 5 people, <span data-price="team"></span> during the founding period. Larger teams can <a class="link" href="https://www.linkedin.com/in/nithyn/" target="_blank" rel="noopener">ask on LinkedIn</a>.</p><a class="btn sm" href="https://www.linkedin.com/in/nithyn/" target="_blank" rel="noopener" data-buy="Team licence (5 people)">Buy team licence · coming soon</a></div>
       <p class="note copy-14 muted">No payment is taken on this site yet. Buy buttons add you to the waitlist.</p>
     </div>
@@ -984,14 +1042,15 @@
   // Prices as [rupees, dollars]. Free skills have no price. Each paid skill is priced by the work it does.
   const FREE_IDS = ["transcript-collator", "collation-sorter", "stop-ai-slop"];
   const PRICES = {
-    skills: { "research-plan-creator": [1299, 25], "report-builder": [1299, 25],
-              "quant-analyst": [999, 19], "diagnostic-partner": [999, 19], "research-driven-prototype": [999, 19], "case-study-builder": [999, 19],
-              "question-zero": [999, 19], "collated-synth": [999, 19], "stakeholder-panel": [699, 12] },
-    packs: { starter: [2299, 45], scope: [2499, 49], collate: [999, 19], analysis: [1799, 35], influence: [1299, 25], career: [999, 19] },
-    stack: { founding: [4999, 99], regular: [6499, 129] },
-    team: [14999, 299],   // team licence, 5 people, founding period
+    skills: { "research-plan-creator": [799, 15], "report-builder": [799, 15],
+              "quant-analyst": [599, 12], "diagnostic-partner": [599, 12], "research-driven-prototype": [599, 12], "case-study-builder": [599, 12],
+              "question-zero": [599, 12], "collated-synth": [599, 12], "stakeholder-panel": [449, 9] },
+    packs: { starter: [1599, 32], scope: [1499, 29], collate: [599, 12], analysis: [1099, 22], influence: [849, 17], career: [599, 12] },
+    stack: { founding: [2999, 59], regular: [3999, 79] },
+    team: [8999, 179],    // team licence, 5 people, founding period
   };
-  // The starter pack: the four skills most studies need, from plan to report.
+  // Buying single skills: 4 or more get 15% off, 7 or more get 30% off.
+  const TIERS = [{ min: 7, off: 0.30 }, { min: 4, off: 0.15 }];
   // The starter pack: the paid skills most studies need, on top of the three free ones.
   const STARTER = { key: "starter", name: "Starter pack", ids: ["research-plan-creator", "collated-synth", "report-builder"] };
 
@@ -1288,25 +1347,26 @@
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(placeColHl);
   if (location.hash.startsWith("#pack-")) requestAnimationFrame(() => openPack(location.hash.slice(6), { instant: true }));
 
-  // ---- pricing: pack picker and single skills ----
+  // ---- pricing: pack tiles and the build-your-own skill chips ----
   const byId = Object.fromEntries(PACKS.flatMap((p) => p.skills).map((s) => [s.id, s]));
-  const PICKABLE = [STARTER, ...PACKS.map((p) => ({ key: p.key, name: p.name, ids: p.skills.map((s) => s.id) }))];
+  const PICKABLE = [STARTER, ...PACKS.map((p) => ({ key: p.key, name: p.name, ids: p.skills.map((s) => s.id), c: p.c }))];
   const paidIn = (ids) => ids.filter((id) => !FREE_IDS.includes(id) && !(byId[id] && byId[id].bonus));
   const freeIn = (ids) => ids.filter((id) => FREE_IDS.includes(id) || (byId[id] && byId[id].bonus));
+  const packOf = (id) => PACKS.find((p) => p.skills.some((s) => s.id === id));
+  const tileIcon = (k) => k === "starter" ? "assets/icons/hd/research-plan-creator.webp" : `assets/icons/hd/pack-${k}.webp`;
   document.getElementById("pick").innerHTML = PICKABLE.map((p) => `
-    <li><label>
-      <input type="checkbox" value="${p.key}">
-      <span><b>${p.name}</b><span class="pick-in">${paidIn(p.ids).map((id) => byId[id].name).join(", ")}${freeIn(p.ids).length ? ` <em>+ ${freeIn(p.ids).map((id) => byId[id].name).join(", ")} free</em>` : ""}</span></span>
-      <span class="pp" data-price="pack" data-pack="${p.key}"></span>
-    </label></li>`).join("");
-  document.getElementById("singles").innerHTML = Object.keys(PRICES.skills)
-    .sort((a, b) => PRICES.skills[b][1] - PRICES.skills[a][1] || byId[a].name.localeCompare(byId[b].name))
-    .map((id) => `
-    <li><label>
-      <input type="checkbox" value="${id}">
-      <span><b>${byId[id].name}</b><span class="pick-in">${PACKS.find((p) => p.skills.some((s) => s.id === id)).name}</span></span>
-      <span class="pp" data-price="skill" data-skill="${id}"></span>
-    </label></li>`).join("");
+    <label class="ptile" style="--c:${p.c || "var(--brand)"}">
+      <input class="vh" type="checkbox" value="${p.key}">
+      <img src="${tileIcon(p.key)}" alt="" width="56" height="56" loading="lazy">
+      <span class="pt-name">${p.name.replace(" pack", "")}</span>
+      <span class="pt-in">${paidIn(p.ids).map((id) => byId[id].name).join(", ")}${freeIn(p.ids).length ? ` <em>+ ${freeIn(p.ids).length} free</em>` : ""}</span>
+      <span class="pt-price"><span data-price="pack" data-pack="${p.key}"></span><span class="pt-save" data-price="pack-save" data-pack="${p.key}"></span></span>
+      <span class="pt-check" aria-hidden="true"></span>
+    </label>`).join("");
+  document.getElementById("singles").innerHTML = PACKS.flatMap((p) => p.skills.filter((s) => !s.bonus).map((s) => ({ s, p }))).map(({ s, p }) =>
+    FREE_IDS.includes(s.id)
+      ? `<a class="chip free" href="#free" style="--c:${p.c}"><span class="blob" aria-hidden="true"></span><span class="ch-name">${s.name}</span><span class="ch-price">Free</span></a>`
+      : `<label class="chip" style="--c:${p.c}"><input class="vh" type="checkbox" value="${s.id}"><span class="blob" aria-hidden="true"></span><span class="ch-name">${s.name}</span><span class="ch-price" data-price="skill" data-skill="${s.id}"></span></label>`).join("");
 
   // ---- free period ----
   if (!freeActive) document.querySelectorAll("[data-free-only]").forEach((el) => { el.hidden = true; });
@@ -1356,46 +1416,59 @@
   }
   applyPrices();
 
-  // Picked packs: show the total, never charge twice for a skill, and point to the full stack when it costs less.
+  // Picked packs: show the total and point to the full stack when it costs less.
   const pickBox = document.getElementById("pick");
+  const lt = (x, total) => (INDIA ? x[0] <= total[0] : x[1] <= total[1]);
+  const diff = (a, b) => [a[0] - b[0], a[1] - b[1]];
   function updatePick() {
     const keys = [...pickBox.querySelectorAll("input:checked")].map((i) => i.value);
     const none = document.getElementById("pick-none"), sum = document.getElementById("pick-sum"), tip = document.getElementById("pick-tip"), buy = document.getElementById("pick-buy");
-    none.hidden = keys.length > 0; sum.hidden = keys.length === 0; tip.hidden = true;
-    buy.classList.toggle("brand", keys.length > 0); buy.setAttribute("aria-disabled", String(keys.length === 0));
+    none.hidden = keys.length > 0; sum.hidden = !keys.length; tip.hidden = true;
+    buy.classList.toggle("brand", keys.length > 0); buy.setAttribute("aria-disabled", String(!keys.length));
     if (!keys.length) { buy.dataset.buy = "Packs"; return; }
     const total = keys.reduce((a, k) => [a[0] + PRICES.packs[k][0], a[1] + PRICES.packs[k][1]], [0, 0]);
     const picks = PICKABLE.filter((p) => keys.includes(p.key));
     const ids = new Set(picks.flatMap((p) => paidIn(p.ids)));
-    const overlap = picks.reduce((n, p) => n + paidIn(p.ids).length, 0) > ids.size;
     document.getElementById("pick-price").innerHTML = both(total);
     document.getElementById("pick-note").textContent = `${keys.length} pack${keys.length > 1 ? "s" : ""} · ${ids.size} paid skill${ids.size > 1 ? "s" : ""}`;
-    const stack = PRICES.stack.founding, cheaper = INDIA ? stack[0] <= total[0] : stack[1] <= total[1];
-    if (cheaper) { tip.hidden = false; tip.innerHTML = `The full stack costs less: ${bothPlain(stack)} for all 12 skills.`; }
-    else if (overlap) { tip.hidden = false; tip.textContent = "Some skills are in more than one of these packs. The Starter pack overlaps with Scope, Collate and Analysis."; }
+    const st = PRICES.stack.founding;
+    if (lt(st, total)) { tip.hidden = false; tip.textContent = `The full stack costs less: ${bothPlain(st)} for all 12 skills.`; }
+    else if (lt(st, [total[0] * 1.6, total[1] * 1.6])) { tip.hidden = false; tip.className = "pick-tip up"; tip.textContent = `${bothPlain(diff(st, total))} more gets you all 12 skills.`; return void (buy.dataset.buy = picks.map((p) => p.name).join(" + ")); }
+    tip.className = "pick-tip";
     buy.dataset.buy = picks.map((p) => p.name).join(" + ");
   }
   pickBox.addEventListener("change", updatePick);
+  document.getElementById("pick-buy").addEventListener("click", (e) => { if (!pickBox.querySelector("input:checked")) { e.preventDefault(); e.stopImmediatePropagation(); document.getElementById("pick-none").textContent = "Tap a pack first."; } }, true);
+  updatePick();
+
+  // Build your own: volume discount, a meter toward the next tier, and a nudge to the full stack.
   const oneBox = document.getElementById("singles");
+  const PAID_N = Object.keys(PRICES.skills).length;
   function updateOne() {
-    const ids = [...oneBox.querySelectorAll("input:checked")].map((i) => i.value);
-    const none = document.getElementById("one-none"), sum = document.getElementById("one-sum"), tip = document.getElementById("one-tip"), buy = document.getElementById("one-buy");
-    none.hidden = ids.length > 0; sum.hidden = ids.length === 0; tip.hidden = true;
-    buy.classList.toggle("brand", ids.length > 0); buy.setAttribute("aria-disabled", String(ids.length === 0));
-    if (!ids.length) { buy.dataset.buy = "Single skills"; return; }
-    const total = ids.reduce((a, id) => [a[0] + PRICES.skills[id][0], a[1] + PRICES.skills[id][1]], [0, 0]);
+    const ids = [...oneBox.querySelectorAll("input:checked")].map((i) => i.value), n = ids.length;
+    const none = document.getElementById("one-none"), sum = document.getElementById("one-sum"), tip = document.getElementById("one-tip"), buy = document.getElementById("one-buy"), msg = document.getElementById("meter-msg");
+    document.getElementById("meter-fill").style.transform = `scaleX(${n / PAID_N})`;
+    document.getElementById("meter").setAttribute("aria-label", `${n} of ${PAID_N} paid skills picked`);
+    const tier = TIERS.find((t) => n >= t.min), next = [...TIERS].reverse().find((t) => n < t.min);
+    msg.textContent = next ? `${n ? "Add" : "Pick"} ${next.min - n} more skill${next.min - n > 1 ? "s" : ""} for ${Math.round(next.off * 100)}% off.` : "You have the biggest discount: 30% off.";
+    msg.classList.toggle("on", !!tier);
+    none.hidden = n > 0; sum.hidden = !n; tip.hidden = true;
+    buy.classList.toggle("brand", n > 0); buy.setAttribute("aria-disabled", String(!n));
+    if (!n) { buy.dataset.buy = "Single skills"; return; }
+    const sub = ids.reduce((a, id) => [a[0] + PRICES.skills[id][0], a[1] + PRICES.skills[id][1]], [0, 0]);
+    const off = tier ? tier.off : 0, total = sub.map((v) => Math.round(v * (1 - off)));
     document.getElementById("one-price").innerHTML = both(total);
-    document.getElementById("one-note").textContent = `${ids.length} skill${ids.length > 1 ? "s" : ""}`;
-    const cmp = (x) => (INDIA ? x[0] <= total[0] : x[1] <= total[1]);
-    // Point to a cheaper way to get the same skills: the full stack, or one pack that holds them all.
-    const pack = PICKABLE.filter((p) => ids.every((id) => p.ids.includes(id)) && cmp(PRICES.packs[p.key]) && ids.length > 1)
-      .sort((x, y) => PRICES.packs[x.key][1] - PRICES.packs[y.key][1])[0];
-    if (cmp(PRICES.stack.founding)) { tip.hidden = false; tip.textContent = `The full stack costs less: ${bothPlain(PRICES.stack.founding)} for all 12 skills.`; }
-    else if (pack) { tip.hidden = false; tip.textContent = `The ${pack.name} costs less: ${bothPlain(PRICES.packs[pack.key])}, with these skills in it.`; }
-    buy.dataset.buy = ids.map((id) => byId[id].name).join(" + ");
+    document.getElementById("one-was").textContent = off ? bothPlain(sub) : "";
+    document.getElementById("one-note").textContent = `${n} skill${n > 1 ? "s" : ""}${off ? ` · ${Math.round(off * 100)}% off` : ""}`;
+    const st = PRICES.stack.founding;
+    const pack = n > 1 && PICKABLE.filter((p) => ids.every((id) => p.ids.includes(id)) && lt(PRICES.packs[p.key], total)).sort((x, y) => PRICES.packs[x.key][1] - PRICES.packs[y.key][1])[0];
+    if (lt(st, total)) { tip.hidden = false; tip.className = "pick-tip"; tip.textContent = `The full stack costs less: ${bothPlain(st)} for all 12 skills.`; }
+    else if (pack) { tip.hidden = false; tip.className = "pick-tip"; tip.textContent = `The ${pack.name} costs less: ${bothPlain(PRICES.packs[pack.key])}, with these skills in it.`; }
+    else if (n >= 4) { tip.hidden = false; tip.className = "pick-tip up"; tip.textContent = `${bothPlain(diff(st, total))} more gets you all 12 skills with the full stack.`; }
+    buy.dataset.buy = ids.map((id) => byId[id].name).join(" + ") + (off ? ` (${Math.round(off * 100)}% off)` : "");
   }
   oneBox.addEventListener("change", updateOne);
-  document.getElementById("one-buy").addEventListener("click", (e) => { if (!oneBox.querySelector("input:checked")) { e.preventDefault(); e.stopImmediatePropagation(); document.getElementById("one-none").textContent = "Tick at least one skill first."; } }, true);
+  document.getElementById("one-buy").addEventListener("click", (e) => { if (!oneBox.querySelector("input:checked")) { e.preventDefault(); e.stopImmediatePropagation(); document.getElementById("one-none").textContent = "Pick a skill first."; } }, true);
   updateOne();
   document.getElementById("pick-buy").addEventListener("click", (e) => { if (!pickBox.querySelector("input:checked")) { e.preventDefault(); e.stopImmediatePropagation(); document.getElementById("pick-none").textContent = "Tick at least one pack first."; } }, true);
   updatePick();
