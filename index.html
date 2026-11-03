@@ -291,30 +291,45 @@
   .seg button { appearance: none; border: 0; background: transparent; color: var(--gray-900); font: 500 14px/20px var(--sans);
     height: 32px; padding: 0 var(--s3); border-radius: var(--r-full); cursor: pointer; }
   .seg button[aria-pressed="true"] { background: var(--gray-1000); color: var(--bg); }
-  .pricing { margin-top: var(--s12); display: grid; gap: var(--s12); align-items: start; }
-  @media (min-width: 900px) { .pricing { grid-template-columns: 400px 1fr; } }
+  .pricing { margin-top: var(--s12); display: grid; gap: var(--s6); align-items: start; }
+  @media (min-width: 1000px) { .pricing { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  .pcol { border: 1px solid var(--border-strong); border-radius: var(--r-lg); padding: var(--s6); }
+  @media (min-width: 1000px) { .pcol { padding: var(--s8); min-height: 100%; } }
+  .pstep { font: 500 13px/20px var(--mono); color: var(--gray-700); margin-bottom: var(--s3); }
+  .pcol > .copy-14 { margin-top: var(--s1); }
   .main-price { border: 1px solid transparent; background: linear-gradient(var(--bg), var(--bg)) padding-box, var(--grad) border-box;
-    box-shadow: 0 24px 64px -32px rgba(191,90,242,.55);
-    border-radius: var(--r-lg); padding: var(--s8); }
+    box-shadow: 0 24px 64px -32px rgba(191,90,242,.55); }
   .main-price .big { display: flex; align-items: baseline; flex-wrap: wrap; gap: var(--s3); margin-top: var(--s4); }
-  .main-price .now { font: 600 56px/56px var(--sans); letter-spacing: -0.06em; }
+  .main-price .now { font: 600 48px/52px var(--sans); letter-spacing: -0.06em; }
   .main-price .save { margin-top: var(--s2); font-size: 14px; color: var(--brand-hover); }
   .main-price .founding { margin-top: var(--s1); }
   .cur2 { margin-left: var(--s2); color: var(--gray-900); font-weight: 400; }
-  .main-price .now .cur2 { font-size: 24px; letter-spacing: -0.02em; }
+  .main-price .now .cur2 { font-size: 22px; letter-spacing: -0.02em; }
   .was .cur2 { margin-left: var(--s1); color: inherit; }
   .main-price .ticks { margin-top: var(--s6); }
   .main-price .btn { width: 100%; margin-top: var(--s8); }
-  .main-price .note { margin-top: var(--s3); font-size: 13px; line-height: 16px; color: var(--gray-700); text-align: center; }
-  .plist { list-style: none; margin: 0; padding: 0; }
-  .plist > li { display: grid; grid-template-columns: 1fr auto; gap: var(--s2) var(--s4); align-items: baseline; padding-block: var(--s5); }
-  .plist > li + li { border-top: 1px solid var(--border); }
-  .plist > li:first-child { padding-top: 0; }
-  .plist > li:last-child { padding-bottom: 0; }
-  .plist .pp { font: 500 16px/24px var(--mono); text-align: right; }
-  .plist .ps { font: 400 13px/16px var(--mono); color: var(--gray-700); text-align: right; }
-  .plist li > div:last-child { display: flex; flex-direction: column; align-items: flex-end; }
-  .plist .btn { margin-top: var(--s3); }
+  .pick, .singles { list-style: none; margin: var(--s5) 0 0; padding: 0; }
+  .pick li + li, .singles li + li { border-top: 1px solid var(--border); }
+  .pick label { display: grid; grid-template-columns: 18px 1fr auto; gap: var(--s3); align-items: start; padding-block: var(--s3); cursor: pointer; }
+  .pick input { width: 16px; height: 16px; margin: 3px 0 0; accent-color: var(--brand); cursor: pointer; }
+  .pick b, .singles b { display: block; font-weight: 500; font-size: 15px; line-height: 22px; }
+  .pick-in { display: block; font-size: 13px; line-height: 18px; color: var(--gray-900); }
+  .pick-in em { font-style: normal; color: var(--gray-700); }
+  .pick .pp, .singles .pp { font: 500 13px/22px var(--mono); text-align: right; white-space: nowrap; }
+  .pick .pp .cur2, .singles .pp .cur2 { display: block; margin-left: 0; }
+  .pick li:has(input:checked) b { color: var(--brand-hover); }
+  .pick-total { margin-top: var(--s4); padding-top: var(--s4); border-top: 1px solid var(--border-strong); }
+  #pick-sum { display: flex; align-items: baseline; flex-wrap: wrap; gap: var(--s1) var(--s3); }
+  #pick-sum[hidden] { display: none; }
+  #pick-price { font: 600 24px/32px var(--mono); }
+  #pick-price .cur2 { font-size: 16px; }
+  #pick-note { font: 400 13px/20px var(--mono); color: var(--gray-700); }
+  .pick-tip { margin-top: var(--s2); font-size: 13px; line-height: 20px; color: var(--warn, #f5a524); }
+  #pick-buy { width: 100%; margin-top: var(--s4); }
+  #pick-buy[aria-disabled="true"] { opacity: .55; }
+  .singles li { display: grid; grid-template-columns: 1fr auto auto; gap: var(--s3); align-items: center; padding-block: var(--s3); }
+  .singles li:last-child, .pick li:last-child label { padding-bottom: 0; }
+  .team { margin-top: var(--s8); }
 
   /* terms */
   .legal { margin-top: var(--s8); max-width: 760px; }
@@ -643,13 +658,14 @@
       <div class="ph">
         <div class="sh">
           <h2 class="h-40" id="pricing-title">Pricing</h2>
-          <p class="copy-18 muted">Prices in rupees and dollars. Every pack includes 12 months of updates and every new skill Nithyn publishes in that time.</p>
+          <p class="copy-18 muted">Buy the whole stack, one or more packs, or single skills. Every purchase includes 12 months of updates.</p>
         </div>
       </div>
       <div class="pricing">
-        <div class="main-price">
+        <div class="pcol main-price">
+          <p class="pstep">1 · Everything</p>
           <h3 class="h-20">Full stack</h3>
-          <p class="copy-14 muted">All 12 skills across the five packs, plus the bonus Portfolio Site Builder.</p>
+          <p class="copy-14 muted">All 12 skills in the five packs, plus the bonus Portfolio Site Builder.</p>
           <div class="big"><span class="now" data-price="stack"></span><span class="was" data-price="stack-regular"></span></div>
           <p class="save" data-price="stack-save"></p>
           <p class="copy-14 muted founding" data-price="stack-note"></p>
@@ -659,10 +675,27 @@
             <li>One licence covers one person.</li>
           </ul>
           <a class="btn brand lg" href="https://www.linkedin.com/in/nithyn/" target="_blank" rel="noopener" data-buy="Full stack">Buy the full stack · coming soon</a>
-          <p class="note">Paid packs open soon. No payment is taken on this site.</p>
         </div>
-        <ul class="plist" id="plist"></ul>
+        <div class="pcol">
+          <p class="pstep">2 · One or more packs</p>
+          <h3 class="h-20">Pick packs</h3>
+          <p class="copy-14 muted">Tick the stages you need. Your total updates as you go.</p>
+          <ul class="pick" id="pick"></ul>
+          <div class="pick-total" id="pick-total">
+            <p class="copy-14 muted" id="pick-none">Tick a pack to see your total.</p>
+            <div id="pick-sum" hidden><span class="pp" id="pick-price"></span><span class="ps" id="pick-note"></span></div>
+            <p class="pick-tip" id="pick-tip" hidden></p>
+            <a class="btn" id="pick-buy" href="https://www.linkedin.com/in/nithyn/" target="_blank" rel="noopener" data-buy="Packs" aria-disabled="true">Buy selected packs · coming soon</a>
+          </div>
+        </div>
+        <div class="pcol">
+          <p class="pstep">3 · Single skills</p>
+          <h3 class="h-20">Buy one skill</h3>
+          <p class="copy-14 muted">Priced by the work each skill does. Three skills are free.</p>
+          <ul class="singles" id="singles"></ul>
+        </div>
       </div>
+      <p class="team copy-14 muted">Buying for a research team? Team licences are available on request. <a class="link" href="https://www.linkedin.com/in/nithyn/" target="_blank" rel="noopener">Ask on LinkedIn</a>. No payment is taken on this site yet.</p>
     </div>
   </section>
 
@@ -1159,21 +1192,25 @@
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(placeColHl);
   if (location.hash.startsWith("#pack-")) requestAnimationFrame(() => openPack(location.hash.slice(6), { instant: true }));
 
-  // ---- pack price list ----
+  // ---- pricing: pack picker and single skills ----
   const byId = Object.fromEntries(PACKS.flatMap((p) => p.skills).map((s) => [s.id, s]));
-  document.getElementById("plist").innerHTML = `
+  const PICKABLE = [STARTER, ...PACKS.map((p) => ({ key: p.key, name: p.name, ids: p.skills.map((s) => s.id) }))];
+  const paidIn = (ids) => ids.filter((id) => !FREE_IDS.includes(id) && !(byId[id] && byId[id].bonus));
+  const freeIn = (ids) => ids.filter((id) => FREE_IDS.includes(id) || (byId[id] && byId[id].bonus));
+  document.getElementById("pick").innerHTML = PICKABLE.map((p) => `
+    <li><label>
+      <input type="checkbox" value="${p.key}">
+      <span><b>${p.name}</b><span class="pick-in">${paidIn(p.ids).map((id) => byId[id].name).join(", ")}${freeIn(p.ids).length ? ` <em>+ ${freeIn(p.ids).map((id) => byId[id].name).join(", ")} free</em>` : ""}</span></span>
+      <span class="pp" data-price="pack" data-pack="${p.key}"></span>
+    </label></li>`).join("");
+  document.getElementById("singles").innerHTML = Object.keys(PRICES.skills)
+    .sort((a, b) => PRICES.skills[b][1] - PRICES.skills[a][1] || byId[a].name.localeCompare(byId[b].name))
+    .map((id) => `
     <li>
-      <div><h3 class="h-16">${STARTER.name}</h3><p class="copy-14 muted">The paid skills most studies need: ${STARTER.ids.map((id) => byId[id].name).join(", ")}. Use them with the three free skills.</p></div>
-      <div><p class="pp" data-price="pack" data-pack="starter"></p><p class="ps"><s data-price="pack-list" data-pack="starter"></s> <span data-price="pack-save" data-pack="starter"></span></p>
-        <a class="btn sm" href="${LINKEDIN}" target="_blank" rel="noopener" data-buy="Starter pack">Buy pack · coming soon</a></div>
-    </li>` + PACKS.map((p) => `
-    <li>
-      <div><h3 class="h-16">${p.name}</h3><p class="copy-14 muted">${p.skills.filter((s) => !s.bonus).map((s) => s.name).join(", ")}${p.skills.some((s) => s.bonus) ? ", plus " + p.skills.filter((s) => s.bonus).map((s) => s.name).join(", ") + " free as a bonus" : ""}</p></div>
-      <div><p class="pp" data-price="pack" data-pack="${p.key}"></p>${p.single ? "" : `<p class="ps"><s data-price="pack-list" data-pack="${p.key}"></s> <span data-price="pack-save" data-pack="${p.key}"></span></p>`}
-        <a class="btn sm" href="${LINKEDIN}" target="_blank" rel="noopener" data-buy="${p.name}">Buy pack · coming soon</a></div>
-    </li>`).join("") + `
-    <li><div><h3 class="h-16">Team licence</h3><p class="copy-14 muted">Covers every member of a research team.</p></div><div><p class="pp">On request</p><a class="btn sm" href="${LINKEDIN}" target="_blank" rel="noopener">Ask on LinkedIn</a></div></li>
-    <li><div><h3 class="h-16">Single skill</h3><p class="copy-14 muted">Any one paid skill on its own, priced by what it does.</p></div><div><p class="pp" data-price="range"></p><a class="btn sm" href="${LINKEDIN}" target="_blank" rel="noopener" data-buy="Single skill">Buy a skill · coming soon</a></div></li>`;
+      <span><b>${byId[id].name}</b><span class="pick-in">${PACKS.find((p) => p.skills.some((s) => s.id === id)).name}</span></span>
+      <span class="pp" data-price="skill" data-skill="${id}"></span>
+      <a class="btn sm" href="${LINKEDIN}" target="_blank" rel="noopener" data-buy="${byId[id].name}">Buy</a>
+    </li>`).join("");
 
   // ---- free period ----
   if (!freeActive) document.querySelectorAll("[data-free-only]").forEach((el) => { el.hidden = true; });
@@ -1221,6 +1258,29 @@
     document.querySelector('[data-price="stack-note"]').textContent = `Founding price for the first 100 buyers or the first 30 days. Then ${bothPlain(P.stack.regular)}.`;
   }
   applyPrices();
+
+  // Picked packs: show the total, never charge twice for a skill, and point to the full stack when it costs less.
+  const pickBox = document.getElementById("pick");
+  function updatePick() {
+    const keys = [...pickBox.querySelectorAll("input:checked")].map((i) => i.value);
+    const none = document.getElementById("pick-none"), sum = document.getElementById("pick-sum"), tip = document.getElementById("pick-tip"), buy = document.getElementById("pick-buy");
+    none.hidden = keys.length > 0; sum.hidden = keys.length === 0; tip.hidden = true;
+    buy.classList.toggle("brand", keys.length > 0); buy.setAttribute("aria-disabled", String(keys.length === 0));
+    if (!keys.length) { buy.dataset.buy = "Packs"; return; }
+    const total = keys.reduce((a, k) => [a[0] + PRICES.packs[k][0], a[1] + PRICES.packs[k][1]], [0, 0]);
+    const picks = PICKABLE.filter((p) => keys.includes(p.key));
+    const ids = new Set(picks.flatMap((p) => paidIn(p.ids)));
+    const overlap = picks.reduce((n, p) => n + paidIn(p.ids).length, 0) > ids.size;
+    document.getElementById("pick-price").innerHTML = both(total);
+    document.getElementById("pick-note").textContent = `${keys.length} pack${keys.length > 1 ? "s" : ""} · ${ids.size} paid skill${ids.size > 1 ? "s" : ""}`;
+    const stack = PRICES.stack.founding, cheaper = INDIA ? stack[0] <= total[0] : stack[1] <= total[1];
+    if (cheaper) { tip.hidden = false; tip.innerHTML = `The full stack costs less: ${bothPlain(stack)} for all 12 skills.`; }
+    else if (overlap) { tip.hidden = false; tip.textContent = "Some skills are in more than one of these packs. The Starter pack overlaps with Scope, Collate and Analysis."; }
+    buy.dataset.buy = picks.map((p) => p.name).join(" + ");
+  }
+  pickBox.addEventListener("change", updatePick);
+  document.getElementById("pick-buy").addEventListener("click", (e) => { if (!pickBox.querySelector("input:checked")) { e.preventDefault(); e.stopImmediatePropagation(); document.getElementById("pick-none").textContent = "Tick at least one pack first."; } }, true);
+  updatePick();
 
   // ---- sticky header gets a hairline once the page scrolls ----
   const hdr = document.getElementById("hdr");
@@ -1281,7 +1341,7 @@
     });
     if (window.ScrollTrigger) {
       G.registerPlugin(window.ScrollTrigger);
-      G.utils.toArray(".sh, .points > div, .cm, .cmp-wrap, .offer, .packs, .main-price, .plist > li, .shout").forEach((el) => {
+      G.utils.toArray(".sh, .points > div, .cm, .cmp-wrap, .offer, .packs, .pcol, .shout").forEach((el) => {
         G.from(el, { y: 16, opacity: 0, duration: 0.6, ease: "power2.out", clearProps: "transform,opacity", scrollTrigger: { trigger: el, start: "top 88%", once: true } });
       });
     }
