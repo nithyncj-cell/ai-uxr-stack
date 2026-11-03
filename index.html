@@ -318,9 +318,15 @@
   .pick .pp, .singles .pp { font: 500 13px/22px var(--mono); text-align: right; white-space: nowrap; }
   .pick .pp .cur2, .singles .pp .cur2 { display: block; margin-left: 0; }
   .pick li:has(input:checked) b { color: var(--brand-hover); }
+  #pick-price, #one-price { white-space: nowrap; }
   .pick-total { margin-top: var(--s4); padding-top: var(--s4); border-top: 1px solid var(--border-strong); }
-  #pick-sum { display: flex; align-items: baseline; flex-wrap: wrap; gap: var(--s1) var(--s3); }
-  #pick-sum[hidden] { display: none; }
+  .sum { display: flex; align-items: baseline; flex-wrap: wrap; gap: var(--s1) var(--s3); }
+  .sum[hidden] { display: none; }
+  #one-price { font: 600 26px/32px var(--sans); letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
+  #one-price .cur2, #pick-price .cur2 { font-size: 16px; }
+  #one-note { font: 400 13px/20px var(--mono); color: var(--gray-700); }
+  #one-buy { width: 100%; margin-top: var(--s4); }
+  #one-buy[aria-disabled="true"] { opacity: .55; }
   #pick-price { font: 600 24px/32px var(--mono); }
   #pick-price .cur2 { font-size: 16px; }
   #pick-note { font: 400 13px/20px var(--mono); color: var(--gray-700); }
@@ -484,6 +490,73 @@
   .tp-part { scroll-margin-top: calc(var(--header-h) + var(--s4)); }
   .tp-part h3 { color: var(--gray-1000); }
   .tp-part .lt { margin-top: var(--s3); padding-bottom: 0; }
+
+  /* audit fixes: mobile menu, touch targets, compact mobile layouts, question grid */
+  .mnav { display: none; position: relative; }
+  .mnav > summary { list-style: none; width: 44px; height: 44px; display: grid; place-items: center; cursor: pointer; border-radius: var(--r-full); }
+  .mnav > summary::-webkit-details-marker { display: none; }
+  .bars, .bars::before, .bars::after { display: block; width: 18px; height: 1.5px; background: var(--gray-1000); border-radius: 2px; transition: transform .2s ease, opacity .2s ease; }
+  .bars { position: relative; }
+  .bars::before, .bars::after { content: ""; position: absolute; left: 0; }
+  .bars::before { top: -6px; } .bars::after { top: 6px; }
+  .mnav[open] .bars { background: transparent; }
+  .mnav[open] .bars::before { transform: translateY(6px) rotate(45deg); }
+  .mnav[open] .bars::after { transform: translateY(-6px) rotate(-45deg); }
+  .mnav nav { position: fixed; left: 0; right: 0; top: var(--header-h); padding: var(--s2) var(--s4) var(--s4); background: var(--bg); box-shadow: 0 24px 48px rgba(0,0,0,.6);
+    -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); display: grid; }
+  .mnav nav a { display: flex; align-items: center; min-height: 48px; font-size: 17px; text-decoration: none; color: var(--gray-1000); }
+  .mnav nav a + a { border-top: 1px solid var(--border); }
+  @media (max-width: 759px) { .mnav { display: block; } .hdr .wrap { gap: var(--s2); } }
+  @media (pointer: coarse) {
+    .btn, .btn.sm { min-height: 44px; }
+    .agree { padding-block: var(--s3); }
+    .pick label { min-height: 44px; }
+    .tp > summary, .legal summary { min-height: 44px; }
+  }
+  .tp > summary { min-height: 32px; }
+  .agree { min-height: 24px; }
+  @media (pointer: coarse) { .logo, .flinks a { min-height: 44px; display: inline-flex; align-items: center; } .flinks { row-gap: 0; } }
+  @media (pointer: coarse) { .tp > summary { min-height: 44px; } }
+  .agree.first { margin-top: 0; margin-bottom: var(--s4); }
+  .offer .terms { margin-top: var(--s5); }
+  /* steady section rhythm */
+  section { padding-block: var(--s12); }
+  @media (min-width: 900px) { section { padding-block: var(--s16) var(--s16); } }
+  /* comments: a swipe row on phones instead of six stacked cards */
+  @media (max-width: 719px) {
+    .board { grid-auto-flow: column; grid-auto-columns: 82%; overflow-x: auto; scroll-snap-type: x mandatory; gap: var(--s3);
+      margin-inline: calc(-1 * var(--s4)); padding: var(--s2) var(--s4) var(--s4); scrollbar-width: none; }
+    .board::-webkit-scrollbar { display: none; }
+    .cm { scroll-snap-align: start; }
+    .src::before { content: "Swipe for more. "; }
+  }
+  /* comparison on phones: the two other tools side by side, the stack full width */
+  @media (max-width: 719px) {
+    .cmp tbody tr { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s2) var(--s3); }
+    .cmp tbody th { grid-column: 1 / -1; padding-bottom: 0; }
+    .cmp td { display: block; padding: 0; font-size: 14px; line-height: 20px; }
+    .cmp td::before { display: block; margin-bottom: var(--s1); font-size: 12px; line-height: 16px; }
+    .cmp td:last-child { grid-column: 1 / -1; margin-top: var(--s1); }
+    .cmp td > span > .st { margin-top: 2px; }
+  }
+  /* questions: heading on the left, answers in two columns */
+  .faq-wrap { display: grid; gap: var(--s8); }
+  .faq { margin-top: 0; max-width: none; }
+  @media (min-width: 1000px) {
+    .faq-wrap { grid-template-columns: minmax(0, 1fr) minmax(0, 2.4fr); gap: var(--s12); align-items: start; }
+    .faq-head { position: sticky; top: calc(var(--header-h) + var(--s8)); }
+    .faq { display: grid; grid-template-columns: 1fr 1fr; column-gap: var(--s10); align-items: start; }
+    .faq details + details { border-top: 0; }
+    .faq details { border-top: 1px solid var(--border); }
+    .faq details:nth-child(-n+2) { border-top: 0; }
+    .faq details:nth-child(2) summary { padding-top: 0; }
+  }
+  /* pick total: proportional figures read better than mono at this size */
+  #pick-price { font: 600 26px/32px var(--sans); letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
+  .team { margin-top: var(--s8); display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--s3) var(--s6);
+    padding: var(--s5) var(--s6); border: 1px solid var(--border-strong); border-radius: var(--r-lg); }
+  .team b { color: var(--gray-1000); font-weight: 500; }
+  .pricing + .team + .note, .team + .note { margin-top: var(--s4); }
   @media (prefers-reduced-motion: reduce) { .glow { animation: none !important; background: rgba(10,114,239,.18); box-shadow: 0 0 0 6px rgba(10,114,239,.18); } * { scroll-behavior: auto !important; transition: none !important; animation: none !important; } }
 </style>
 </head>
@@ -510,6 +583,16 @@
       <a href="#faq">Questions</a>
     </nav>
     <a class="btn brand sm" href="#skills">See the 12 skills</a>
+    <details class="mnav">
+      <summary aria-label="Open the section menu"><span class="bars" aria-hidden="true"></span><span class="sr">Menu</span></summary>
+      <nav aria-label="Sections">
+        <a href="#skills">Skills</a>
+        <a href="#different">How it's different</a>
+        <a href="#free" data-free-only>Free skills</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#faq">Questions</a>
+      </nav>
+    </details>
   </div>
 </header>
 
@@ -612,6 +695,7 @@
       </div>
       <div class="offer">
         <div>
+          <label class="agree first"><input type="checkbox" id="agree"> <span>I agree to the <a class="link" href="#legal-licence" data-legal>Skill Licence Terms</a>.</span></label>
           <ul class="also">
             <li><img src="assets/icons/hd/transcript-collator.webp" alt="" width="48" height="48" loading="lazy">
               <div><h3 class="h-16">Transcript Collator</h3><p class="copy-14 muted">Turns raw transcripts into one theme-tagged notesheet, with a verbatim quote and timestamp on every row.</p></div>
@@ -631,7 +715,6 @@
               <div class="dl"><button class="btn sm" type="button" data-skill="slop" data-kind="zip">Download .zip</button></div>
               <p class="status" id="status-slop" role="status" aria-live="polite"></p></li>
           </ul>
-          <label class="agree"><input type="checkbox" id="agree"> <span>I agree to the <a class="link" href="#legal-licence" data-legal>Skill Licence Terms</a>.</span></label>
           <div class="robot" id="robot-dl" hidden></div>
           <div class="gate-email" id="gate-free" hidden>
             <label class="field"><span>Your email</span><input type="email" id="free-email" name="email" autocomplete="email" maxlength="254" placeholder="you@company.com"></label>
@@ -658,7 +741,7 @@
       <div class="ph">
         <div class="sh">
           <h2 class="h-40" id="pricing-title">Pricing</h2>
-          <p class="copy-18 muted">Buy the whole stack, one or more packs, or single skills. Every purchase includes 12 months of updates.</p>
+          <p class="copy-18 muted">Buy the whole stack, one or more packs, or single skills. Every purchase includes 12 months of updates. Founding full-stack buyers get lifetime updates.</p>
         </div>
       </div>
       <div class="pricing">
@@ -671,7 +754,7 @@
           <p class="copy-14 muted founding" data-price="stack-note"></p>
           <ul class="ticks">
             <li>Each skill hands its output to the next.</li>
-            <li>12 months of updates and new skills.</li>
+            <li>Lifetime updates and new skills for founding buyers.</li>
             <li>One licence covers one person.</li>
           </ul>
           <a class="btn brand lg" href="https://www.linkedin.com/in/nithyn/" target="_blank" rel="noopener" data-buy="Full stack">Buy the full stack · coming soon</a>
@@ -683,7 +766,7 @@
           <ul class="pick" id="pick"></ul>
           <div class="pick-total" id="pick-total">
             <p class="copy-14 muted" id="pick-none">Tick a pack to see your total.</p>
-            <div id="pick-sum" hidden><span class="pp" id="pick-price"></span><span class="ps" id="pick-note"></span></div>
+            <div class="sum" id="pick-sum" hidden><span class="pp" id="pick-price"></span><span class="ps" id="pick-note"></span></div>
             <p class="pick-tip" id="pick-tip" hidden></p>
             <a class="btn" id="pick-buy" href="https://www.linkedin.com/in/nithyn/" target="_blank" rel="noopener" data-buy="Packs" aria-disabled="true">Buy selected packs · coming soon</a>
           </div>
@@ -692,10 +775,17 @@
           <p class="pstep">3 · Single skills</p>
           <h3 class="h-20">Buy one skill</h3>
           <p class="copy-14 muted">Priced by the work each skill does. Three skills are free.</p>
-          <ul class="singles" id="singles"></ul>
+          <ul class="pick" id="singles"></ul>
+          <div class="pick-total">
+            <p class="copy-14 muted" id="one-none">Tick a skill to see your total.</p>
+            <div class="sum" id="one-sum" hidden><span class="pp" id="one-price"></span><span class="ps" id="one-note"></span></div>
+            <p class="pick-tip" id="one-tip" hidden></p>
+            <a class="btn" id="one-buy" href="https://www.linkedin.com/in/nithyn/" target="_blank" rel="noopener" data-buy="Single skills" aria-disabled="true">Buy selected skills · coming soon</a>
+          </div>
         </div>
       </div>
-      <p class="team copy-14 muted">Buying for a research team? Team licences are available on request. <a class="link" href="https://www.linkedin.com/in/nithyn/" target="_blank" rel="noopener">Ask on LinkedIn</a>. No payment is taken on this site yet.</p>
+      <div class="team"><p class="copy-14 muted"><b>Team licence.</b> The full stack for 5 people, <span data-price="team"></span> during the founding period. Larger teams can <a class="link" href="https://www.linkedin.com/in/nithyn/" target="_blank" rel="noopener">ask on LinkedIn</a>.</p><a class="btn sm" href="https://www.linkedin.com/in/nithyn/" target="_blank" rel="noopener" data-buy="Team licence (5 people)">Buy team licence · coming soon</a></div>
+      <p class="note copy-14 muted">No payment is taken on this site yet. Buy buttons add you to the waitlist.</p>
     </div>
   </section>
 
@@ -716,7 +806,11 @@
 
   <section id="faq" aria-labelledby="faq-title">
     <div class="wrap">
-      <h2 class="h-40" id="faq-title">Questions</h2>
+      <div class="faq-wrap">
+      <div class="sh faq-head">
+        <h2 class="h-40" id="faq-title">Questions</h2>
+        <p class="copy-18 muted">Can't find your answer? Email <a class="link" href="mailto:nithyncj@gmail.com">nithyncj@gmail.com</a>.</p>
+      </div>
       <div class="legal faq">
         <details>
           <summary>What is an AI skill?</summary>
@@ -760,7 +854,7 @@
         </details>
         <details>
           <summary>Can I use the skills for my team or for clients?</summary>
-          <div class="lt"><p>Yes, on your own work, your employer's work or a client's work. One licence covers one person. For a team licence or a custom version, message Nithyn on LinkedIn.</p></div>
+          <div class="lt"><p>Yes, on your own work, your employer's work or a client's work. One licence covers one person. A team licence covers 5 people for <span data-price="team"></span> during the founding period. For a bigger team or a custom version, message Nithyn on LinkedIn.</p></div>
         </details>
         <details>
           <summary>Can I read or change the skill instructions?</summary>
@@ -770,6 +864,7 @@
           <summary>Something isn't working. What do I do?</summary>
           <div class="lt"><p>Email <a href="mailto:nithyncj@gmail.com">nithyncj@gmail.com</a> or use the <a href="https://github.com/nithyncj-cell/ai-uxr-stack/issues/new/choose" target="_blank" rel="noopener">skill feedback form</a> on GitHub. Please don't share participant data or confidential transcripts.</p></div>
         </details>
+      </div>
       </div>
     </div>
   </section>
@@ -813,7 +908,7 @@
     <details class="tp" id="legal">
       <summary>Terms and policies</summary>
       <div class="tp-body">
-        <p class="copy-14 muted">Last updated 31 October 2026. Plain-English terms; the bold headings are part of the terms.</p>
+        <p class="copy-14 muted">Last updated 3 November 2026. Plain-English terms; the bold headings are part of the terms.</p>
 
           <div class="tp-part" id="legal-licence"><h3 class="h-16">Skill Licence Terms</h3>
             <div class="lt">
@@ -827,7 +922,7 @@
               <p><b>8. No warranty.</b> To the extent the law allows, skills are provided as they are, without any warranty that they will be error-free or suit a particular purpose.</p>
               <p><b>9. Limit of liability.</b> To the extent the law allows, Nithyn is not liable for indirect or consequential loss, lost profits or lost data. Nithyn's total liability for any claim about a skill is limited to the amount you paid for that skill. For a free download, that amount is zero. Nothing in these terms limits liability that cannot be limited by law.</p>
               <p><b>10. Free skills.</b> The UXR Transcript Collator, Collation Sorter and Stop AI Slop are free to download after you give your email address. These terms apply to them in full. If Nithyn ever starts charging for a free skill, copies you already downloaded stay licensed to you.</p>
-              <p><b>11. Updates and new skills.</b> If you buy a pack or the full stack, for 12 months from your purchase you get every update to the skills you bought and every new skill Nithyn adds to the AI UXR Stack, at no extra cost. If you buy a single skill, you get updates to that skill for 12 months. After 12 months you keep the versions you have; later updates and new skills may be sold separately or through an optional yearly renewal. Nithyn may update, replace or retire any skill. Every update and new skill you receive is covered by these terms.</p>
+              <p><b>11. Updates and new skills.</b> If you buy a pack or the full stack, for 12 months from your purchase you get every update to the skills you bought and every new skill Nithyn adds to the AI UXR Stack, at no extra cost. If you buy a single skill, you get updates to that skill for 12 months. If you buy the full stack at the founding price, you get these updates and new skills for as long as Nithyn publishes them, instead of for 12 months. After 12 months you keep the versions you have; later updates and new skills may be sold separately or through an optional yearly renewal. Nithyn may update, replace or retire any skill. Every update and new skill you receive is covered by these terms.</p>
               <p><b>12. Ending the licence.</b> Your licence ends automatically if you break these terms. When it ends, you must delete every copy of the skill you hold.</p>
               <p><b>13. Changes to these terms.</b> Nithyn may change these terms. The version shown on this page on the day you download a skill applies to that download.</p>
               <p><b>14. Law and disputes.</b> These terms are governed by the laws of India. The courts at Bengaluru, Karnataka have exclusive jurisdiction, without affecting any consumer rights you have where you live.</p>
@@ -892,8 +987,9 @@
     skills: { "research-plan-creator": [1299, 25], "report-builder": [1299, 25],
               "quant-analyst": [999, 19], "diagnostic-partner": [999, 19], "research-driven-prototype": [999, 19], "case-study-builder": [999, 19],
               "question-zero": [999, 19], "collated-synth": [999, 19], "stakeholder-panel": [699, 12] },
-    packs: { starter: [2299, 45], scope: [2499, 49], collate: [999, 19], analysis: [1999, 39], influence: [1299, 25], career: [999, 19] },
-    stack: { founding: [4999, 99], regular: [7999, 149] },
+    packs: { starter: [2299, 45], scope: [2499, 49], collate: [999, 19], analysis: [1799, 35], influence: [1299, 25], career: [999, 19] },
+    stack: { founding: [4999, 99], regular: [6499, 129] },
+    team: [14999, 299],   // team licence, 5 people, founding period
   };
   // The starter pack: the four skills most studies need, from plan to report.
   // The starter pack: the paid skills most studies need, on top of the three free ones.
@@ -1206,11 +1302,11 @@
   document.getElementById("singles").innerHTML = Object.keys(PRICES.skills)
     .sort((a, b) => PRICES.skills[b][1] - PRICES.skills[a][1] || byId[a].name.localeCompare(byId[b].name))
     .map((id) => `
-    <li>
+    <li><label>
+      <input type="checkbox" value="${id}">
       <span><b>${byId[id].name}</b><span class="pick-in">${PACKS.find((p) => p.skills.some((s) => s.id === id)).name}</span></span>
       <span class="pp" data-price="skill" data-skill="${id}"></span>
-      <a class="btn sm" href="${LINKEDIN}" target="_blank" rel="noopener" data-buy="${byId[id].name}">Buy</a>
-    </li>`).join("");
+    </label></li>`).join("");
 
   // ---- free period ----
   if (!freeActive) document.querySelectorAll("[data-free-only]").forEach((el) => { el.hidden = true; });
@@ -1255,7 +1351,8 @@
     document.querySelector('[data-price="stack"]').innerHTML = both(P.stack.founding);
     document.querySelector('[data-price="stack-regular"]').innerHTML = bothPlain(P.stack.regular);
     document.querySelector('[data-price="stack-save"]').textContent = save(P.stack.founding, all) + "% less than buying each skill on its own.";
-    document.querySelector('[data-price="stack-note"]').textContent = `Founding price for the first 100 buyers or the first 30 days. Then ${bothPlain(P.stack.regular)}.`;
+    document.querySelectorAll('[data-price="team"]').forEach((el) => { el.textContent = bothPlain(P.team); });
+    document.querySelector('[data-price="stack-note"]').textContent = `Founding price for the first 100 buyers or the first 30 days, with lifetime updates. Then ${bothPlain(P.stack.regular)}.`;
   }
   applyPrices();
 
@@ -1279,8 +1376,33 @@
     buy.dataset.buy = picks.map((p) => p.name).join(" + ");
   }
   pickBox.addEventListener("change", updatePick);
+  const oneBox = document.getElementById("singles");
+  function updateOne() {
+    const ids = [...oneBox.querySelectorAll("input:checked")].map((i) => i.value);
+    const none = document.getElementById("one-none"), sum = document.getElementById("one-sum"), tip = document.getElementById("one-tip"), buy = document.getElementById("one-buy");
+    none.hidden = ids.length > 0; sum.hidden = ids.length === 0; tip.hidden = true;
+    buy.classList.toggle("brand", ids.length > 0); buy.setAttribute("aria-disabled", String(ids.length === 0));
+    if (!ids.length) { buy.dataset.buy = "Single skills"; return; }
+    const total = ids.reduce((a, id) => [a[0] + PRICES.skills[id][0], a[1] + PRICES.skills[id][1]], [0, 0]);
+    document.getElementById("one-price").innerHTML = both(total);
+    document.getElementById("one-note").textContent = `${ids.length} skill${ids.length > 1 ? "s" : ""}`;
+    const cmp = (x) => (INDIA ? x[0] <= total[0] : x[1] <= total[1]);
+    // Point to a cheaper way to get the same skills: the full stack, or one pack that holds them all.
+    const pack = PICKABLE.filter((p) => ids.every((id) => p.ids.includes(id)) && cmp(PRICES.packs[p.key]) && ids.length > 1)
+      .sort((x, y) => PRICES.packs[x.key][1] - PRICES.packs[y.key][1])[0];
+    if (cmp(PRICES.stack.founding)) { tip.hidden = false; tip.textContent = `The full stack costs less: ${bothPlain(PRICES.stack.founding)} for all 12 skills.`; }
+    else if (pack) { tip.hidden = false; tip.textContent = `The ${pack.name} costs less: ${bothPlain(PRICES.packs[pack.key])}, with these skills in it.`; }
+    buy.dataset.buy = ids.map((id) => byId[id].name).join(" + ");
+  }
+  oneBox.addEventListener("change", updateOne);
+  document.getElementById("one-buy").addEventListener("click", (e) => { if (!oneBox.querySelector("input:checked")) { e.preventDefault(); e.stopImmediatePropagation(); document.getElementById("one-none").textContent = "Tick at least one skill first."; } }, true);
+  updateOne();
   document.getElementById("pick-buy").addEventListener("click", (e) => { if (!pickBox.querySelector("input:checked")) { e.preventDefault(); e.stopImmediatePropagation(); document.getElementById("pick-none").textContent = "Tick at least one pack first."; } }, true);
   updatePick();
+
+  // ---- phone menu closes after a link is chosen ----
+  document.querySelectorAll(".mnav nav a").forEach((a) => a.addEventListener("click", () => { a.closest("details").open = false; }));
+  document.addEventListener("click", (e) => { const m = document.querySelector(".mnav[open]"); if (m && !m.contains(e.target)) m.open = false; });
 
   // ---- sticky header gets a hairline once the page scrolls ----
   const hdr = document.getElementById("hdr");
