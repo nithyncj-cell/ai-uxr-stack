@@ -185,37 +185,93 @@
     display: grid; place-items: center; font: 500 12px/1 var(--mono); color: var(--gray-1000); }
   .steps b { color: var(--gray-1000); font-weight: 500; }
 
-  /* skills: pack cards, two per row; each expands in place */
-  .packs { margin-top: var(--s12); display: grid; gap: var(--s6); align-items: stretch; }
-  @media (min-width: 900px) { .packs { grid-template-columns: 1fr 1fr; } }
-  .pack { border: 1px solid var(--border-strong); border-radius: var(--r-lg); padding: var(--s8); display: flex; flex-direction: column; gap: var(--s6); }
-  .pack-foot { margin-top: auto; }
-  .pack-top { display: grid; grid-template-columns: 1fr 96px; gap: var(--s4); align-items: start; }
-  .pack-top p { margin-top: var(--s1); }
-  .pack-icon { width: 96px; height: 96px; will-change: transform; }
-  .sk { list-style: none; margin: 0; padding: 0; }
-  .sk > li { display: grid; grid-template-columns: 12px 1fr auto; gap: var(--s3); align-items: start; padding-block: var(--s3); }
-  .sk > li + li { border-top: 1px solid var(--border); }
-  .sk > li:first-child { padding-top: 0; }
-  .sk > li:last-child { padding-bottom: 0; }
-  .blob { width: 12px; height: 12px; margin-top: 6px; border-radius: 60% 40% 55% 45% / 50% 60% 40% 50%;
+  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  .skip { position: absolute; left: var(--s4); top: -48px; z-index: 30; }
+  .skip:focus { top: var(--s3); }
+  .soon .link { color: var(--gray-1000); }
+
+  /* comparison: one plain table, rows split by hairlines, the stack column in primary text */
+  .cmp { width: 100%; margin-top: var(--s12); border-collapse: collapse; font-size: 15px; line-height: 24px; }
+  .cmp th, .cmp td { text-align: left; vertical-align: top; padding: var(--s4) var(--s6) var(--s4) 0; }
+  .cmp tbody tr { border-top: 1px solid var(--border); }
+  .cmp thead th { padding-top: 0; font: 600 16px/24px var(--sans); letter-spacing: -0.02em; }
+  .cmp thead th:last-child { color: var(--brand-hover); }
+  .cmp tbody th { width: 18%; font-weight: 500; color: var(--gray-1000); }
+  .cmp td { color: var(--gray-900); }
+  .cmp td:last-child { color: var(--gray-1000); }
+  .cmp tbody tr:last-child > * { padding-bottom: 0; }
+  @media (max-width: 719px) {
+    .cmp, .cmp tbody, .cmp tr, .cmp th, .cmp td { display: block; width: auto; }
+    .cmp thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+    .cmp tbody tr { padding-block: var(--s5); }
+    .cmp tbody tr:first-child { border-top: 0; padding-top: 0; }
+    .cmp tbody tr:last-child { padding-bottom: 0; }
+    .cmp tbody th { width: auto; padding: 0 0 var(--s2); }
+    .cmp td { display: grid; grid-template-columns: 104px 1fr; gap: var(--s3); padding: var(--s1) 0; }
+    .cmp td::before { content: attr(data-label); font-size: 13px; line-height: 24px; color: var(--gray-700); }
+  }
+  .newbie { margin-top: var(--s16); }
+  @media (min-width: 900px) { .newbie { margin-top: var(--s24); } }
+  .points.three { }
+  @media (min-width: 900px) { .newbie .points { grid-template-columns: repeat(3, 1fr); } }
+
+  /* skills: five pack cards; a card flips over and spans the row to show its skills */
+  .packs { margin-top: var(--s12); display: grid; gap: var(--s4); grid-auto-flow: row dense; perspective: 1600px; }
+  @media (min-width: 640px) { .packs { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  @media (min-width: 1000px) { .packs { grid-template-columns: repeat(5, minmax(0, 1fr)); } }
+  .pack { position: relative; border: 1px solid var(--border-strong); border-radius: var(--r-lg); transition: border-color .2s ease; }
+  .pack:not(.open):hover { border-color: color-mix(in srgb, var(--c) 60%, transparent); }
+  .pack.open { grid-column: 1 / -1; border-color: color-mix(in srgb, var(--c) 45%, transparent); }
+  .pack-front { appearance: none; width: 100%; height: 100%; margin: 0; padding: var(--s6); border: 0; border-radius: inherit; background: none;
+    color: inherit; font: inherit; text-align: left; cursor: pointer; touch-action: manipulation;
+    display: grid; grid-template-columns: 64px 1fr; grid-template-rows: auto auto 1fr auto; column-gap: var(--s4); row-gap: var(--s1); align-items: start; }
+  .pack-front > * { display: block; }
+  .pack-front .pack-icon { grid-row: 1 / span 4; width: 64px; height: 64px; will-change: transform; }
+  .pf-name { font: 600 20px/28px var(--sans); letter-spacing: -0.02em; }
+  .pf-pain { font-size: 14px; line-height: 20px; color: var(--gray-900); }
+  .pf-meta { margin-top: var(--s3); font: 500 13px/20px var(--mono); color: var(--gray-900); }
+  .pf-meta .cur2 { margin-left: var(--s1); }
+  .pf-price { display: block; color: var(--gray-1000); }
+  .pf-open { margin-top: var(--s3); display: inline-flex !important; align-items: center; gap: var(--s1); font-size: 14px; line-height: 20px; font-weight: 500; }
+  .pf-open::after { content: ""; width: 14px; height: 14px; transition: transform .2s ease;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%23ededed' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 8h10M9 4l4 4-4 4'/%3E%3C/svg%3E") center/14px no-repeat; }
+  .pack-front:hover .pf-open::after { transform: translateX(3px); }
+  @media (min-width: 640px) {
+    .pack-front { grid-template-columns: 1fr; grid-template-rows: auto; row-gap: var(--s1); }
+    .pack-front .pack-icon { grid-row: auto; width: 88px; height: 88px; margin-bottom: var(--s4); }
+    .pf-meta { margin-top: auto; padding-top: var(--s4); }
+  }
+  .pack-back { padding: var(--s6); }
+  @media (min-width: 900px) { .pack-back { padding: var(--s10) var(--s12) var(--s12); } }
+  .pb-head { display: grid; grid-template-columns: 56px 1fr auto; gap: var(--s4); align-items: center; }
+  .pb-head img { width: 56px; height: 56px; }
+  @media (max-width: 639px) { .pack-back { position: relative; } .pb-head { grid-template-columns: 56px 1fr; padding-right: 64px; } .pb-close { position: absolute; top: var(--s4); right: var(--s4); } }
+  @media (min-width: 900px) { .pb-head { grid-template-columns: 80px 1fr auto; gap: var(--s6); } .pb-head img { width: 80px; height: 80px; } }
+  .pb-head h3:focus { outline: none; }
+  .pb-head p { margin-top: var(--s1); }
+  .pb-skills { list-style: none; margin: var(--s10) 0 0; padding: 0; display: grid; gap: var(--s10) var(--s12); }
+  @media (min-width: 900px) { .pb-skills { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); } }
+  .pbs-top { display: grid; grid-template-columns: 12px 1fr; column-gap: var(--s3); row-gap: var(--s1); align-items: center; }
+  .pbs.bonus .pbs-top { grid-template-columns: 32px 1fr; }
+  .pbs-top .sp { grid-column: 2; font: 500 13px/20px var(--mono); }
+  .pbs-top .bonus-tag { font-family: var(--sans); }
+  .pbs-top .sp .cur2 { margin-left: var(--s1); }
+  .blob { width: 12px; height: 12px; border-radius: 60% 40% 55% 45% / 50% 60% 40% 50%;
     background: radial-gradient(circle at 35% 30%, color-mix(in srgb, var(--c) 40%, #fff), var(--c) 70%); }
-  .sk .sp { font: 500 14px/24px var(--mono); white-space: nowrap; text-align: right; }
-  .sk .sp s { color: var(--gray-700); margin-right: var(--s2); }
-  .sk-desc { display: none; }
-  .sk > li.bonus { grid-template-columns: 40px 1fr auto; }
-  .bonus-icon { width: 40px; height: 40px; margin-top: -8px; will-change: transform; }
-  .bonus-tag { font: 500 13px/24px var(--sans); color: var(--gray-1000); white-space: normal; }
-  .pack.open .sk-desc { display: block; margin-top: var(--s1); }
-  .pack-foot { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--s3); }
-  .pack-buy { display: flex; align-items: baseline; gap: var(--s2); }
+  .bonus-icon { width: 32px; height: 32px; will-change: transform; }
+  .bonus-tag { font: 500 13px/20px var(--sans); color: var(--gray-1000); white-space: normal; }
+  .pbs-more { margin-top: var(--s3); font-size: 15px; line-height: 24px; color: var(--gray-1000); }
+  .pbs-dl { margin: var(--s5) 0 0; display: grid; gap: var(--s3); }
+  .pbs-dl dt { font-size: 13px; line-height: 20px; color: var(--gray-700); }
+  .pbs-dl dd { margin: 0; font-size: 14px; line-height: 22px; color: var(--gray-900); }
+  .pbs-dl div:last-child dd { color: var(--gray-1000); }
+  .pb-foot { margin-top: var(--s10); padding-top: var(--s6); border-top: 1px solid var(--border);
+    display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--s4); }
+  .pack-buy { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--s2) var(--s3); }
   .pack-buy .pp { font: 500 20px/28px var(--mono); }
+  .pack-buy .was { font-size: 14px; }
   .pack-actions { display: flex; flex-wrap: wrap; gap: var(--s2); }
-  .toggle { display: inline-flex; align-items: center; gap: var(--s1); }
-  .toggle::after { content: ""; width: 12px; height: 12px; transition: transform .2s ease;
-    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' fill='none' stroke='%23ededed' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 4.5l3 3 3-3'/%3E%3C/svg%3E") center/12px no-repeat; }
-  .pack.open .toggle::after { transform: rotate(180deg); }
-  .more { margin-top: var(--s2); }
+  .more { margin-top: var(--s4); }
   .more summary { display: inline-flex; align-items: center; gap: var(--s1); list-style: none; cursor: pointer; font-size: 14px; line-height: 20px; color: var(--gray-900); }
   .more summary::-webkit-details-marker { display: none; }
   .more summary::after { content: ""; width: 12px; height: 12px; transition: transform .2s ease;
@@ -223,7 +279,6 @@
   .more[open] summary::after { transform: rotate(180deg); }
   .more summary:hover { color: var(--gray-1000); }
   .more ul { margin: var(--s2) 0 0; padding-left: var(--s4); display: grid; gap: var(--s1); color: var(--gray-900); font-size: 14px; line-height: 20px; }
-  @keyframes flash { 0%, 40% { box-shadow: inset 2px 0 0 var(--brand); } 100% { box-shadow: inset 2px 0 0 transparent; } }
 
   /* pricing: one highlighted card, plain list beside it */
   .ph { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: var(--s4); }
@@ -292,13 +347,17 @@
   .credits a { color: var(--gray-900); }
 
   .robot { margin-top: var(--s4); min-height: 65px; }
-  .also { list-style: none; margin: var(--s6) 0 0; padding: 0; }
-  .also > li { display: grid; grid-template-columns: 1fr auto; gap: var(--s1) var(--s4); align-items: center; padding-block: var(--s4); }
+  .also { list-style: none; margin: 0; padding: 0; }
+  .also > li { display: grid; grid-template-columns: 48px 1fr; gap: var(--s2) var(--s4); align-items: start; padding-block: var(--s5); }
+  .also > li > img { width: 48px; height: 48px; grid-row: span 2; }
+  .also > li > .dl { grid-column: 2; margin-top: 0; }
+  @media (min-width: 640px) { .also > li { grid-template-columns: 48px 1fr auto; align-items: center; } .also > li > img { grid-row: auto; } .also > li > .dl { grid-column: auto; } }
+  .also > li:first-child { padding-top: 0; }
   .also > li + li { border-top: 1px solid var(--border); }
   .also > li:last-child { padding-bottom: 0; }
   .also > li > .status { grid-column: 1 / -1; margin-top: 0; min-height: 0; }
+  @media (min-width: 640px) { .also > li > .status { grid-column: 2 / -1; } }
   .also > li > .status:empty { display: none; }
-  .also { border-top: 1px solid var(--border); }
   .gate-email { margin-top: var(--s6); }
   .gate-email .field:first-child { margin-top: 0; }
   /* waitlist pop-up */
@@ -319,31 +378,11 @@
   .hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
   .modal .agree { margin-top: var(--s5); }
   .modal-actions { display: flex; justify-content: flex-end; gap: var(--s3); margin-top: var(--s6); }
-  /* Collator block: hero, proof and download read as one story, joined by a thin gradient thread */
-  .chapter section { border-top: 0; padding-block: 0; }
-  .chapter > section > .wrap { padding-block: var(--s8) var(--s12); }
-  .chapter > #free > .wrap { padding-bottom: var(--s16); }
-  @media (min-width: 900px) {
-    .chapter > section > .wrap { padding-block: var(--s8) var(--s16); }
-    .chapter > #free > .wrap { padding-bottom: var(--s24); }
-    .chapter .hero { padding-bottom: var(--s12); }
-  }
-  @media (min-width: 720px) {
-    .chapter > .wrap, .chapter > section > .wrap { position: relative; }
-    .chapter > .wrap::before, .chapter > section > .wrap::before { content: ""; position: absolute; left: 12px; top: 0; bottom: 0; width: 1px;
-      background: linear-gradient(180deg, rgba(41,151,255,.55), rgba(191,90,242,.45)); }
-    .chapter > #why > .wrap::before { background: linear-gradient(180deg, rgba(191,90,242,.45), rgba(255,55,95,.4)); }
-    .chapter > #free > .wrap::before { background: linear-gradient(180deg, rgba(255,55,95,.4), rgba(255,159,10,.45) 60%, transparent); }
-    .chapter > .wrap:first-child::before { top: var(--node-y, 0px); }
-    /* a node on the thread beside each heading */
-    .chapter > .wrap::after, .chapter > section > .wrap::after { content: ""; position: absolute; left: 8px; width: 9px; height: 9px;
-      top: var(--node-y, 0px); border-radius: 50%; background: var(--bg); border: 2px solid var(--brand); box-sizing: border-box; }
-
-  }
   @media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; transition: none !important; animation: none !important; } }
 </style>
 </head>
 <body>
+<a class="btn brand sm skip" href="#top">Skip to content</a>
 
 <header class="hdr" id="hdr">
   <div class="wrap">
@@ -359,33 +398,74 @@
     </a>
     <nav class="nav" aria-label="Sections">
       <a href="#skills">Skills</a>
+      <a href="#different">How it's different</a>
+      <a href="#free" data-free-only>Free skills</a>
       <a href="#pricing">Pricing</a>
       <a href="#faq">Questions</a>
-      <a href="#free" data-free-only>Free skills</a>
     </nav>
-    <a class="btn brand sm" href="#free" data-free-only>Get the Collator free</a>
+    <a class="btn brand sm" href="#skills">See the 12 skills</a>
   </div>
 </header>
 
 <main id="top">
-  <div class="chapter">
   <div class="wrap hero">
     <div>
-      <h1 class="h-72">Ten interviews to one notesheet, the same day.</h1>
-      <p class="lede copy-18 muted">Collating transcripts by hand takes days, and a summary loses the exact words. The Collator fills your notesheet row by row.</p>
+      <h1 class="h-72">Claude skills for every step of a UX study.</h1>
+      <p class="lede copy-18 muted">The AI UXR Stack is 12 Claude skills built and tested by a UX researcher. Each one runs a research method from start to finish: scoping, planning, collating, synthesis, analysis, reporting and sharing.</p>
       <ul class="why-list">
-        <li>Mapped to your discussion guide</li>
-        <li>Verbatim quote and timestamp on every row</li>
-        <li><span>Writes <span class="missing">missing</span> instead of guessing</span></li>
+        <li>No prompt writing. You ask in plain words.</li>
+        <li>Every quote and number traces back to your files.</li>
+        <li>Each skill hands its output to the next.</li>
       </ul>
       <div class="actions">
-        <a class="btn brand lg" href="#free" data-free-only>Get the Collator free</a>
-        <a class="btn lg" href="#pricing">See pricing for all skills</a>
+        <a class="btn brand lg" href="#skills">See the 12 skills</a>
+        <a class="btn lg" href="#different">How it's different</a>
       </div>
-      <p class="soon copy-14 muted">Free forever, along with Collation Sorter and Stop AI Slop. Paid packs are coming soon.</p>
+      <p class="soon copy-14 muted"><a class="link" href="#free" data-free-only>3 skills are free for good.</a> Paid packs open soon.</p>
     </div>
     <figure class="stackfig"><div class="stackviz" role="img" aria-label="Five stacked cards, one per pack: Scope, Collate, Analyse, Influence and Career."><div class="iso" id="iso"></div></div></figure>
   </div>
+
+  <section id="different" aria-labelledby="different-title">
+    <div class="wrap">
+      <div class="sh">
+        <h2 class="h-40" id="different-title">How it's different from NotebookLM or plain Claude</h2>
+        <p class="copy-18 muted">Both are good tools. Both leave the research method to you. The stack builds the method in.</p>
+      </div>
+      <table class="cmp">
+        <thead><tr><th scope="col"><span class="sr">Compare</span></th><th scope="col">NotebookLM</th><th scope="col">Claude with your own prompts</th><th scope="col">AI UXR Stack</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">Best for</th><td data-label="NotebookLM"><span>Asking questions of a set of documents</span></td><td data-label="Claude with your own prompts"><span>One-off tasks you can describe well</span></td><td data-label="AI UXR Stack"><span>Running each step of a study the same careful way</span></td></tr>
+          <tr><th scope="row">Research method</th><td data-label="NotebookLM"><span>You decide what to ask, one question at a time</span></td><td data-label="Claude with your own prompts"><span>As good as the prompt you write</span></td><td data-label="AI UXR Stack"><span>Built in. Each skill works in stages and asks for what it needs.</span></td></tr>
+          <tr><th scope="row">Quotes &amp; numbers</th><td data-label="NotebookLM"><span>Cited back to your sources</span></td><td data-label="Claude with your own prompts"><span>Kept exact only if your prompt insists</span></td><td data-label="AI UXR Stack"><span>Kept verbatim with timestamps. Gaps are marked <span class="missing">missing</span>.</span></td></tr>
+          <tr><th scope="row">What you get</th><td data-label="NotebookLM"><span>Answers, summaries &amp; overviews</span></td><td data-label="Claude with your own prompts"><span>Whatever you ask for</span></td><td data-label="AI UXR Stack"><span>Research outputs: notesheets, plans, reports &amp; prototypes</span></td></tr>
+          <tr><th scope="row">What comes next</th><td data-label="NotebookLM"><span>You plan it</span></td><td data-label="Claude with your own prompts"><span>You plan it</span></td><td data-label="AI UXR Stack"><span>Each skill points you to the next one</span></td></tr>
+        </tbody>
+      </table>
+
+      <div class="newbie">
+        <div class="sh">
+          <h3 class="h-24">New to AI, or still on simple prompts? Start here.</h3>
+          <p class="copy-18 muted">Most researchers start with a quick prompt, then fix the answer by hand. A skill keeps the plain words and adds the method, so you spend less time rewriting what comes back.</p>
+        </div>
+        <div class="points">
+          <div><h4 class="h-20">Ask the way you talk</h4><p class="muted">Type “collate my transcripts” or “plan a study on checkout”. There are no prompt templates to learn.</p></div>
+          <div><h4 class="h-20">It asks before it starts</h4><p class="muted">Each skill says what it does, then asks what you already have: a brief, a guide, transcripts or data.</p></div>
+          <div><h4 class="h-20">You stay the researcher</h4><p class="muted">It shows where every claim comes from and leaves the judgement calls to you.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="skills" aria-labelledby="skills-title">
+    <div class="wrap">
+      <div class="sh">
+        <h2 class="h-40" id="skills-title">12 skills in 5 packs</h2>
+        <p class="copy-18 muted">Each pack covers one stage of a study. Open a pack to see what each skill does, when to use it and what you get.</p>
+      </div>
+      <div class="packs" id="packlist"></div>
+    </div>
+  </section>
 
   <section id="why" aria-labelledby="why-title">
     <div class="wrap">
@@ -393,7 +473,7 @@
         <h2 class="h-40" id="why-title">Built so you can check every claim.</h2>
         <p class="copy-18 muted">Every skill follows four rules, so you can trace each output back to your own files.</p>
       </div>
-      <div class="points">
+      <div class="points two">
         <div><h3 class="h-20">Evidence stays verbatim</h3><p class="muted">Quotes, timestamps and numbers come straight from your files. Anything missing is marked <span class="missing">missing</span>.</p></div>
         <div><h3 class="h-20">It asks before it acts</h3><p class="muted">Each skill says what it does, then asks what you already have before doing any work.</p></div>
         <div><h3 class="h-20">Your data stays yours</h3><p class="muted">Skills run inside your Claude account and send nothing to Nithyn. If a file hides instructions, the skill points them out to you.</p></div>
@@ -405,44 +485,37 @@
   <section id="free" aria-labelledby="free-title" data-free-only>
     <div class="wrap">
       <div class="sh">
-        <h2 class="h-40" id="free-title">Get the Collator free, for good.</h2>
-        <p class="copy-18 muted">Enter your email once and download. Collation Sorter and Stop AI Slop are free too.</p>
+        <h2 class="h-40" id="free-title">Try 3 skills free</h2>
+        <p class="copy-18 muted">Free for good. Enter your email once, then download.</p>
       </div>
       <div class="offer">
         <div>
-          <div class="offer-h">
-            <img src="assets/icons/hd/pack-collate.webp" alt="" width="64" height="64">
-            <h3 class="h-24">UXR Transcript Collator</h3>
-          </div>
-          <div class="price-line"><span class="now">Free</span></div>
-          <ul class="ticks">
-            <li>Maps every transcript to your themes in one notesheet.</li>
-            <li>Keeps the verbatim quote and timestamp on every row.</li>
-            <li><span>Writes <span class="missing">missing</span> instead of guessing.</span></li>
+          <ul class="also">
+            <li><img src="assets/icons/hd/transcript-collator.webp" alt="" width="48" height="48" loading="lazy">
+              <div><h3 class="h-16">Transcript Collator</h3><p class="copy-14 muted">Turns raw transcripts into one theme-tagged notesheet, with a verbatim quote and timestamp on every row.</p></div>
+              <div class="dl">
+                <button class="btn sm brand" type="button" data-skill="collator" data-kind="zip">
+                  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 2.5v8"/><path d="M4.5 7L8 10.5 11.5 7"/><path d="M3 13.5h10"/></svg>
+                  Download .zip</button>
+                <button class="btn sm" type="button" data-skill="collator" data-kind="md">.md</button>
+              </div>
+              <p class="status" id="status-collator" role="status" aria-live="polite"></p></li>
+            <li><img src="assets/icons/hd/collation-sorter.webp" alt="" width="48" height="48" loading="lazy">
+              <div><h3 class="h-16">Collation Sorter</h3><p class="copy-14 muted">Sorts your collated sheet by theme and by participant in two new tabs.</p></div>
+              <div class="dl"><button class="btn sm" type="button" data-skill="sorter" data-kind="zip">Download .zip</button></div>
+              <p class="status" id="status-sorter" role="status" aria-live="polite"></p></li>
+            <li><img src="assets/icons/hd/stop-ai-slop.webp" alt="" width="48" height="48" loading="lazy">
+              <div><h3 class="h-16">Stop AI Slop</h3><p class="copy-14 muted">A final editing pass that strips AI-writing tells from anything you send.</p></div>
+              <div class="dl"><button class="btn sm" type="button" data-skill="slop" data-kind="zip">Download .zip</button></div>
+              <p class="status" id="status-slop" role="status" aria-live="polite"></p></li>
           </ul>
           <label class="agree"><input type="checkbox" id="agree"> <span>I agree to the <a class="link" href="#legal-licence" data-legal>Skill Licence Terms</a>.</span></label>
           <div class="robot" id="robot-dl" hidden></div>
-          <div class="dl">
-            <button class="btn brand" type="button" data-skill="collator" data-kind="zip">
-              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 2.5v8"/><path d="M4.5 7L8 10.5 11.5 7"/><path d="M3 13.5h10"/></svg>
-              Download for Claude (.zip)
-            </button>
-            <button class="btn" type="button" data-skill="collator" data-kind="md">Download .md</button>
-          </div>
           <div class="gate-email" id="gate-free" hidden>
-            <label class="field"><span>Your email</span><input type="email" id="free-email" autocomplete="email" maxlength="254" placeholder="you@company.com"></label>
+            <label class="field"><span>Your email</span><input type="email" id="free-email" name="email" autocomplete="email" maxlength="254" placeholder="you@company.com"></label>
             <label class="agree"><input type="checkbox" id="free-optin"> <span>Also email me when skills are updated or new ones come out.</span></label>
             <div class="dl"><button class="btn brand" type="button" id="free-go">Continue to download</button></div>
           </div>
-          <p class="status" id="status-collator" role="status" aria-live="polite"></p>
-          <ul class="also">
-            <li><div><h4 class="h-16">Collation Sorter</h4><p class="copy-14 muted">Sorts your collated sheet by theme and by participant in two new tabs.</p></div>
-              <button class="btn sm" type="button" data-skill="sorter" data-kind="zip">Download (.zip)</button>
-              <p class="status" id="status-sorter" role="status" aria-live="polite"></p></li>
-            <li><div><h4 class="h-16">Stop AI Slop</h4><p class="copy-14 muted">A final editing pass that strips AI-writing tells from anything you send.</p></div>
-              <button class="btn sm" type="button" data-skill="slop" data-kind="zip">Download (.zip)</button>
-              <p class="status" id="status-slop" role="status" aria-live="polite"></p></li>
-          </ul>
           <p class="terms">Licensed for your own research. Sharing, reselling or rebuilding them is not allowed.</p>
         </div>
         <div>
@@ -450,14 +523,12 @@
           <ol class="steps">
             <li><span>In Claude, open <b>Settings → Capabilities</b> and turn on <b>Code execution and file creation</b>.</span></li>
             <li><span>Open <b>Customize → Skills → + → Create skill → Upload a skill</b> and pick the zip.</span></li>
-            <li><span>Start a chat and type <code>collate my transcripts</code>.</span></li>
+            <li><span>Start a chat and ask for the job, for example <code>collate my transcripts</code>.</span></li>
           </ol>
         </div>
       </div>
     </div>
   </section>
-
-  </div>
 
   <section id="shoutout" aria-labelledby="shoutout-title">
     <div class="wrap">
@@ -471,16 +542,6 @@
           <a class="btn" href="https://uxrstrategist.com/aibundle/" target="_blank" rel="noopener">See the UXR AI Bundle</a>
         </div>
       </div>
-    </div>
-  </section>
-
-  <section id="skills" aria-labelledby="skills-title">
-    <div class="wrap">
-      <div class="sh">
-        <h2 class="h-40" id="skills-title">One skill for each slow step.</h2>
-        <p class="copy-18 muted">Five packs, from scoping a study to writing it up for your portfolio. Each skill hands its output to the next.</p>
-      </div>
-      <div class="packs" id="packlist"></div>
     </div>
   </section>
 
@@ -523,6 +584,10 @@
         <details>
           <summary>What do these skills do?</summary>
           <div class="lt"><p>There are 12 skills, one for each slow step of a study: scoping it, planning it, collating transcripts, reading them for contradictions, running the numbers, building the report, turning findings into a prototype, testing the work against stakeholder objections, and writing it up as a case study. Each skill hands its output to the next, so you can use one on its own or chain them.</p></div>
+        </details>
+        <details>
+          <summary>How is this different from NotebookLM?</summary>
+          <div class="lt"><p>NotebookLM answers questions about the sources you upload. The stack runs research methods: it scopes, collates, synthesises, analyses and reports in set stages, and keeps every quote verbatim. See <a class="link" href="#different">How it's different</a>.</p></div>
         </details>
         <details>
           <summary>Do I need to code?</summary>
@@ -728,7 +793,7 @@
           n: "A stakeholder-ready plan from the raw notes, versioned every time scope or stakeholders change.",
           hood: ["Tests every objective against SMART criteria before the plan is written.", "Ranks hypotheses and lays method options side by side.", "Adds a pre-mortem, a recall-bias register and a phased timeline with debrief slots.", "Knows all 12 skills in the stack and points you to the right next one.", "Reads your files as material, not commands: an instruction hidden in a transcript is flagged to you, not followed."] },
       ] },
-    { key: "collate", short: "Collate", name: "Transcript Collator pack", icon: "rows", c: "var(--purple)", pain: "“Fieldwork's done. Now a week of retyping.”",
+    { key: "collate", short: "Collate", name: "Collate pack", icon: "rows", c: "var(--purple)", pain: "“Fieldwork's done. Now a week of retyping.”",
       skills: [
         { id: "transcript-collator", name: "Transcript Collator", icon: "chat", free: true,
           more: "Turns raw transcripts into one theme-tagged notesheet, with a verbatim quote and timestamp on every row.",
@@ -826,42 +891,104 @@
   const icon = (id, size) => `assets/icons/${size === "hd" ? "hd/" : ""}${id}.webp`;
   const GENERIC = /^(Knows all 12|Reads your files|Guards its own)/;
 
-  // ---- skills: one card per pack; the pack gets the 3D icon, its skills get a small blob ----
+  // ---- skills: five pack cards; opening one flips it over and spans the row ----
   const packIcon = (key) => `assets/icons/hd/pack-${key}.webp`;
+  const countLabel = (p) => { const paid = p.skills.filter((s) => !s.bonus).length; return `${paid} skill${paid === 1 ? "" : "s"}${p.skills.some((s) => s.bonus) ? " + bonus" : ""}`; };
+  const priceCell = (s) => s.bonus ? `<span class="bonus-tag">Bonus, free with this pack</span>` : FREE_IDS.includes(s.id) ? `<a class="link" href="#free">Free</a>` : `<span data-price="skill" data-skill="${s.id}"></span>`;
   document.getElementById("packlist").innerHTML = PACKS.map((p) => `
-    <article class="pack" id="pack-${p.key}" style="--c:${p.c}">
-      <div class="pack-top">
-        <div><h3 class="h-24">${p.name}</h3><p class="muted">${p.pain}</p></div>
-        <img class="pack-icon" src="${packIcon(p.key)}" alt="" width="96" height="96" loading="lazy" decoding="async">
-      </div>
-      <ul class="sk">${p.skills.map((s) => `
-        <li id="skill-${s.id}"${s.bonus ? ' class="bonus"' : ""}>${s.bonus ? `<img class="bonus-icon" src="assets/icons/hd/bonus.webp" alt="" width="40" height="40" loading="lazy">` : `<span class="blob" aria-hidden="true"></span>`}
-          <div>
-            <h4 class="h-16">${s.name}</h4>
-            <div class="sk-desc">
-              <p class="copy-14 muted">${s.more}</p>
-              <details class="more"><summary>How it's built</summary>
-                <ul>${s.hood.filter((h) => !GENERIC.test(h)).slice(0, 3).map((h) => `<li>${h}</li>`).join("")}<li>${s.stat}.</li></ul>
-              </details>
-            </div>
-          </div>
-          <div class="sp">${s.bonus ? `<span class="bonus-tag">Bonus, free with this pack</span>` : FREE_IDS.includes(s.id) ? `<a class="link" href="#free">Free</a>` : `<span data-price="skill" data-skill="${s.id}"></span>`}</div>
-        </li>`).join("")}
-      </ul>
-      <div class="pack-foot">
-        <div><div class="pack-buy"><span class="pp" data-price="pack" data-pack="${p.key}"></span>${p.single ? "" : `<s class="was" data-price="pack-list" data-pack="${p.key}"></s>`}</div><p class="copy-14 muted">Includes 12 months of updates and new skills.</p></div>
-        <div class="pack-actions">
-          <button class="btn sm toggle" type="button" aria-expanded="false" aria-controls="pack-${p.key}">Show details</button>
-          <a class="btn sm brand" href="${LINKEDIN}" target="_blank" rel="noopener" data-buy="${p.name}">Buy pack · coming soon</a>
+    <article class="pack" id="pack-${p.key}" style="--c:${p.c}" aria-label="${p.name}">
+      <button class="pack-front" type="button" aria-expanded="false" aria-controls="back-${p.key}">
+        <img class="pack-icon" src="${packIcon(p.key)}" alt="" width="88" height="88" loading="lazy" decoding="async">
+        <span class="pf-name">${p.name}</span>
+        <span class="pf-pain">${p.pain}</span>
+        <span class="pf-meta">${countLabel(p)}<span class="pf-price" data-price="pack" data-pack="${p.key}"></span></span>
+        <span class="pf-open">Open pack</span>
+      </button>
+      <div class="pack-back" id="back-${p.key}" hidden>
+        <div class="pb-head">
+          <img src="${packIcon(p.key)}" alt="" width="80" height="80" loading="lazy">
+          <div><h3 class="h-24" tabindex="-1">${p.name}</h3><p class="muted">${p.pain}</p></div>
+          <button class="btn sm pb-close" type="button" aria-label="Close ${p.name}">Close</button>
+        </div>
+        <ul class="pb-skills">${p.skills.map((s) => `
+          <li class="pbs${s.bonus ? " bonus" : ""}" id="skill-${s.id}">
+            <div class="pbs-top">${s.bonus ? `<img class="bonus-icon" src="assets/icons/hd/bonus.webp" alt="" width="32" height="32" loading="lazy">` : `<span class="blob" aria-hidden="true"></span>`}<h4 class="h-20">${s.name}</h4><span class="sp">${priceCell(s)}</span></div>
+            <p class="pbs-more">${s.more}</p>
+            <dl class="pbs-dl">
+              <div><dt>When to use it</dt><dd>${s.s}</dd></div>
+              <div><dt>The problem</dt><dd>${s.p}</dd></div>
+              <div><dt>What it costs you</dt><dd>${s.i}</dd></div>
+              <div><dt>What you get</dt><dd>${s.n}</dd></div>
+            </dl>
+            <details class="more"><summary>How it's built</summary>
+              <ul>${s.hood.filter((h) => !GENERIC.test(h)).slice(0, 3).map((h) => `<li>${h}</li>`).join("")}<li>${s.stat}.</li></ul>
+            </details>
+          </li>`).join("")}
+        </ul>
+        <div class="pb-foot">
+          <div><div class="pack-buy"><span class="pp" data-price="pack" data-pack="${p.key}"></span><s class="was" data-price="pack-list" data-pack="${p.key}"></s></div><p class="copy-14 muted">Includes 12 months of updates and new skills.</p></div>
+          <div class="pack-actions"><a class="btn brand" href="${LINKEDIN}" target="_blank" rel="noopener" data-buy="${p.name}">Buy pack · coming soon</a></div>
         </div>
       </div>
     </article>`).join("");
-  document.querySelectorAll(".pack .toggle").forEach((b) => b.addEventListener("click", () => {
-    const card = b.closest(".pack");
-    const open = card.classList.toggle("open");
-    b.setAttribute("aria-expanded", String(open));
-    b.textContent = open ? "Hide details" : "Show details";
-  }));
+
+  const packGrid = document.getElementById("packlist");
+  const packCards = [...packGrid.querySelectorAll(".pack")];
+  const reduceMotionPacks = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  function setOpen(card, open) {
+    card.classList.toggle("open", open);
+    card.querySelector(".pack-front").hidden = open;
+    card.querySelector(".pack-front").setAttribute("aria-expanded", String(open));
+    card.querySelector(".pack-back").hidden = !open;
+  }
+  // FLIP: note where every card is, change the layout, then slide each card from its old spot.
+  function relayout(change, target, opening) {
+    const G = window.gsap;
+    if (!G || reduceMotionPacks) { change(); return; }
+    G.killTweensOf(packCards); packCards.forEach((c) => G.set(c, { clearProps: "transform,opacity" }));
+    const first = new Map(packCards.map((c) => [c, c.getBoundingClientRect()]));
+    change();
+    packCards.forEach((c) => {
+      if (c === target) return;
+      const a = first.get(c), b = c.getBoundingClientRect();
+      const dx = a.left - b.left, dy = a.top - b.top;
+      if (Math.abs(dx) > 1 || Math.abs(dy) > 1) G.fromTo(c, { x: dx, y: dy }, { x: 0, y: 0, duration: 0.5, ease: "power3.inOut", clearProps: "transform" });
+    });
+    G.fromTo(target, { rotationY: opening ? -90 : 90, opacity: 0.2, transformPerspective: 1600 },
+      { rotationY: 0, opacity: 1, duration: opening ? 0.55 : 0.45, ease: "back.out(1.1)", clearProps: "transform,opacity" });
+  }
+  function openPack(key, opts = {}) {
+    const card = document.getElementById("pack-" + key);
+    if (!card || card.classList.contains("open")) { if (card && opts.scroll) card.scrollIntoView({ behavior: reduceMotionPacks ? "auto" : "smooth", block: "start" }); return; }
+    const G = window.gsap;
+    const go = () => {
+      relayout(() => { packCards.forEach((c) => setOpen(c, c === card)); }, card, true);
+      try { history.replaceState(null, "", "#pack-" + key); } catch (e) {}
+      if (opts.scroll !== false) card.scrollIntoView({ behavior: reduceMotionPacks || opts.instant ? "auto" : "smooth", block: "start" });
+      card.querySelector(".pack-back h3").focus({ preventScroll: true });
+    };
+    if (G && !reduceMotionPacks && !opts.instant) G.to(card, { rotationY: 90, transformPerspective: 1600, duration: 0.18, ease: "power2.in", onComplete: go });
+    else go();
+  }
+  function closePack(card) {
+    const G = window.gsap;
+    const go = () => {
+      relayout(() => setOpen(card, false), card, false);
+      try { history.replaceState(null, "", "#skills"); } catch (e) {}
+      card.querySelector(".pack-front").focus({ preventScroll: true });
+      const r = card.getBoundingClientRect();
+      if (r.top < 0 || r.top > window.innerHeight * 0.6) card.scrollIntoView({ behavior: reduceMotionPacks ? "auto" : "smooth", block: "center" });
+    };
+    if (G && !reduceMotionPacks) G.to(card, { rotationY: -90, transformPerspective: 1600, duration: 0.18, ease: "power2.in", onComplete: go });
+    else go();
+  }
+  packCards.forEach((card) => {
+    const key = card.id.slice(5);
+    card.querySelector(".pack-front").addEventListener("click", () => openPack(key));
+    card.querySelector(".pb-close").addEventListener("click", () => closePack(card));
+    card.addEventListener("keydown", (e) => { if (e.key === "Escape" && card.classList.contains("open")) closePack(card); });
+  });
+  if (location.hash.startsWith("#pack-")) requestAnimationFrame(() => openPack(location.hash.slice(6), { instant: true }));
 
   // ---- pack price list ----
   const byId = Object.fromEntries(PACKS.flatMap((p) => p.skills).map((s) => [s.id, s]));
@@ -952,7 +1079,7 @@
       el.style.setProperty("--c", p.c);
       el.title = p.name;
       el.innerHTML = `<div class="ln">${p.short}</div><div class="lc"><img src="${packIcon(p.key)}" alt="" width="64" height="64"></div>`;
-      el.addEventListener("click", () => document.getElementById("pack-" + p.key).scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" }));
+      el.addEventListener("click", () => openPack(p.key));
       iso.appendChild(el);
       return el;
     });
@@ -973,20 +1100,20 @@
   function initMotion() {
     const G = window.gsap;
     if (!G || reduceMotion) return;
-    document.querySelectorAll(".pack").forEach((row) => {
+    document.querySelectorAll(".pack-front").forEach((row) => {
       const img = row.querySelector(".pack-icon");
       row.addEventListener("pointerenter", () => G.to(img, { y: -6, rotation: -8, scale: 1.1, duration: 0.4, ease: "back.out(2.5)" }));
       row.addEventListener("pointerleave", () => G.to(img, { y: 0, rotation: 0, scale: 1, duration: 0.4, ease: "power3.out" }));
     });
-    document.querySelectorAll(".sk > li.bonus").forEach((row) => {
+    document.querySelectorAll(".pbs.bonus").forEach((row) => {
       const img = row.querySelector(".bonus-icon");
       row.addEventListener("pointerenter", () => G.to(img, { y: -6, rotation: 8, scale: 1.15, duration: 0.4, ease: "back.out(3)" }));
       row.addEventListener("pointerleave", () => G.to(img, { y: 0, rotation: 0, scale: 1, duration: 0.4, ease: "power3.out" }));
     });
     if (window.ScrollTrigger) {
       G.registerPlugin(window.ScrollTrigger);
-      G.utils.toArray(".sh, .points > div, .offer, .pack, .main-price, .plist > li").forEach((el) => {
-        G.from(el, { y: 16, opacity: 0, duration: 0.6, ease: "power2.out", scrollTrigger: { trigger: el, start: "top 88%", once: true } });
+      G.utils.toArray(".sh, .points > div, .cmp, .offer, .packs, .main-price, .plist > li, .shout").forEach((el) => {
+        G.from(el, { y: 16, opacity: 0, duration: 0.6, ease: "power2.out", clearProps: "transform,opacity", scrollTrigger: { trigger: el, start: "top 88%", once: true } });
       });
     }
   }
@@ -1003,21 +1130,6 @@
     });
   }
   noWidows(document.body);
-
-  // Place each thread node level with the first line of its heading.
-  function placeNodes() {
-    document.querySelectorAll(".chapter > .wrap, .chapter > section > .wrap").forEach((wrap) => {
-      const h = wrap.querySelector("h1, h2");
-      if (!h) return;
-      let y = 0, el = h;
-      while (el && el !== wrap) { y += el.offsetTop; el = el.offsetParent; }
-      const line = parseFloat(getComputedStyle(h).lineHeight) || h.offsetHeight;
-      wrap.style.setProperty("--node-y", Math.round(y + line / 2 - 4.5) + "px");
-    });
-  }
-  placeNodes();
-  window.addEventListener("resize", placeNodes);
-  if (document.fonts && document.fonts.ready) document.fonts.ready.then(placeNodes);
 
   // ---- robot check (Cloudflare Turnstile) on the waitlist form and the free download ----
   // Paste the Turnstile site key here. While it's empty, no check is shown.
