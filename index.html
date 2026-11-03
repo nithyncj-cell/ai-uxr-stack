@@ -1014,6 +1014,7 @@
               <p>Question Zero builds on James Chudley's knowledge-mapping workshop and importance and confidence matrix. The thanks to The Goal by Eliyahu M. Goldratt and to Constantine Papas, PhD, are personal acknowledgements and do not mean they endorse these skills.</p>
               <p>The shoutout to Nikki Anderson and her UXR AI Bundle is a personal recommendation. Nikki and The User Research Strategist are not connected to these skills and do not endorse them. The banner is a screenshot of her page and links to it.</p>
               <p>The skill icons are 3D renders from <a href="https://huggingface.co/datasets/nvidia/simready-assets" target="_blank" rel="noopener">NVIDIA SimReady Assets</a>, used under the <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a> licence. They were cropped and resized for this website. NVIDIA does not endorse the AI UXR Stack.</p>
+              <p>The pack icons are 3D icons from <a href="https://github.com/microsoft/fluentui-emoji" target="_blank" rel="noopener">Microsoft Fluent Emoji</a>, used under the MIT License (© Microsoft Corporation). Microsoft does not endorse the AI UXR Stack.</p>
             </div>
           </div>
           <div class="tp-part" id="legal-contact"><h3 class="h-16">Contact and Grievances</h3>
@@ -1026,7 +1027,7 @@
 
       </div>
     </details>
-    <p class="credits">Thanks to The Goal by Eliyahu M. Goldratt and to Constantine Papas, PhD. Skill icons: <a href="https://huggingface.co/datasets/nvidia/simready-assets" target="_blank" rel="noopener">NVIDIA SimReady Assets</a>, CC BY 4.0. © 2026 Nithyn. All rights reserved.</p>
+    <p class="credits">Thanks to The Goal by Eliyahu M. Goldratt and to Constantine Papas, PhD. Pack icons: <a href="https://github.com/microsoft/fluentui-emoji" target="_blank" rel="noopener">Microsoft Fluent Emoji</a>, MIT License. Skill icons: <a href="https://huggingface.co/datasets/nvidia/simready-assets" target="_blank" rel="noopener">NVIDIA SimReady Assets</a>, CC BY 4.0. © 2026 Nithyn. All rights reserved.</p>
   </div>
 </footer>
 
@@ -1182,7 +1183,7 @@
   const GENERIC = /^(Knows all 12|Reads your files|Guards its own)/;
 
   // ---- skills: five pack cards stay in place; the chosen pack opens in a panel just below its row ----
-  const packIcon = (key) => `assets/icons/hd/pack-${key}.webp`;
+  const packIcon = (key) => `assets/icons/hd/pack-${key}.webp?v=2`;
   const countLabel = (p) => { const paid = p.skills.filter((s) => !s.bonus).length; return `${paid} skill${paid === 1 ? "" : "s"}${p.skills.some((s) => s.bonus) ? " + bonus" : ""}`; };
   const priceCell = (s) => s.bonus ? `<span class="bonus-tag">Bonus, free with this pack</span>` : FREE_IDS.includes(s.id) ? `<a class="link" href="#free">Free</a>` : `<span data-price="skill" data-skill="${s.id}"></span>`;
   const packGrid = document.getElementById("packlist");
@@ -1205,7 +1206,7 @@
         </div>
         <ul class="pb-skills">${p.skills.map((s) => `
           <li class="pbs${s.bonus ? " bonus" : ""}" id="skill-${s.id}">
-            <div class="pbs-top">${s.bonus ? `<img class="bonus-icon" src="assets/icons/hd/bonus.webp" alt="" width="32" height="32" loading="lazy">` : `<span class="blob" aria-hidden="true"></span>`}<h4 class="h-20">${s.name}</h4><span class="sp">${priceCell(s)}</span></div>
+            <div class="pbs-top">${s.bonus ? `<img class="bonus-icon" src="assets/icons/hd/bonus.webp?v=2" alt="" width="32" height="32" loading="lazy">` : `<span class="blob" aria-hidden="true"></span>`}<h4 class="h-20">${s.name}</h4><span class="sp">${priceCell(s)}</span></div>
             <p class="pbs-more" data-f="more">${s.more}</p>
             <dl class="pbs-dl">
               <div><dt>When to use it</dt><dd data-f="s">${s.s}</dd></div>
@@ -1353,7 +1354,7 @@
   const paidIn = (ids) => ids.filter((id) => !FREE_IDS.includes(id) && !(byId[id] && byId[id].bonus));
   const freeIn = (ids) => ids.filter((id) => FREE_IDS.includes(id) || (byId[id] && byId[id].bonus));
   const packOf = (id) => PACKS.find((p) => p.skills.some((s) => s.id === id));
-  const tileIcon = (k) => k === "starter" ? "assets/icons/hd/research-plan-creator.webp" : `assets/icons/hd/pack-${k}.webp`;
+  const tileIcon = (k) => `assets/icons/hd/pack-${k}.webp?v=2`;
   document.getElementById("pick").innerHTML = PICKABLE.map((p) => `
     <label class="ptile" style="--c:${p.c || "var(--brand)"}">
       <input class="vh" type="checkbox" value="${p.key}">
