@@ -216,7 +216,7 @@
   @media (min-width: 900px) { .newbie .points { grid-template-columns: repeat(3, 1fr); } }
 
   /* skills: five pack cards; a card flips over and spans the row to show its skills */
-  .packs { margin-top: var(--s12); display: grid; gap: var(--s4); grid-auto-flow: row dense; perspective: 1600px; }
+  .packs { margin-top: var(--s12); display: grid; gap: var(--s4); grid-auto-flow: row dense; align-content: start; }
   @media (min-width: 640px) { .packs { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
   @media (min-width: 1000px) { .packs { grid-template-columns: repeat(5, minmax(0, 1fr)); } }
   .pack { position: relative; border: 1px solid var(--border-strong); border-radius: var(--r-lg); transition: border-color .2s ease; }
@@ -941,46 +941,59 @@
     card.querySelector(".pack-front").setAttribute("aria-expanded", String(open));
     card.querySelector(".pack-back").hidden = !open;
   }
-  // FLIP: note where every card is, change the layout, then slide each card from its old spot.
-  function relayout(change, target, opening) {
+  // Smooth open and close: every card glides from where it was to where it lands (FLIP),
+  // the opening card grows out of its own outline, and its content fades up once it has room.
+  const EASE = "power3.inOut", DUR = 0.6;
+  let packAnim = null;
+  function relayout(change, target, opening, opts = {}) {
     const G = window.gsap;
-    if (!G || reduceMotionPacks) { change(); return; }
-    G.killTweensOf(packCards); packCards.forEach((c) => G.set(c, { clearProps: "transform,opacity" }));
+    if (packAnim) { packAnim.progress(1).kill(); packAnim = null; }
+    if (!G || reduceMotionPacks || opts.instant) { change(); return; }
     const first = new Map(packCards.map((c) => [c, c.getBoundingClientRect()]));
+    const h0 = packGrid.offsetHeight;
     change();
+    const h1 = packGrid.offsetHeight;
+    const tl = G.timeline({ defaults: { ease: EASE, duration: DUR },
+      onComplete: () => { G.set([packGrid, ...packCards, ...packCards.map((c) => c.querySelector(".pack-back"))], { clearProps: "transform,clipPath,opacity,height" }); packAnim = null; } });
+    tl.fromTo(packGrid, { height: h0 }, { height: h1 }, 0);
     packCards.forEach((c) => {
-      if (c === target) return;
       const a = first.get(c), b = c.getBoundingClientRect();
+      if (c === target && opening) {
+        // grow out of the closed card's outline
+        const top = a.top - b.top, left = a.left - b.left;
+        const right = b.right - a.right, bottom = b.bottom - a.bottom;
+        tl.fromTo(c, { clipPath: `inset(${top}px ${right}px ${bottom}px ${left}px round 12px)` }, { clipPath: "inset(0px 0px 0px 0px round 12px)" }, 0);
+        tl.fromTo(c.querySelector(".pack-back"), { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.45, ease: "power2.out" }, 0.22);
+        return;
+      }
+      if (c === target) { tl.fromTo(c, { opacity: 0, scale: 0.97 }, { opacity: 1, scale: 1, duration: 0.45, ease: "power2.out" }, 0.15); }
       const dx = a.left - b.left, dy = a.top - b.top;
-      if (Math.abs(dx) > 1 || Math.abs(dy) > 1) G.fromTo(c, { x: dx, y: dy }, { x: 0, y: 0, duration: 0.5, ease: "power3.inOut", clearProps: "transform" });
+      if (Math.abs(dx) > 1 || Math.abs(dy) > 1) tl.fromTo(c, { x: dx, y: dy }, { x: 0, y: 0 }, 0);
     });
-    G.fromTo(target, { rotationY: opening ? -90 : 90, opacity: 0.2, transformPerspective: 1600 },
-      { rotationY: 0, opacity: 1, duration: opening ? 0.55 : 0.45, ease: "back.out(1.1)", clearProps: "transform,opacity" });
+    packAnim = tl;
+  }
+  function glideTo(card) {
+    const hdrH = document.getElementById("hdr").offsetHeight;
+    const y = card.getBoundingClientRect().top + window.scrollY - hdrH - 16;
+    window.scrollTo({ top: y, behavior: reduceMotionPacks ? "auto" : "smooth" });
   }
   function openPack(key, opts = {}) {
     const card = document.getElementById("pack-" + key);
-    if (!card || card.classList.contains("open")) { if (card && opts.scroll) card.scrollIntoView({ behavior: reduceMotionPacks ? "auto" : "smooth", block: "start" }); return; }
-    const G = window.gsap;
-    const go = () => {
-      relayout(() => { packCards.forEach((c) => setOpen(c, c === card)); }, card, true);
+    if (!card) return;
+    if (!card.classList.contains("open")) {
+      relayout(() => { packCards.forEach((c) => setOpen(c, c === card)); }, card, true, opts);
       try { history.replaceState(null, "", "#pack-" + key); } catch (e) {}
-      if (opts.scroll !== false) card.scrollIntoView({ behavior: reduceMotionPacks || opts.instant ? "auto" : "smooth", block: "start" });
       card.querySelector(".pack-back h3").focus({ preventScroll: true });
-    };
-    if (G && !reduceMotionPacks && !opts.instant) G.to(card, { rotationY: 90, transformPerspective: 1600, duration: 0.18, ease: "power2.in", onComplete: go });
-    else go();
+    }
+    if (opts.instant) { const hdrH = document.getElementById("hdr").offsetHeight; window.scrollTo(0, card.getBoundingClientRect().top + window.scrollY - hdrH - 16); }
+    else glideTo(card);
   }
   function closePack(card) {
-    const G = window.gsap;
-    const go = () => {
-      relayout(() => setOpen(card, false), card, false);
-      try { history.replaceState(null, "", "#skills"); } catch (e) {}
-      card.querySelector(".pack-front").focus({ preventScroll: true });
-      const r = card.getBoundingClientRect();
-      if (r.top < 0 || r.top > window.innerHeight * 0.6) card.scrollIntoView({ behavior: reduceMotionPacks ? "auto" : "smooth", block: "center" });
-    };
-    if (G && !reduceMotionPacks) G.to(card, { rotationY: -90, transformPerspective: 1600, duration: 0.18, ease: "power2.in", onComplete: go });
-    else go();
+    relayout(() => setOpen(card, false), card, false);
+    try { history.replaceState(null, "", "#skills"); } catch (e) {}
+    card.querySelector(".pack-front").focus({ preventScroll: true });
+    const r = card.getBoundingClientRect();
+    if (r.top < 80 || r.bottom > window.innerHeight) glideTo(packGrid);
   }
   packCards.forEach((card) => {
     const key = card.id.slice(5);
