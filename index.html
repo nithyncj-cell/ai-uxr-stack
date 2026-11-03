@@ -437,6 +437,25 @@
     12%, 60% { background: rgba(10,114,239,.18); box-shadow: 0 0 0 6px rgba(10,114,239,.18), 0 0 32px rgba(41,151,255,.45); color: var(--gray-1000); }
     100% { background: rgba(10,114,239,0); box-shadow: 0 0 0 0 rgba(10,114,239,0); }
   }
+
+  /* comparison status: green = built in, yellow = partly or missing */
+  :root { --ok: #3fb950; --warn: #f5a524; }
+  .st { display: inline-block; flex: none; width: 16px; height: 16px; margin-right: var(--s2); vertical-align: -3px; border-radius: 50%; background-position: center; background-repeat: no-repeat; background-size: 10px; }
+  .yes .st { background-color: rgba(63,185,80,.18); box-shadow: inset 0 0 0 1px rgba(63,185,80,.6);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' fill='none' stroke='%233fb950' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M2.5 6.5l2.2 2.2L9.5 3.5'/%3E%3C/svg%3E"); }
+  .part .st { background-color: rgba(245,165,36,.16); box-shadow: inset 0 0 0 1px rgba(245,165,36,.6);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M6 1.5a4.5 4.5 0 0 1 0 9z' fill='%23f5a524'/%3E%3C/svg%3E"); }
+  .no .st { background-color: rgba(245,165,36,.16); box-shadow: inset 0 0 0 1px rgba(245,165,36,.6);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' fill='none' stroke='%23f5a524' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='M3 6h6'/%3E%3C/svg%3E"); }
+  .cmp td > span { display: flex; align-items: flex-start; }
+  .cmp td > span > .st { margin-top: 4px; }
+  .cmp td.yes { color: var(--gray-1000); }
+  .cmp td.yes > span { color: inherit; }
+  .cmp td.no, .cmp td.part { color: var(--gray-900); }
+  .cmp tbody th { font-weight: 500; }
+  .cmp thead th:first-child { color: var(--gray-700); font-weight: 500; font-size: 14px; }
+  .legend { list-style: none; margin: var(--s5) 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: var(--s2) var(--s6); font-size: 14px; line-height: 20px; color: var(--gray-900); }
+  .legend li { display: inline-flex; align-items: center; }
   @media (prefers-reduced-motion: reduce) { .glow { animation: none !important; background: rgba(10,114,239,.18); box-shadow: 0 0 0 6px rgba(10,114,239,.18); } * { scroll-behavior: auto !important; transition: none !important; animation: none !important; } }
 </style>
 </head>
@@ -500,17 +519,21 @@
     <div class="wrap">
       <div class="sh">
         <h2 class="h-40" id="different-title">How it's different from NotebookLM or plain Claude</h2>
-        <p class="copy-18 muted">Both are good tools. Both leave the research method to you. The stack builds the method in.</p>
+        <p class="copy-18 muted">Both are good tools. Both leave the research method to you.</p>
+        <ul class="legend"><li class="yes"><i class="st"></i>Built in</li><li class="part"><i class="st"></i>Partly</li><li class="no"><i class="st"></i>Missing, or up to you each time</li></ul>
       </div>
       <div class="cmp-wrap"><div class="col-hl" aria-hidden="true"></div>
       <table class="cmp">
-        <thead><tr><th scope="col"><span class="sr">Compare</span></th><th scope="col">NotebookLM</th><th scope="col">Claude with your own prompts</th><th scope="col">AI UXR Stack</th></tr></thead>
+        <thead><tr><th scope="col">What you need</th><th scope="col">NotebookLM</th><th scope="col">Claude with your own prompts</th><th scope="col">AI UXR Stack</th></tr></thead>
         <tbody>
-          <tr><th scope="row">Best for</th><td data-label="NotebookLM"><span>Asking questions of a set of documents</span></td><td data-label="Claude with your own prompts"><span>One-off tasks you can describe well</span></td><td data-label="AI UXR Stack"><span>Running each step of a study the same careful way</span></td></tr>
-          <tr><th scope="row">Research method</th><td data-label="NotebookLM"><span>You decide what to ask, one question at a time</span></td><td data-label="Claude with your own prompts"><span>As good as the prompt you write</span></td><td data-label="AI UXR Stack"><span>Built in. Each skill works in stages and asks for what it needs.</span></td></tr>
-          <tr><th scope="row">Quotes &amp; numbers</th><td data-label="NotebookLM"><span>Cited back to your sources</span></td><td data-label="Claude with your own prompts"><span>Kept exact only if your prompt insists</span></td><td data-label="AI UXR Stack"><span>Kept verbatim with timestamps. Gaps are marked <span class="missing">missing</span>.</span></td></tr>
-          <tr><th scope="row">What you get</th><td data-label="NotebookLM"><span>Answers, summaries &amp; overviews</span></td><td data-label="Claude with your own prompts"><span>Whatever you ask for</span></td><td data-label="AI UXR Stack"><span>Research outputs: notesheets, plans, reports &amp; prototypes</span></td></tr>
-          <tr><th scope="row">What comes next</th><td data-label="NotebookLM"><span>You plan it</span></td><td data-label="Claude with your own prompts"><span>You plan it</span></td><td data-label="AI UXR Stack"><span>Each skill points you to the next one</span></td></tr>
+          <tr><th scope="row">Runs a research method, step by step</th><td data-label="NotebookLM" class="no"><span><i class="st" role="img" aria-label="Missing"></i><span>No method built in. You ask, it answers.</span></span></td><td data-label="Claude with your own prompts" class="no"><span><i class="st" role="img" aria-label="Missing"></i><span>Only if you write the method into every prompt.</span></span></td><td data-label="AI UXR Stack" class="yes"><span><i class="st" role="img" aria-label="Built in"></i><span>Each skill works in set stages, built from real studies.</span></span></td></tr>
+          <tr><th scope="row">Asks what it needs before it starts</th><td data-label="NotebookLM" class="no"><span><i class="st" role="img" aria-label="Missing"></i><span>Works with whatever you upload.</span></span></td><td data-label="Claude with your own prompts" class="no"><span><i class="st" role="img" aria-label="Missing"></i><span>Starts on whatever you type.</span></span></td><td data-label="AI UXR Stack" class="yes"><span><i class="st" role="img" aria-label="Built in"></i><span>Asks for your brief, guide, transcripts or data first.</span></span></td></tr>
+          <tr><th scope="row">Verbatim quote &amp; timestamp on every row</th><td data-label="NotebookLM" class="part"><span><i class="st" role="img" aria-label="Partly"></i><span>Cites source passages, but makes no row-by-row notesheet.</span></span></td><td data-label="Claude with your own prompts" class="part"><span><i class="st" role="img" aria-label="Partly"></i><span>Can tidy or paraphrase quotes unless told not to.</span></span></td><td data-label="AI UXR Stack" class="yes"><span><i class="st" role="img" aria-label="Built in"></i><span>Keeps every quote and timestamp exact. Gaps are marked <span class="missing">missing</span>.</span></span></td></tr>
+          <tr><th scope="row">Research deliverables</th><td data-label="NotebookLM" class="part"><span><i class="st" role="img" aria-label="Partly"></i><span>General reports, slide decks &amp; overviews.</span></span></td><td data-label="Claude with your own prompts" class="part"><span><i class="st" role="img" aria-label="Partly"></i><span>Any format, if you describe it well.</span></span></td><td data-label="AI UXR Stack" class="yes"><span><i class="st" role="img" aria-label="Built in"></i><span>Notesheets, research plans, reports, decks &amp; clickable prototypes.</span></span></td></tr>
+          <tr><th scope="row">Same quality on every study</th><td data-label="NotebookLM" class="part"><span><i class="st" role="img" aria-label="Partly"></i><span>Depends on the questions you ask.</span></span></td><td data-label="Claude with your own prompts" class="no"><span><i class="st" role="img" aria-label="Missing"></i><span>Changes with how you word the prompt.</span></span></td><td data-label="AI UXR Stack" class="yes"><span><i class="st" role="img" aria-label="Built in"></i><span>Same stages and checks every time.</span></span></td></tr>
+          <tr><th scope="row">Hands off to the next step</th><td data-label="NotebookLM" class="no"><span><i class="st" role="img" aria-label="Missing"></i><span>You plan what comes next.</span></span></td><td data-label="Claude with your own prompts" class="no"><span><i class="st" role="img" aria-label="Missing"></i><span>You plan what comes next.</span></span></td><td data-label="AI UXR Stack" class="yes"><span><i class="st" role="img" aria-label="Built in"></i><span>Each skill passes its output to the next one.</span></span></td></tr>
+          <tr><th scope="row">Research checks built in</th><td data-label="NotebookLM" class="no"><span><i class="st" role="img" aria-label="Missing"></i><span>None.</span></span></td><td data-label="Claude with your own prompts" class="no"><span><i class="st" role="img" aria-label="Missing"></i><span>Only the ones you remember to ask for.</span></span></td><td data-label="AI UXR Stack" class="yes"><span><i class="st" role="img" aria-label="Built in"></i><span>Small samples as counts, bias checks, flags for hidden instructions in files.</span></span></td></tr>
+          <tr><th scope="row">Works across a large library of sources</th><td data-label="NotebookLM" class="yes"><span><i class="st" role="img" aria-label="Built in"></i><span>Up to 50 sources a notebook free, 300 on Pro.</span></span></td><td data-label="Claude with your own prompts" class="yes"><span><i class="st" role="img" aria-label="Built in"></i><span>Reads the files you add to a chat or project.</span></span></td><td data-label="AI UXR Stack" class="part"><span><i class="st" role="img" aria-label="Partly"></i><span>Runs inside Claude, so Claude's file limits apply.</span></span></td></tr>
         </tbody>
       </table></div>
 
@@ -1257,7 +1280,7 @@
   }
   // Keep the last two words of each text block together so no line ends with a single word.
   function noWidows(root) {
-    root.querySelectorAll("h1, h2, h3, h4, p, li, summary").forEach((el) => {
+    root.querySelectorAll("h1, h2, h3, h4, p, li, summary, td, dd").forEach((el) => {
       const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
       let last = null, n;
       while ((n = walker.nextNode())) if (n.nodeValue.trim()) last = n;
