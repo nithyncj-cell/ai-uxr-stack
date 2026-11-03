@@ -220,8 +220,13 @@
   @media (min-width: 640px) { .packs { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
   @media (min-width: 1000px) { .packs { grid-template-columns: repeat(5, minmax(0, 1fr)); } }
   .pack { position: relative; border: 1px solid var(--border-strong); border-radius: var(--r-lg); transition: border-color .2s ease; }
-  .pack:not(.open):hover { border-color: color-mix(in srgb, var(--c) 60%, transparent); }
-  .pack.open { grid-column: 1 / -1; border-color: color-mix(in srgb, var(--c) 45%, transparent); }
+  .pack:not(.sel):hover { border-color: color-mix(in srgb, var(--c) 60%, transparent); }
+  .pack.sel { border-color: var(--c); box-shadow: 0 0 0 1px var(--c), 0 18px 48px -24px color-mix(in srgb, var(--c) 70%, transparent); }
+  .pack.sel .pack-icon { transform: translateY(-4px); }
+  .pf-c { display: none; } .pack.sel .pf-o { display: none; } .pack.sel .pf-c { display: inline; }
+  .pack.sel .pf-open::after { transform: rotate(90deg); }
+  .pack-panel { grid-column: 1 / -1; border: 1px solid var(--border-strong); border-radius: var(--r-lg); }
+  .pack-front .pack-icon { transition: transform .35s cubic-bezier(.2,.8,.2,1); }
   .pack-front { appearance: none; width: 100%; height: 100%; margin: 0; padding: var(--s6); border: 0; border-radius: inherit; background: none;
     color: inherit; font: inherit; text-align: left; cursor: pointer; touch-action: manipulation;
     display: grid; grid-template-columns: 64px 1fr; grid-template-rows: auto auto 1fr auto; column-gap: var(--s4); row-gap: var(--s1); align-items: start; }
@@ -957,20 +962,23 @@
   const icon = (id, size) => `assets/icons/${size === "hd" ? "hd/" : ""}${id}.webp`;
   const GENERIC = /^(Knows all 12|Reads your files|Guards its own)/;
 
-  // ---- skills: five pack cards; opening one flips it over and spans the row ----
+  // ---- skills: five pack cards stay in place; the chosen pack opens in a panel just below its row ----
   const packIcon = (key) => `assets/icons/hd/pack-${key}.webp`;
   const countLabel = (p) => { const paid = p.skills.filter((s) => !s.bonus).length; return `${paid} skill${paid === 1 ? "" : "s"}${p.skills.some((s) => s.bonus) ? " + bonus" : ""}`; };
   const priceCell = (s) => s.bonus ? `<span class="bonus-tag">Bonus, free with this pack</span>` : FREE_IDS.includes(s.id) ? `<a class="link" href="#free">Free</a>` : `<span data-price="skill" data-skill="${s.id}"></span>`;
-  document.getElementById("packlist").innerHTML = PACKS.map((p) => `
-    <article class="pack" id="pack-${p.key}" style="--c:${p.c}" aria-label="${p.name}">
-      <button class="pack-front" type="button" aria-expanded="false" aria-controls="back-${p.key}">
+  const packGrid = document.getElementById("packlist");
+  packGrid.innerHTML = PACKS.map((p, i) => `
+    <article class="pack" id="pack-${p.key}" style="--c:${p.c}; order:${i * 2}">
+      <button class="pack-front" type="button" aria-expanded="false" aria-controls="pack-panel">
         <img class="pack-icon" src="${packIcon(p.key)}" alt="" width="88" height="88" loading="lazy" decoding="async">
         <span class="pf-name">${p.name}</span>
         <span class="pf-pain">${p.pain}</span>
         <span class="pf-meta">${countLabel(p)}<span class="pf-price" data-price="pack" data-pack="${p.key}"></span></span>
-        <span class="pf-open">Open pack</span>
+        <span class="pf-open"><span class="pf-o">Open pack</span><span class="pf-c">Close pack</span></span>
       </button>
-      <div class="pack-back" id="back-${p.key}" hidden>
+    </article>`).join("") + `
+    <div class="pack-panel" id="pack-panel" role="region" aria-label="Pack details" hidden>${PACKS.map((p) => `
+      <div class="pack-back" id="back-${p.key}" style="--c:${p.c}" hidden>
         <div class="pb-head">
           <img src="${packIcon(p.key)}" alt="" width="80" height="80" loading="lazy">
           <div><h3 class="h-24" tabindex="-1">${p.name}</h3><p class="muted">${p.pain}</p></div>
@@ -995,79 +1003,79 @@
           <div><div class="pack-buy"><span class="pp" data-price="pack" data-pack="${p.key}"></span><s class="was" data-price="pack-list" data-pack="${p.key}"></s></div><p class="copy-14 muted">Includes 12 months of updates and new skills.</p></div>
           <div class="pack-actions"><a class="btn brand" href="${LINKEDIN}" target="_blank" rel="noopener" data-buy="${p.name}">Buy pack · coming soon</a></div>
         </div>
-      </div>
-    </article>`).join("");
+      </div>`).join("")}
+    </div>`;
 
-  const packGrid = document.getElementById("packlist");
   const packCards = [...packGrid.querySelectorAll(".pack")];
+  const panel = document.getElementById("pack-panel");
   const reduceMotionPacks = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  function setOpen(card, open) {
-    card.classList.toggle("open", open);
-    card.querySelector(".pack-front").hidden = open;
-    card.querySelector(".pack-front").setAttribute("aria-expanded", String(open));
-    card.querySelector(".pack-back").hidden = !open;
+  let openKey = null, packAnim = null;
+  const EASE = "power3.inOut";
+  const cols = () => getComputedStyle(packGrid).gridTemplateColumns.split(" ").filter(Boolean).length || 1;
+  // Put the panel straight after the row that holds the chosen card.
+  function placePanel(i) { const c = cols(); panel.style.order = String((Math.min(Math.ceil((i + 1) / c) * c, packCards.length) - 1) * 2 + 1); }
+  function markCards(key) {
+    packCards.forEach((c) => { const on = c.id === "pack-" + key; c.classList.toggle("sel", on); c.querySelector(".pack-front").setAttribute("aria-expanded", String(on)); });
   }
-  // Smooth open and close: every card glides from where it was to where it lands (FLIP),
-  // the opening card grows out of its own outline, and its content fades up once it has room.
-  const EASE = "power3.inOut", DUR = 0.6;
-  let packAnim = null;
-  function relayout(change, target, opening, opts = {}) {
-    const G = window.gsap;
-    if (packAnim) { packAnim.progress(1).kill(); packAnim = null; }
-    if (!G || reduceMotionPacks || opts.instant) { change(); return; }
-    const first = new Map(packCards.map((c) => [c, c.getBoundingClientRect()]));
-    const h0 = packGrid.offsetHeight;
-    change();
-    const h1 = packGrid.offsetHeight;
-    const tl = G.timeline({ defaults: { ease: EASE, duration: DUR },
-      onComplete: () => { G.set([packGrid, ...packCards, ...packCards.map((c) => c.querySelector(".pack-back"))], { clearProps: "transform,clipPath,opacity,height" }); packAnim = null; } });
-    tl.fromTo(packGrid, { height: h0 }, { height: h1 }, 0);
-    packCards.forEach((c) => {
-      const a = first.get(c), b = c.getBoundingClientRect();
-      if (c === target && opening) {
-        // grow out of the closed card's outline
-        const top = a.top - b.top, left = a.left - b.left;
-        const right = b.right - a.right, bottom = b.bottom - a.bottom;
-        tl.fromTo(c, { clipPath: `inset(${top}px ${right}px ${bottom}px ${left}px round 12px)` }, { clipPath: "inset(0px 0px 0px 0px round 12px)" }, 0);
-        tl.fromTo(c.querySelector(".pack-back"), { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.45, ease: "power2.out" }, 0.22);
-        return;
-      }
-      if (c === target) { tl.fromTo(c, { opacity: 0, scale: 0.97 }, { opacity: 1, scale: 1, duration: 0.45, ease: "power2.out" }, 0.15); }
-      const dx = a.left - b.left, dy = a.top - b.top;
-      if (Math.abs(dx) > 1 || Math.abs(dy) > 1) tl.fromTo(c, { x: dx, y: dy }, { x: 0, y: 0 }, 0);
-    });
-    packAnim = tl;
-  }
-  function glideTo(card) {
+  function showBack(key) { panel.querySelectorAll(".pack-back").forEach((b) => { b.hidden = b.id !== "back-" + key; }); }
+  function finish() { if (packAnim) { packAnim.progress(1).kill(); packAnim = null; } }
+  function keepInView() {
+    // Scroll only when the panel would start below the fold, and only enough to show the card and the top of the panel.
     const hdrH = document.getElementById("hdr").offsetHeight;
-    const y = card.getBoundingClientRect().top + window.scrollY - hdrH - 16;
-    window.scrollTo({ top: y, behavior: reduceMotionPacks ? "auto" : "smooth" });
+    const card = document.getElementById("pack-" + openKey);
+    const r = card.getBoundingClientRect();
+    if (r.bottom > window.innerHeight * 0.55 || r.top < hdrH) {
+      window.scrollTo({ top: r.top + window.scrollY - hdrH - 16, behavior: reduceMotionPacks ? "auto" : "smooth" });
+    }
   }
   function openPack(key, opts = {}) {
-    const card = document.getElementById("pack-" + key);
-    if (!card) return;
-    if (!card.classList.contains("open")) {
-      relayout(() => { packCards.forEach((c) => setOpen(c, c === card)); }, card, true, opts);
-      try { history.replaceState(null, "", "#pack-" + key); } catch (e) {}
-      card.querySelector(".pack-back h3").focus({ preventScroll: true });
+    const i = PACKS.findIndex((p) => p.key === key);
+    if (i < 0) return;
+    finish();
+    const G = window.gsap, animate = G && !reduceMotionPacks && !opts.instant;
+    const back = document.getElementById("back-" + key);
+    const sameRow = openKey && !panel.hidden && (() => { const c = cols(); return Math.floor(PACKS.findIndex((p) => p.key === openKey) / c) === Math.floor(i / c); })();
+    const h0 = panel.hidden ? 0 : panel.offsetHeight;
+    if (openKey === key && !panel.hidden) { if (opts.scroll !== false) keepInView(); return; }
+    openKey = key; markCards(key);
+    if (!sameRow && !panel.hidden && animate) {
+      // Different row: close where it is, then open under the new row.
+      packAnim = G.to(panel, { height: 0, opacity: 0, duration: 0.3, ease: "power2.in", onComplete: () => { panel.hidden = true; G.set(panel, { clearProps: "height,opacity" }); packAnim = null; openPack(key, opts); } });
+      return;
     }
-    if (opts.scroll === false) return;
-    if (opts.instant) { const hdrH = document.getElementById("hdr").offsetHeight; window.scrollTo(0, card.getBoundingClientRect().top + window.scrollY - hdrH - 16); }
-    else glideTo(card);
+    placePanel(i); showBack(key); panel.hidden = false;
+    try { history.replaceState(null, "", "#pack-" + key); } catch (e) {}
+    back.querySelector("h3").focus({ preventScroll: true });
+    if (animate) {
+      const h1 = panel.offsetHeight;
+      packAnim = G.timeline({ onComplete: () => { G.set([panel, back], { clearProps: "height,opacity,transform,overflow" }); packAnim = null; } })
+        .fromTo(panel, { height: h0, overflow: "hidden" }, { height: h1, duration: 0.55, ease: EASE }, 0)
+        .fromTo(back, { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" }, h0 ? 0.05 : 0.15);
+    }
+    if (opts.scroll !== false) keepInView();
   }
-  function closePack(card) {
-    relayout(() => setOpen(card, false), card, false);
+  function closePack() {
+    if (!openKey) return;
+    finish();
+    const card = document.getElementById("pack-" + openKey);
+    const G = window.gsap, done = () => { panel.hidden = true; openKey = null; markCards(null); };
     try { history.replaceState(null, "", "#skills"); } catch (e) {}
     card.querySelector(".pack-front").focus({ preventScroll: true });
+    if (G && !reduceMotionPacks) {
+      markCards(null);
+      packAnim = G.timeline({ onComplete: () => { done(); G.set(panel, { clearProps: "height,opacity,overflow" }); packAnim = null; } })
+        .to(panel, { height: 0, opacity: 0, overflow: "hidden", duration: 0.45, ease: EASE });
+    } else done();
     const r = card.getBoundingClientRect();
-    if (r.top < 80 || r.bottom > window.innerHeight) glideTo(packGrid);
+    if (r.top < 0) window.scrollTo({ top: r.top + window.scrollY - document.getElementById("hdr").offsetHeight - 16, behavior: reduceMotionPacks ? "auto" : "smooth" });
   }
   packCards.forEach((card) => {
     const key = card.id.slice(5);
-    card.querySelector(".pack-front").addEventListener("click", () => openPack(key));
-    card.querySelector(".pb-close").addEventListener("click", () => closePack(card));
-    card.addEventListener("keydown", (e) => { if (e.key === "Escape" && card.classList.contains("open")) closePack(card); });
+    card.querySelector(".pack-front").addEventListener("click", () => (openKey === key && !panel.hidden ? closePack() : openPack(key)));
   });
+  panel.addEventListener("click", (e) => { if (e.target.closest(".pb-close")) closePack(); });
+  panel.addEventListener("keydown", (e) => { if (e.key === "Escape") closePack(); });
+  window.addEventListener("resize", () => { if (openKey && !panel.hidden) placePanel(PACKS.findIndex((p) => p.key === openKey)); });
 
   // ---- researcher comments: each points to the skill line that answers it ----
   const VOICES = [
@@ -1089,10 +1097,9 @@
   }).join("");
   function showSkillLine(skillId, field) {
     const s = skillById[skillId]; if (!s) return;
-    const card = document.getElementById("pack-" + s.pack);
-    const wasOpen = card.classList.contains("open");
+    const wasOpen = openKey === s.pack && !panel.hidden;
     openPack(s.pack, { scroll: false });
-    const line = card.querySelector(`#skill-${skillId} [data-f="${field}"]`);
+    const line = document.querySelector(`#skill-${skillId} [data-f="${field}"]`);
     if (!line) return;
     setTimeout(() => {
       const hdrH = document.getElementById("hdr").offsetHeight;
