@@ -37,13 +37,13 @@ The Transcript Collator turns raw interview transcripts into one theme-tagged no
 |---|---|---|---|---|
 | **Scope** | "Don't tell us what we already know." | Question Zero, Diagnostic Partner, Research Plan Creator | ₹2,499 | $49 |
 | **Transcript Collator** | "Fieldwork's done. Now a week of retyping." | Transcript Collator (free), Collated Synth, Collation Sorter (free) | ₹999 | $19 |
-| **Analysis** | "Fifty crosstabs and no story." | Quant Analyst, Report Builder | ₹1,999 | $39 |
+| **Analysis** | "Fifty crosstabs and no story." | Quant Analyst, Report Builder | ₹1,799 | $35 |
 | **Influence** | "Great findings. Nothing changed." | Research-Driven Prototype, Stakeholder Panel, Stop AI Slop (free) | ₹1,299 | $25 |
 | **Career** | "The work was strong. The portfolio isn't." | Case Study Builder, plus Portfolio Site Builder free as a bonus | ₹999 | $19 |
 | **Starter** | The paid skills most studies need | Research Plan Creator, Collated Synth, Report Builder | ₹2,299 | $45 |
-| **Full stack** | All 12 skills | Everything above | ₹4,999 founding, then ₹7,999 | $99 founding, then $149 |
+| **Full stack** | All 12 skills | Everything above | ₹4,999 founding, then ₹6,499 | $99 founding, then $129 |
 
-Paid skills are priced by the work they do, from ₹699 / $12 to ₹1,299 / $25. The founding full-stack price is for the first 100 buyers or the first 30 days. Every pack includes 12 months of updates and every new skill Nithyn publishes in that time. Team licences are available on request. Paid packs open soon; [follow on LinkedIn](https://www.linkedin.com/in/nithyn/) to hear first. Prices on the website are the current ones.
+Paid skills are priced by the work they do, from ₹699 / $12 to ₹1,299 / $25. The founding full-stack price is for the first 100 buyers or the first 30 days, and founding buyers get lifetime updates. Every other purchase includes 12 months of updates and every new skill Nithyn publishes in that time. A team licence covers 5 people for ₹14,999 / $299 during the founding period. Paid packs open soon; [follow on LinkedIn](https://www.linkedin.com/in/nithyn/) to hear first. Prices on the website are the current ones.
 
 ## The 12 skills
 
