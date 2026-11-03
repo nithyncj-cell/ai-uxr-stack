@@ -35,15 +35,15 @@ The Transcript Collator turns raw interview transcripts into one theme-tagged no
 
 | Pack | The problem it solves | Skills | India | International |
 |---|---|---|---|---|
-| **Scope** | "Don't tell us what we already know." | Question Zero, Diagnostic Partner, Research Plan Creator | ₹2,499 | $49 |
-| **Transcript Collator** | "Fieldwork's done. Now a week of retyping." | Transcript Collator (free), Collated Synth, Collation Sorter (free) | ₹999 | $19 |
-| **Analysis** | "Fifty crosstabs and no story." | Quant Analyst, Report Builder | ₹1,799 | $35 |
-| **Influence** | "Great findings. Nothing changed." | Research-Driven Prototype, Stakeholder Panel, Stop AI Slop (free) | ₹1,299 | $25 |
-| **Career** | "The work was strong. The portfolio isn't." | Case Study Builder, plus Portfolio Site Builder free as a bonus | ₹999 | $19 |
-| **Starter** | The paid skills most studies need | Research Plan Creator, Collated Synth, Report Builder | ₹2,299 | $45 |
-| **Full stack** | All 12 skills | Everything above | ₹4,999 founding, then ₹6,499 | $99 founding, then $129 |
+| **Scope** | "Don't tell us what we already know." | Question Zero, Diagnostic Partner, Research Plan Creator | ₹1,499 | $29 |
+| **Collate** | "Fieldwork's done. Now a week of retyping." | Transcript Collator (free), Collated Synth, Collation Sorter (free) | ₹599 | $12 |
+| **Analysis** | "Fifty crosstabs and no story." | Quant Analyst, Report Builder | ₹1,099 | $22 |
+| **Influence** | "Great findings. Nothing changed." | Research-Driven Prototype, Stakeholder Panel, Stop AI Slop (free) | ₹849 | $17 |
+| **Career** | "The work was strong. The portfolio isn't." | Case Study Builder, plus Portfolio Site Builder free as a bonus | ₹599 | $12 |
+| **Starter** | The paid skills most studies need | Research Plan Creator, Collated Synth, Report Builder | ₹1,599 | $32 |
+| **Full stack** | All 12 skills | Everything above | ₹2,999 founding, then ₹3,999 | $59 founding, then $79 |
 
-Paid skills are priced by the work they do, from ₹699 / $12 to ₹1,299 / $25. The founding full-stack price is for the first 100 buyers or the first 30 days, and founding buyers get lifetime updates. Every other purchase includes 12 months of updates and every new skill Nithyn publishes in that time. A team licence covers 5 people for ₹14,999 / $299 during the founding period. Paid packs open soon; [follow on LinkedIn](https://www.linkedin.com/in/nithyn/) to hear first. Prices on the website are the current ones.
+Paid skills are priced by the work they do, from ₹449 / $9 to ₹799 / $15. Buy 4 or more single skills for 15% off, or 7 or more for 30% off. The founding full-stack price is for the first 100 buyers or the first 30 days, and founding buyers get lifetime updates. Every other purchase includes 12 months of updates and every new skill Nithyn publishes in that time. A team licence covers 5 people for ₹8,999 / $179 during the founding period. Paid packs open soon; [follow on LinkedIn](https://www.linkedin.com/in/nithyn/) to hear first. Prices on the website are the current ones.
 
 ## The 12 skills
 
@@ -52,7 +52,7 @@ Paid skills are priced by the work they do, from ₹699 / $12 to ₹1,299 / $25.
 | **Question Zero** | Maps what your team already knows, and how it knows it, then turns the gaps into ranked research questions. |
 | **Diagnostic Partner** | Works through a solution-shaped brief and funnel data with the PM, and turns it into a research-ready problem. |
 | **Research Plan Creator** | Turns kickoff calls, briefs and ad hoc asks into a stakeholder-ready research plan. |
-| **Transcript Collator** | Turns raw transcripts into one theme-tagged notesheet, with a verbatim quote and timestamp on every row. |
+| **Collate** | Turns raw transcripts into one theme-tagged notesheet, with a verbatim quote and timestamp on every row. |
 | **Collated Synth** | Reads each participant's notes start to finish for beliefs, contradictions and tensions, as cited leads you judge. |
 | **Collation Sorter** | Sorts the collated sheet by theme and by participant in two new tabs, leaving the original untouched. |
 | **Quant Analyst** | Runs survey, usability and behaviour data against your research objectives instead of every possible crosstab. |
