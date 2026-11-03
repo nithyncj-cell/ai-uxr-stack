@@ -456,6 +456,19 @@
   .cmp thead th:first-child { color: var(--gray-700); font-weight: 500; font-size: 14px; }
   .legend { list-style: none; margin: var(--s5) 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: var(--s2) var(--s6); font-size: 14px; line-height: 20px; color: var(--gray-900); }
   .legend li { display: inline-flex; align-items: center; }
+
+  /* terms: one quiet toggle in the footer, plain text inside */
+  .tp { margin-top: var(--s8); border-top: 1px solid var(--border); padding-top: var(--s6); }
+  .tp > summary { display: inline-flex; align-items: center; gap: var(--s2); cursor: pointer; list-style: none; font-size: 14px; line-height: 20px; color: var(--gray-900); }
+  .tp > summary::-webkit-details-marker { display: none; }
+  .tp > summary::after { content: ""; width: 12px; height: 12px; transition: transform .2s ease;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' fill='none' stroke='%23a1a1a1' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 4.5l3 3 3-3'/%3E%3C/svg%3E") center/12px no-repeat; }
+  .tp[open] > summary::after { transform: rotate(180deg); }
+  .tp > summary:hover { color: var(--gray-1000); }
+  .tp-body { max-width: 760px; margin-top: var(--s6); display: grid; gap: var(--s8); }
+  .tp-part { scroll-margin-top: calc(var(--header-h) + var(--s4)); }
+  .tp-part h3 { color: var(--gray-1000); }
+  .tp-part .lt { margin-top: var(--s3); padding-bottom: 0; }
   @media (prefers-reduced-motion: reduce) { .glow { animation: none !important; background: rgba(10,114,239,.18); box-shadow: 0 0 0 6px rgba(10,114,239,.18); } * { scroll-behavior: auto !important; transition: none !important; animation: none !important; } }
 </style>
 </head>
@@ -624,20 +637,6 @@
     </div>
   </section>
 
-  <section id="shoutout" aria-labelledby="shoutout-title">
-    <div class="wrap">
-      <div class="shout">
-        <a class="shout-img" href="https://uxrstrategist.com/aibundle/" target="_blank" rel="noopener" aria-label="Open Nikki Anderson's UXR AI Bundle page">
-          <img src="assets/nikki-uxr-ai-bundle.webp" width="1483" height="812" loading="lazy" alt="The UXR AI Bundle page on The User Research Strategist: “You were told to use AI on your research, and you've been rewriting its output ever since.”">
-        </a>
-        <div>
-          <h2 class="h-24" id="shoutout-title">Shoutout to Nikki Anderson</h2>
-          <p class="copy-18 muted">Nikki, The User Research Strategist, builds AI tools for researchers too. Her UXR AI Bundle has 76 Claude skills, a nine-plugin agent suite and 109 prompts. If you want a wider library, start&nbsp;there.</p>
-          <a class="btn" href="https://uxrstrategist.com/aibundle/" target="_blank" rel="noopener">See the UXR AI Bundle</a>
-        </div>
-      </div>
-    </div>
-  </section>
 
   <section id="pricing" aria-labelledby="pricing-title">
     <div class="wrap">
@@ -663,6 +662,21 @@
           <p class="note">Paid packs open soon. No payment is taken on this site.</p>
         </div>
         <ul class="plist" id="plist"></ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="shoutout" aria-labelledby="shoutout-title">
+    <div class="wrap">
+      <div class="shout">
+        <a class="shout-img" href="https://uxrstrategist.com/aibundle/" target="_blank" rel="noopener" aria-label="Open Nikki Anderson's UXR AI Bundle page">
+          <img src="assets/nikki-uxr-ai-bundle.webp" width="1483" height="812" loading="lazy" alt="The UXR AI Bundle page on The User Research Strategist: “You were told to use AI on your research, and you've been rewriting its output ever since.”">
+        </a>
+        <div>
+          <h2 class="h-24" id="shoutout-title">Shoutout to Nikki Anderson</h2>
+          <p class="copy-18 muted">Nikki, The User Research Strategist, builds AI tools for researchers too. Her UXR AI Bundle has 76 Claude skills, a nine-plugin agent suite and 109 prompts. If you want a wider library, start&nbsp;there.</p>
+          <a class="btn" href="https://uxrstrategist.com/aibundle/" target="_blank" rel="noopener">See the UXR AI Bundle</a>
+        </div>
       </div>
     </div>
   </section>
@@ -727,75 +741,6 @@
     </div>
   </section>
 
-  <section id="legal" aria-labelledby="legal-title">
-    <div class="wrap">
-      <h2 class="h-24" id="legal-title">Terms and policies</h2>
-      <p class="copy-14 muted" style="margin-top:var(--s2)">Last updated 31 October 2026. Plain-English terms; the bold headings are part of the terms.</p>
-<div class="legal">
-          <details id="legal-licence">
-            <summary>Skill Licence Terms</summary>
-            <div class="lt">
-              <p><b>1. Who this agreement is between.</b> These terms are a contract between you and Nithyn C Joseph, an individual based in Bengaluru, Karnataka, India (“Nithyn”). You accept them when you tick “I agree” and download, install or use a skill. If you accept for an employer or client, you confirm you are authorised to bind them. This contract is formed electronically and is valid under the Indian Contract Act, 1872 and the Information Technology Act, 2000.</p>
-              <p><b>2. Ownership.</b> Each skill file, including its instructions, structure, examples and wording, is Nithyn's original work, protected by the Copyright Act, 1957 and international copyright treaties. You receive a licence to use it. You do not receive ownership of it.</p>
-              <p><b>3. What you may do.</b> You may install and run a skill in your own AI account to do research work for yourself, your employer or your clients. One licence covers one person. Team licences are available on request.</p>
-              <p><b>4. What you may not do.</b> You may not share, upload, publish, sell, sublicense, lend or give away a skill file or any part of it. You may not edit, translate or adapt it to make another skill, prompt, custom GPT, Gem or agent, including one that does the same job. You may not remove or change the credit line or the terms inside the file. You may not extract a skill's instructions, through an AI model or by any other means, to rebuild it. You may not use a skill file to train or fine-tune an AI model.</p>
-              <p><b>5. Your work stays yours.</b> Notesheets, reports, prototypes and other outputs you make with a skill belong to you or your employer, and you may share them freely.</p>
-              <p><b>6. Your data and your participants.</b> Skills run inside your own AI account. Nithyn never receives your transcripts, files or outputs. You are responsible for having consent to process your participants' personal data, for following the Digital Personal Data Protection Act, 2023 and any other law that applies to you, for following your employer's policies, and for removing personal details where needed.</p>
-              <p><b>7. AI output.</b> A skill guides an AI model; it does not control or guarantee what the model produces. Check the output before you rely on it or share it.</p>
-              <p><b>8. No warranty.</b> To the extent the law allows, skills are provided as they are, without any warranty that they will be error-free or suit a particular purpose.</p>
-              <p><b>9. Limit of liability.</b> To the extent the law allows, Nithyn is not liable for indirect or consequential loss, lost profits or lost data. Nithyn's total liability for any claim about a skill is limited to the amount you paid for that skill. For a free download, that amount is zero. Nothing in these terms limits liability that cannot be limited by law.</p>
-              <p><b>10. Free skills.</b> The UXR Transcript Collator, Collation Sorter and Stop AI Slop are free to download after you give your email address. These terms apply to them in full. If Nithyn ever starts charging for a free skill, copies you already downloaded stay licensed to you.</p>
-              <p><b>11. Updates and new skills.</b> If you buy a pack or the full stack, for 12 months from your purchase you get every update to the skills you bought and every new skill Nithyn adds to the AI UXR Stack, at no extra cost. If you buy a single skill, you get updates to that skill for 12 months. After 12 months you keep the versions you have; later updates and new skills may be sold separately or through an optional yearly renewal. Nithyn may update, replace or retire any skill. Every update and new skill you receive is covered by these terms.</p>
-              <p><b>12. Ending the licence.</b> Your licence ends automatically if you break these terms. When it ends, you must delete every copy of the skill you hold.</p>
-              <p><b>13. Changes to these terms.</b> Nithyn may change these terms. The version shown on this page on the day you download a skill applies to that download.</p>
-              <p><b>14. Law and disputes.</b> These terms are governed by the laws of India. The courts at Bengaluru, Karnataka have exclusive jurisdiction, without affecting any consumer rights you have where you live.</p>
-            </div>
-          </details>
-          <details id="legal-site">
-            <summary>Website Terms</summary>
-            <div class="lt">
-              <p>This website describes the AI UXR Stack. Its text, design and icons are © 2026 Nithyn and may not be copied without permission. Skill descriptions summarise what each skill does and may change as the skills are updated. Links to LinkedIn and other websites go to services Nithyn does not control, and their own terms apply there. Using this website means you accept these Website Terms, and downloading a skill means you accept the Skill Licence Terms.</p>
-            </div>
-          </details>
-          <details id="legal-refunds">
-            <summary>Payments, Refunds and Cancellation</summary>
-            <div class="lt">
-              <p><b>Paid skills are not on sale yet.</b> The Buy buttons let you join a waitlist. No payment is taken on this website.</p>
-              <p><b>Prices.</b> Prices are shown in Indian rupees for buyers in India and in US dollars elsewhere. The full price, including any tax and charges, will be shown before you pay. Your bank or card issuer may add currency conversion fees.</p>
-              <p><b>Delivery.</b> Skills are digital files, delivered right after payment.</p>
-              <p><b>Refunds.</b> Because a skill is delivered instantly and cannot be returned, a purchase is final once the file is downloaded. If a file is faulty, will not install, or does not match its description, contact Nithyn within 7 days of purchase for a fix, a replacement or a full refund. Approved refunds go back to the original payment method within 14 days.</p>
-              <p><b>Cancellation.</b> No cancellation charge applies to any order.</p>
-            </div>
-          </details>
-          <details id="legal-privacy">
-            <summary>Privacy</summary>
-            <div class="lt">
-              <p><b>Free downloads.</b> Before your first free download, the site asks for your email address. Nithyn uses it to know who uses the free skills and, only if you tick the box, to email you about updates and new skills. It is stored in the same Google Sheet described below.</p>
-              <p><b>Waitlist.</b> If you click a Buy button, a short form asks for your email address and, if you choose to answer, three questions about your research work and a discount code. Nithyn uses them only to email you when paid skills open and to decide what to build next. They are stored in a Google Sheet that only Nithyn can open, so Google's privacy policy covers that storage. They are not sold or shared. To see, correct or delete your answers, message Nithyn on LinkedIn or write to the email under Contact and Grievances.</p>
-              <p>The website never asks for payment details. It saves one setting in your own browser: whether you have already given your email for free downloads. It never leaves your device, and you can clear it in your browser settings.</p>
-              <p>The website is hosted on GitHub Pages, and GitHub's privacy statement covers hosting and access logs. Fonts load from Google Fonts, and the zip and animation scripts load from cdnjs, so those services receive your IP address. The robot check on the download and the waitlist form is run by Cloudflare Turnstile, which receives your IP address and basic browser details; Cloudflare's privacy policy covers that. When you click a LinkedIn link, LinkedIn's privacy policy applies. Downloads are built in your own browser, and Nithyn does not receive a list of who downloaded a skill.</p>
-            </div>
-          </details>
-          <details id="legal-marks">
-            <summary>Trademarks and Credits</summary>
-            <div class="lt">
-              <p>Claude is a product of Anthropic. Figma, FigJam and Miro are trademarks of their owners. The AI UXR Stack is independent and is not affiliated with, sponsored by or endorsed by Anthropic or any other company named on this website.</p>
-              <p>Question Zero builds on James Chudley's knowledge-mapping workshop and importance and confidence matrix. The thanks to The Goal by Eliyahu M. Goldratt and to Constantine Papas, PhD, are personal acknowledgements and do not mean they endorse these skills.</p>
-              <p>The shoutout to Nikki Anderson and her UXR AI Bundle is a personal recommendation. Nikki and The User Research Strategist are not connected to these skills and do not endorse them. The banner is a screenshot of her page and links to it.</p>
-              <p>The skill icons are 3D renders from <a href="https://huggingface.co/datasets/nvidia/simready-assets" target="_blank" rel="noopener">NVIDIA SimReady Assets</a>, used under the <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a> licence. They were cropped and resized for this website. NVIDIA does not endorse the AI UXR Stack.</p>
-            </div>
-          </details>
-          <details id="legal-contact">
-            <summary>Contact and Grievances</summary>
-            <div class="lt">
-              <p><b>Seller.</b> Nithyn C Joseph, Cruzexpos, Kochi, Kerala, India.</p>
-              <p><b>Email.</b> <a class="link" href="mailto:nithyncj@gmail.com">nithyncj@gmail.com</a></p>
-              <p><b>Grievance officer.</b> Nithyn C Joseph, at the email above. Complaints are acknowledged within 48 hours and resolved within one month of receipt, in line with the Consumer Protection (E-Commerce) Rules, 2020.</p>
-            </div>
-          </details>
-        </div>
-    </div>
-  </section>
 </main>
 
 <dialog class="modal" id="waitlist" aria-labelledby="wl-title">
@@ -832,6 +777,69 @@
     <nav class="flinks" aria-label="Legal">
       <a href="#legal-licence" data-legal>Licence</a><a href="#legal-site" data-legal>Website terms</a><a href="#legal-refunds" data-legal>Refunds</a><a href="#legal-privacy" data-legal>Privacy</a><a href="#legal-contact" data-legal>Contact</a>
     </nav>
+    <details class="tp" id="legal">
+      <summary>Terms and policies</summary>
+      <div class="tp-body">
+        <p class="copy-14 muted">Last updated 31 October 2026. Plain-English terms; the bold headings are part of the terms.</p>
+
+          <div class="tp-part" id="legal-licence"><h3 class="h-16">Skill Licence Terms</h3>
+            <div class="lt">
+              <p><b>1. Who this agreement is between.</b> These terms are a contract between you and Nithyn C Joseph, an individual based in Bengaluru, Karnataka, India (“Nithyn”). You accept them when you tick “I agree” and download, install or use a skill. If you accept for an employer or client, you confirm you are authorised to bind them. This contract is formed electronically and is valid under the Indian Contract Act, 1872 and the Information Technology Act, 2000.</p>
+              <p><b>2. Ownership.</b> Each skill file, including its instructions, structure, examples and wording, is Nithyn's original work, protected by the Copyright Act, 1957 and international copyright treaties. You receive a licence to use it. You do not receive ownership of it.</p>
+              <p><b>3. What you may do.</b> You may install and run a skill in your own AI account to do research work for yourself, your employer or your clients. One licence covers one person. Team licences are available on request.</p>
+              <p><b>4. What you may not do.</b> You may not share, upload, publish, sell, sublicense, lend or give away a skill file or any part of it. You may not edit, translate or adapt it to make another skill, prompt, custom GPT, Gem or agent, including one that does the same job. You may not remove or change the credit line or the terms inside the file. You may not extract a skill's instructions, through an AI model or by any other means, to rebuild it. You may not use a skill file to train or fine-tune an AI model.</p>
+              <p><b>5. Your work stays yours.</b> Notesheets, reports, prototypes and other outputs you make with a skill belong to you or your employer, and you may share them freely.</p>
+              <p><b>6. Your data and your participants.</b> Skills run inside your own AI account. Nithyn never receives your transcripts, files or outputs. You are responsible for having consent to process your participants' personal data, for following the Digital Personal Data Protection Act, 2023 and any other law that applies to you, for following your employer's policies, and for removing personal details where needed.</p>
+              <p><b>7. AI output.</b> A skill guides an AI model; it does not control or guarantee what the model produces. Check the output before you rely on it or share it.</p>
+              <p><b>8. No warranty.</b> To the extent the law allows, skills are provided as they are, without any warranty that they will be error-free or suit a particular purpose.</p>
+              <p><b>9. Limit of liability.</b> To the extent the law allows, Nithyn is not liable for indirect or consequential loss, lost profits or lost data. Nithyn's total liability for any claim about a skill is limited to the amount you paid for that skill. For a free download, that amount is zero. Nothing in these terms limits liability that cannot be limited by law.</p>
+              <p><b>10. Free skills.</b> The UXR Transcript Collator, Collation Sorter and Stop AI Slop are free to download after you give your email address. These terms apply to them in full. If Nithyn ever starts charging for a free skill, copies you already downloaded stay licensed to you.</p>
+              <p><b>11. Updates and new skills.</b> If you buy a pack or the full stack, for 12 months from your purchase you get every update to the skills you bought and every new skill Nithyn adds to the AI UXR Stack, at no extra cost. If you buy a single skill, you get updates to that skill for 12 months. After 12 months you keep the versions you have; later updates and new skills may be sold separately or through an optional yearly renewal. Nithyn may update, replace or retire any skill. Every update and new skill you receive is covered by these terms.</p>
+              <p><b>12. Ending the licence.</b> Your licence ends automatically if you break these terms. When it ends, you must delete every copy of the skill you hold.</p>
+              <p><b>13. Changes to these terms.</b> Nithyn may change these terms. The version shown on this page on the day you download a skill applies to that download.</p>
+              <p><b>14. Law and disputes.</b> These terms are governed by the laws of India. The courts at Bengaluru, Karnataka have exclusive jurisdiction, without affecting any consumer rights you have where you live.</p>
+            </div>
+          </div>
+          <div class="tp-part" id="legal-site"><h3 class="h-16">Website Terms</h3>
+            <div class="lt">
+              <p>This website describes the AI UXR Stack. Its text, design and icons are © 2026 Nithyn and may not be copied without permission. Skill descriptions summarise what each skill does and may change as the skills are updated. Links to LinkedIn and other websites go to services Nithyn does not control, and their own terms apply there. Using this website means you accept these Website Terms, and downloading a skill means you accept the Skill Licence Terms.</p>
+            </div>
+          </div>
+          <div class="tp-part" id="legal-refunds"><h3 class="h-16">Payments, Refunds and Cancellation</h3>
+            <div class="lt">
+              <p><b>Paid skills are not on sale yet.</b> The Buy buttons let you join a waitlist. No payment is taken on this website.</p>
+              <p><b>Prices.</b> Prices are shown in Indian rupees for buyers in India and in US dollars elsewhere. The full price, including any tax and charges, will be shown before you pay. Your bank or card issuer may add currency conversion fees.</p>
+              <p><b>Delivery.</b> Skills are digital files, delivered right after payment.</p>
+              <p><b>Refunds.</b> Because a skill is delivered instantly and cannot be returned, a purchase is final once the file is downloaded. If a file is faulty, will not install, or does not match its description, contact Nithyn within 7 days of purchase for a fix, a replacement or a full refund. Approved refunds go back to the original payment method within 14 days.</p>
+              <p><b>Cancellation.</b> No cancellation charge applies to any order.</p>
+            </div>
+          </div>
+          <div class="tp-part" id="legal-privacy"><h3 class="h-16">Privacy</h3>
+            <div class="lt">
+              <p><b>Free downloads.</b> Before your first free download, the site asks for your email address. Nithyn uses it to know who uses the free skills and, only if you tick the box, to email you about updates and new skills. It is stored in the same Google Sheet described below.</p>
+              <p><b>Waitlist.</b> If you click a Buy button, a short form asks for your email address and, if you choose to answer, three questions about your research work and a discount code. Nithyn uses them only to email you when paid skills open and to decide what to build next. They are stored in a Google Sheet that only Nithyn can open, so Google's privacy policy covers that storage. They are not sold or shared. To see, correct or delete your answers, message Nithyn on LinkedIn or write to the email under Contact and Grievances.</p>
+              <p>The website never asks for payment details. It saves one setting in your own browser: whether you have already given your email for free downloads. It never leaves your device, and you can clear it in your browser settings.</p>
+              <p>The website is hosted on GitHub Pages, and GitHub's privacy statement covers hosting and access logs. Fonts load from Google Fonts, and the zip and animation scripts load from cdnjs, so those services receive your IP address. The robot check on the download and the waitlist form is run by Cloudflare Turnstile, which receives your IP address and basic browser details; Cloudflare's privacy policy covers that. When you click a LinkedIn link, LinkedIn's privacy policy applies. Downloads are built in your own browser, and Nithyn does not receive a list of who downloaded a skill.</p>
+            </div>
+          </div>
+          <div class="tp-part" id="legal-marks"><h3 class="h-16">Trademarks and Credits</h3>
+            <div class="lt">
+              <p>Claude is a product of Anthropic. Figma, FigJam and Miro are trademarks of their owners. The AI UXR Stack is independent and is not affiliated with, sponsored by or endorsed by Anthropic or any other company named on this website.</p>
+              <p>Question Zero builds on James Chudley's knowledge-mapping workshop and importance and confidence matrix. The thanks to The Goal by Eliyahu M. Goldratt and to Constantine Papas, PhD, are personal acknowledgements and do not mean they endorse these skills.</p>
+              <p>The shoutout to Nikki Anderson and her UXR AI Bundle is a personal recommendation. Nikki and The User Research Strategist are not connected to these skills and do not endorse them. The banner is a screenshot of her page and links to it.</p>
+              <p>The skill icons are 3D renders from <a href="https://huggingface.co/datasets/nvidia/simready-assets" target="_blank" rel="noopener">NVIDIA SimReady Assets</a>, used under the <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a> licence. They were cropped and resized for this website. NVIDIA does not endorse the AI UXR Stack.</p>
+            </div>
+          </div>
+          <div class="tp-part" id="legal-contact"><h3 class="h-16">Contact and Grievances</h3>
+            <div class="lt">
+              <p><b>Seller.</b> Nithyn C Joseph, Cruzexpos, Kochi, Kerala, India.</p>
+              <p><b>Email.</b> <a class="link" href="mailto:nithyncj@gmail.com">nithyncj@gmail.com</a></p>
+              <p><b>Grievance officer.</b> Nithyn C Joseph, at the email above. Complaints are acknowledged within 48 hours and resolved within one month of receipt, in line with the Consumer Protection (E-Commerce) Rules, 2020.</p>
+            </div>
+          </div>
+
+      </div>
+    </details>
     <p class="credits">Thanks to The Goal by Eliyahu M. Goldratt and to Constantine Papas, PhD. Skill icons: <a href="https://huggingface.co/datasets/nvidia/simready-assets" target="_blank" rel="noopener">NVIDIA SimReady Assets</a>, CC BY 4.0. © 2026 Nithyn. All rights reserved.</p>
   </div>
 </footer>
@@ -1461,7 +1469,7 @@
   function openLegal(id) {
     const d = document.getElementById(id);
     if (!d) return;
-    d.open = true;
+    document.getElementById("legal").open = true;
     requestAnimationFrame(() => d.scrollIntoView({ behavior: "smooth", block: "start" }));
   }
   if (location.hash.startsWith("#legal-")) openLegal(location.hash.slice(1));
